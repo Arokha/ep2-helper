@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<!-- Primary Meta Tags -->
+	<title>EP2 - Helpers</title>
+
+    <!-- Libs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js" integrity="sha256-ufGElb3TnOtzl5E4c/qQnZFGP+FYEZj5kbSEdJNrw0A=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.css" integrity="sha256-R0iK59NZuc4WqlwHXje+t3E1xLMgNGg/yEorSnXUnQM=" crossorigin="anonymous" />
+
+	<style>
+		body {
+			margin: 0.5rem;
+			background-color: #000;
+		}
+		.ui.segment.tab {
+			margin: 0px;
+		}
+		.ui.inverted.menu .active.item {
+			color: #10A3A3 !important;
+		}
+		.ui.inverted.menu .active.item:hover {
+			color: #40D3D3 !important;
+		}
+		.ui.message {
+			background-color: #BBBBBB;
+		}
+	</style>
+</head>
+<body>
+	<div id="global-tabs" class="ui large top secondary inverted stackable pointing menu">
+		<a class="item active" data-tab="quickrules">Quick Rules</a>
+	    <a class="item" data-tab="roller">Dice Roller</a>
+	    <a class="item" data-tab="chargen">Data - Chargen</a>
+	    <a class="item" data-tab="morphs">Data - Morphs</a>
+	    <a class="item" data-tab="gear">Data - Gear</a>
+	    <a class="item" data-tab="mods">Data - Mods</a>
+	    <a class="item" data-tab="services">Data - Services</a>
+	</div>
+	<div class="ui tab segment inverted active" id="quickrules" data-tab="quickrules">Failed to load this page?</div>
+	<div class="ui tab segment inverted" id="roller" data-tab="roller">Failed to load this page?</div>
+	<div class="ui tab segment inverted" id="chargen" data-tab="chargen">Failed to load this page?</div>
+	<div class="ui tab segment inverted" id="morphs" data-tab="morphs">Failed to load this page?</div>
+	<div class="ui tab segment inverted" id="gear" data-tab="gear">Failed to load this page?</div>
+	<div class="ui tab segment inverted" id="mods" data-tab="mods">Failed to load this page?</div>
+	<div class="ui tab segment inverted" id="services" data-tab="services">Failed to load this page?</div>
+</body>
+
+<script>
+	$("#quickrules").load("quickrules.html");
+	$("#roller").load("roller.html");
+	$("#chargen").load("chargen.html");
+	$("#morphs").load("morphs.html");
+	$("#gear").load("gear.html");
+	$("#mods").load("mods.html");
+	$("#services").load("services.html");
+
+	$.fn.timedDisable = function(time) {
+	    if (time == null) { time = 3000; }
+	    return $(this).each(function() {
+	        $(this).addClass('disabled');
+	        var disabledElem = $(this);
+	        setTimeout(function() {
+	            disabledElem.removeClass('disabled');
+	        }, time);
+	    });
+	};
+
+	$(function () {
+	    $('body').toast({
+			title: 'HEY',
+			message: "This site is still very WIP! Things are missing, ok? Don't complain!",
+			displayTime: 5000,
+			showProgress: 'bottom'
+		  })
+		;
+
+	    //Tabs
+	    $('.menu .item').tab({
+	    	onVisible: function(){
+	    		//Sticky elements need to find where they are now
+	    		$('.ui.sticky').sticky('refresh');
+	    	}
+	    });
+	});
+
+</script>

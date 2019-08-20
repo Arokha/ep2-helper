@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <style>
+    .ui.vertical.tabular.menu .active.item {
+      background-color: #3D3E3F;
+    }
+  </style>
+</head>
+
+<body>
+<div id="chargen-grid" class="ui grid">
+  <div class="three wide column">
+    <div id="chargen-tabs" class="ui vertical sticky fluid tabular menu inverted">
+      <a class="item active" data-tab="chargen-1">1: Background</a>
+      <a class="item" data-tab="chargen-2">2: Career</a>
+      <a class="item" data-tab="chargen-3">3: Interests</a>
+      <a class="item" data-tab="chargen-4">4: Faction</a>
+      <a class="item" data-tab="chargen-5">5: Aptitudes</a>
+      <a class="item" data-tab="chargen-6">6: Total Skills</a>
+      <a class="item" data-tab="chargen-7">7: Languages</a>
+      <a class="item" data-tab="chargen-8">8: Flex</a>
+      <a class="item" data-tab="chargen-9">9: Reputation</a>
+      <a class="item" data-tab="chargen-10">10: Customization</a>
+      <a class="item" data-tab="chargen-11">11: Derived Stats</a>
+      <a class="item" data-tab="chargen-12">12: Morph & Gear</a>
+      <a class="item" data-tab="chargen-13">13: Motivation</a>
+    </div>
+  </div>
+  <div class="thirteen wide stretched column">
+    <div class="ui tab segment inverted active" id="chargen-1" data-tab="chargen-1">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[0]"></vcomp-stepdesc>
+      
+      <div class="ui three doubling cards inverted">
+        <template v-for="background in backgrounds">
+          <div class="ui centered card">
+            <div class="content">
+              <div class="header">{{background.name}}</div>
+              <div class="description"><p>{{background.description}}</p></div>
+              <br>
+              <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                  <li v-for="(value, name) in background.skills">{{name}}: {{value.rating}} <span v-if="value.options.length">({{or_list(value.options)}})</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-2" data-tab="chargen-2">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[1]"></vcomp-stepdesc>
+      
+      <div class="ui three doubling cards inverted">
+        <template v-for="career in careers">
+          <div class="ui centered card">
+            <div class="content">
+              <div class="header">{{career.name}}</div>
+              <div class="description">{{career.description}}</div>
+              <br>
+              <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                  <li v-for="(value, name) in career.skills">{{name}}: {{value.rating}} <span v-if="value.options.length">({{or_list(value.options)}})</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-3" data-tab="chargen-3">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[2]"></vcomp-stepdesc>
+
+      <div class="ui three doubling cards inverted">
+        <template v-for="interest in interests">
+          <div class="ui centered card">
+            <div class="content">
+              <div class="header">{{interest.name}}</div>
+              <div class="description">{{interest.description}}</div>
+              <br>
+              <div class="card-body">
+                <div class="header">Skills</div>
+                <ul>
+                  <li v-for="(value, name) in interest.skills">{{name}}: {{value.rating}} <span v-if="value.options.length">({{or_list(value.options)}})</span></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-4" data-tab="chargen-4">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[3]"></vcomp-stepdesc>
+
+      <div class="ui three doubling cards inverted">
+        <template v-for="faction in factions">
+          <div class="ui centered card">
+            <div class="content">
+              <div class="header">{{faction.name}}</div>
+              <div class="description">{{faction.description}}</div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-5" data-tab="chargen-5">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[4]"></vcomp-stepdesc>
+      
+      <div class="ui three doubling cards inverted">
+        <template v-for="aptemp in aptemps">
+          <div class="ui centered card">
+            <div class="content">
+              <div class="header">{{aptemp.name}}</div>
+              <div class="description">
+                {{aptemp.description}}
+                <ul>
+                  <li>COG: {{aptemp.aptitudes.COG}}</li>
+                  <li>INT: {{aptemp.aptitudes.INT}}</li>
+                  <li>REF: {{aptemp.aptitudes.REF}}</li>
+                  <li>SAV: {{aptemp.aptitudes.SAV}}</li>
+                  <li>SOM: {{aptemp.aptitudes.SOM}}</li>
+                  <li>WIL: {{aptemp.aptitudes.WIL}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-6" data-tab="chargen-6">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[5]"></vcomp-stepdesc>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-7" data-tab="chargen-7">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[6]"></vcomp-stepdesc>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-8" data-tab="chargen-8">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[7]"></vcomp-stepdesc>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-9" data-tab="chargen-9">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[8]"></vcomp-stepdesc>
+
+      <div class="ui three doubling cards inverted">
+        <template v-for="reputation in reputations">
+          <div class="ui centered card">
+            <div class="content">
+              <div class="header">{{reputation.name}}</div>
+              <div class="description">{{reputation.description}}</div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-10" data-tab="chargen-10">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[9]"></vcomp-stepdesc>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-11" data-tab="chargen-11">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[10]"></vcomp-stepdesc>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-12" data-tab="chargen-12">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[11]"></vcomp-stepdesc>
+
+      <div class="ui three doubling cards inverted">
+        <template v-for="gearpack in gearpacks">
+          <div class="ui centered card">
+            <div class="content">
+              <div class="header">{{gearpack.name}} - {{gearpack.type}}</div>
+              <div class="description">
+                <ul>
+                  <li v-for="item in gearpack.gear">{{item}}</li>
+                </ul>
+                <template v-for="option in gearpack.options">
+                  {{option.name}} extras:
+                  <ul>
+                    <li v-for="item in option.gear">{{item}}</li>
+                  </ul>
+                </template>
+              </div>
+            </div>
+          </div>
+        </template>
+      </div>
+    </div>
+
+    <div class="ui tab segment inverted" id="chargen-13" data-tab="chargen-13">
+      <vcomp-stepdesc v-if="chargen.length" :step="chargen[12]"></vcomp-stepdesc>
+    </div>
+    
+  </div> <!-- Col2 end -->
+</div> <!-- Grid end -->
+</body>
+
+<script>
+
+  var chargen_message = {
+    props: {
+      step: Object
+    },
+    template: `
+      <div class="ui message">
+        <template v-for="section in step.guidance">
+          <div class="header">{{section.heading}}</div>
+          <p v-for="para in section.text" v-html="para"></p>
+        </template>
+      </div>
+      `
+  }
+
+  var vue_chargen = new Vue({
+    el: '#chargen-grid',
+    data: {
+      chargen: [],
+      backgrounds: [],
+      careers: [],
+      interests: [],
+      factions: [],
+      aptemps: [],
+      reputations: [],
+      gearpacks: []
+    },
+    methods: {
+      or_list: function (arr) {
+        return arr.join(", ").replace(/, ((?:.(?!, ))+)$/, ', or $1');
+      }
+    },
+    components: {
+      vcompStepdesc: chargen_message
+    }
+  })
+
+  $(function() {
+    $('#chargen-tabs .item').tab();
+    $('#chargen-tabs').sticky({
+      context: '#chargen-grid',
+      silent: true
+    })
+  });
+
+  $.getJSON('data/chargen.json').then(function(json){vue_chargen.chargen = json;});
+  $.getJSON('data/backgrounds.json').then(function(json){vue_chargen.backgrounds = json;});
+  $.getJSON('data/careers.json').then(function(json){vue_chargen.careers = json;});
+  $.getJSON('data/interests.json').then(function(json){vue_chargen.interests = json;});
+  $.getJSON('data/factions.json').then(function(json){vue_chargen.factions = json;});
+  $.getJSON('data/aptitude_templates.json').then(function(json){vue_chargen.aptemps = json;});
+  $.getJSON('data/reputations.json').then(function(json){vue_chargen.reputations = json;});
+  $.getJSON('data/gear_packs.json').then(function(json){vue_chargen.gearpacks = json;});
+  
+</script>
+</html>

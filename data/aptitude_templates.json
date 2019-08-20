@@ -1,0 +1,86 @@
+[
+    {
+        "name": "Actioneer",
+        "description": "You are more comfortable with physicality than talking or thinking.",
+        "aptitudes": {
+            "COG": 10,
+            "INT": 15,
+            "REF": 20,
+            "SAV": 10,
+            "SOM": 20,
+            "WIL": 15
+        }
+    },
+    {
+        "name": "Extrovert",
+        "description": "You can talk your way through most situations.",
+        "aptitudes": {
+            "COG": 10,
+            "INT": 20,
+            "REF": 15,
+            "SAV": 20,
+            "SOM": 15,
+            "WIL": 10
+        }
+    },
+    {
+        "name": "Facilitator",
+        "description": "You’re good with people, planning, and seeing things through.",
+        "aptitudes": {
+            "COG": 15,
+            "INT": 15,
+            "REF": 10,
+            "SAV": 20,
+            "SOM": 10,
+            "WIL": 20
+        }
+    },
+    {
+        "name": "Factotum",
+        "description": "You’ve never quite stood out, but you exhibit broad competence.",
+        "aptitudes": {
+            "COG": 15,
+            "INT": 15,
+            "REF": 15,
+            "SAV": 15,
+            "SOM": 15,
+            "WIL": 15
+        }
+    },
+    {
+        "name": "Inquirer",
+        "description": "Your creative mind is good at figuring things out.",
+        "aptitudes": {
+            "COG": 20,
+            "INT": 20,
+            "REF": 10,
+            "SAV": 15,
+            "SOM": 10,
+            "WIL": 15
+        }
+    },
+    {
+        "name": "Survivor",
+        "description": "You have the will and stamina to scrape by in tough situations.",
+        "aptitudes": {
+            "COG": 15,
+            "INT": 10,
+            "REF": 15,
+            "SAV": 10,
+            "SOM": 20,
+            "WIL": 20
+        }
+    },
+    {
+        "name": "Thrill Seeker",
+        "description": "You’ve never said no to a dare, but your fast reaction time and quick thinking compensate for your lack of foresight.",
+        "aptitudes": {
+            "COG": 20,
+            "INT": 10,
+            "REF": 20,
+            "SAV": 15,
+            "SOM": 15,
+            "WIL": 10
+        }
+    }
+]
