@@ -1,30 +1,51 @@
-[
-    {
-        "name": "@-rep",
-        "description": "The Circle-A List, for autonomists, anarchists, Titanians, scum, and Extropians."
-    },
-    {
-        "name": "c-rep",
-        "description": "CivicNet, used by the Planetary Consortium, Morningstar Constellation, Lunar-Lagrange Alliance, Jovian Republic, and other hypercorps and capitalists."
-    },
-    {
-        "name": "f-rep",
-        "description": "Fame, the media network used by metacelebrities, journalists, socialites, artists, and glitterati."
-    },
-    {
-        "name": "g-rep",
-        "description": "Guanxi, the network for triads, cartels, gangs, and other criminal groups."
-    },
-    {
-        "name": "i-rep",
-        "description": "The Eye, Firewall’s secret internal network."
-    },
-    {
-        "name": "r-rep",
-        "description": "Research Network Affiliates, used by Argonauts, scientists, technologists, and researchers of all stripes."
-    },
-    {
-        "name": "x-rep",
-        "description": "ExploreNet, the social network for gatecrashers and exoplanet colonists"
-    }
+﻿[
+  {
+    "name": "@-rep",
+    "description": "The Circle-A List, for autonomists, anarchists, Titanians, scum, and Extropians.",
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "f4bf42f3-4963-4b62-a2ed-ed108ffa4405"
+  },
+  {
+    "name": "c-rep",
+    "description": "CivicNet, used by the Planetary Consortium, Morningstar Constellation, Lunar-Lagrange Alliance, Jovian Republic, and other hypercorps and capitalists.",
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "9e12cf85-1fe3-4502-95c9-19d632911f96"
+  },
+  {
+    "name": "f-rep",
+    "description": "Fame, the media network used by metacelebrities, journalists, socialites, artists, and glitterati.",
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "3ae1ab3a-3e48-4b5b-a542-0f192f59cd5a"
+  },
+  {
+    "name": "g-rep",
+    "description": "Guanxi, the network for triads, cartels, gangs, and other criminal groups.",
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "a674ea55-b951-4e3f-820f-680dc00c2193"
+  },
+  {
+    "name": "i-rep",
+    "description": "The Eye, Firewall’s secret internal network.",
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "774953ec-d24c-454a-b473-c5c4fcadc46e"
+  },
+  {
+    "name": "r-rep",
+    "description": "Research Network Affiliates, used by Argonauts, scientists, technologists, and researchers of all stripes.",
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "6805b0d6-3a7d-4425-b1e9-2d619e11ee9b"
+  },
+  {
+    "name": "x-rep",
+    "description": "ExploreNet, the social network for gatecrashers and exoplanet colonists",
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "f5af3280-09fd-4e7f-937f-bbe829cb6b05"
+  }
 ]

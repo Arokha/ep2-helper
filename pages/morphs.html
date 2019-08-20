@@ -29,11 +29,11 @@
     </div>
   </div>
   <div class="fourteen wide stretched column">
-	<vcomp-typecard :type="biomorphs" idappend="1" :active="true" :desc="morph_types['biomorphs']">Biomorphs</vcomp-typecard>
-	<vcomp-typecard :type="pod_biomorphs" idappend="2" :desc="morph_types['pod_biomorphs']">Pod Biomorphs</vcomp-typecard>
-	<vcomp-typecard :type="uplift_biomorphs" idappend="3" :desc="morph_types['uplift_biomorphs']">Uplift Biomorphs</vcomp-typecard>
-	<vcomp-typecard :type="synthmorphs" idappend="4" :desc="morph_types['synthmorphs']">Synthmorphs</vcomp-typecard>
-	<vcomp-typecard :type="infomorphs" idappend="5" :desc="morph_types['infomorphs']">Infomorphs</vcomp-typecard>
+	<vcomp-typecard :morphs="morphs" :morph_types="morph_types" idappend="1" :active="true" mytype="Biomorph"></vcomp-typecard>
+	<vcomp-typecard :morphs="morphs" :morph_types="morph_types" idappend="2" mytype="Pod"></vcomp-typecard>
+	<vcomp-typecard :morphs="morphs" :morph_types="morph_types" idappend="3" mytype="Uplift"></vcomp-typecard>
+	<vcomp-typecard :morphs="morphs" :morph_types="morph_types" idappend="4" mytype="Synthmorph"></vcomp-typecard>
+	<vcomp-typecard :morphs="morphs" :morph_types="morph_types" idappend="5" mytype="Infomorph"></vcomp-typecard>
   </div>
 </div>
 </body>
@@ -43,9 +43,9 @@
 	  el: '#morph-grid',
 	  data: {
 	    morphs: [],
-	    morph_types: {}
+	    morph_types: []
 	  },
-	  mounted: function() {
+	  updated: function() {
 	  	$('#morph-tabs .item').tab();
 		$('#morph-tabs').sticky({
 			context: '#morph-grid',

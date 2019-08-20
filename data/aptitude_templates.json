@@ -1,86 +1,107 @@
-[
-    {
-        "name": "Actioneer",
-        "description": "You are more comfortable with physicality than talking or thinking.",
-        "aptitudes": {
-            "COG": 10,
-            "INT": 15,
-            "REF": 20,
-            "SAV": 10,
-            "SOM": 20,
-            "WIL": 15
-        }
+﻿[
+  {
+    "name": "Actioneer",
+    "description": "You are more comfortable with physicality than talking or thinking.",
+    "aptitudes": {
+      "cognition": 10,
+      "intuition": 15,
+      "reflexes": 20,
+      "savvy": 10,
+      "somatics": 20,
+      "willpower": 15
     },
-    {
-        "name": "Extrovert",
-        "description": "You can talk your way through most situations.",
-        "aptitudes": {
-            "COG": 10,
-            "INT": 20,
-            "REF": 15,
-            "SAV": 20,
-            "SOM": 15,
-            "WIL": 10
-        }
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "f4eb8984-8a3d-41a1-9e79-4dc6716a5358"
+  },
+  {
+    "name": "Extrovert",
+    "description": "You can talk your way through most situations.",
+    "aptitudes": {
+      "cognition": 10,
+      "intuition": 20,
+      "reflexes": 15,
+      "savvy": 20,
+      "somatics": 15,
+      "willpower": 10
     },
-    {
-        "name": "Facilitator",
-        "description": "You’re good with people, planning, and seeing things through.",
-        "aptitudes": {
-            "COG": 15,
-            "INT": 15,
-            "REF": 10,
-            "SAV": 20,
-            "SOM": 10,
-            "WIL": 20
-        }
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "1d7ffabb-f8b6-4832-926e-6d1070122052"
+  },
+  {
+    "name": "Facilitator",
+    "description": "You’re good with people, planning, and seeing things through.",
+    "aptitudes": {
+      "cognition": 15,
+      "intuition": 15,
+      "reflexes": 10,
+      "savvy": 20,
+      "somatics": 10,
+      "willpower": 20
     },
-    {
-        "name": "Factotum",
-        "description": "You’ve never quite stood out, but you exhibit broad competence.",
-        "aptitudes": {
-            "COG": 15,
-            "INT": 15,
-            "REF": 15,
-            "SAV": 15,
-            "SOM": 15,
-            "WIL": 15
-        }
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "99bf4e6c-0bcf-4ab5-95f7-ffeab940e1fe"
+  },
+  {
+    "name": "Factotum",
+    "description": "You’ve never quite stood out, but you exhibit broad competence.",
+    "aptitudes": {
+      "cognition": 15,
+      "intuition": 15,
+      "reflexes": 15,
+      "savvy": 15,
+      "somatics": 15,
+      "willpower": 15
     },
-    {
-        "name": "Inquirer",
-        "description": "Your creative mind is good at figuring things out.",
-        "aptitudes": {
-            "COG": 20,
-            "INT": 20,
-            "REF": 10,
-            "SAV": 15,
-            "SOM": 10,
-            "WIL": 15
-        }
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "236f0dfe-b4e4-430b-a27a-d2d7f59a2cf0"
+  },
+  {
+    "name": "Inquirer",
+    "description": "Your creative mind is good at figuring things out.",
+    "aptitudes": {
+      "cognition": 20,
+      "intuition": 20,
+      "reflexes": 10,
+      "savvy": 15,
+      "somatics": 10,
+      "willpower": 15
     },
-    {
-        "name": "Survivor",
-        "description": "You have the will and stamina to scrape by in tough situations.",
-        "aptitudes": {
-            "COG": 15,
-            "INT": 10,
-            "REF": 15,
-            "SAV": 10,
-            "SOM": 20,
-            "WIL": 20
-        }
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "386abd74-07a8-424b-b742-62ab25331a1f"
+  },
+  {
+    "name": "Survivor",
+    "description": "You have the will and stamina to scrape by in tough situations.",
+    "aptitudes": {
+      "cognition": 15,
+      "intuition": 10,
+      "reflexes": 15,
+      "savvy": 10,
+      "somatics": 20,
+      "willpower": 20
     },
-    {
-        "name": "Thrill Seeker",
-        "description": "You’ve never said no to a dare, but your fast reaction time and quick thinking compensate for your lack of foresight.",
-        "aptitudes": {
-            "COG": 20,
-            "INT": 10,
-            "REF": 20,
-            "SAV": 15,
-            "SOM": 15,
-            "WIL": 10
-        }
-    }
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "2e7f6b80-3084-46be-bf3d-0ab5b9637ad5"
+  },
+  {
+    "name": "Thrill Seeker",
+    "description": "You’ve never said no to a dare, but your fast reaction time and quick thinking compensate for your lack of foresight.",
+    "aptitudes": {
+      "cognition": 20,
+      "intuition": 10,
+      "reflexes": 20,
+      "savvy": 15,
+      "somatics": 15,
+      "willpower": 10
+    },
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "f8573954-783d-470f-92c3-4d11ff112996"
+  }
 ]
