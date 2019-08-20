@@ -203,21 +203,6 @@
 </body>
 
 <script>
-
-  var chargen_message = {
-    props: {
-      step: Object
-    },
-    template: `
-      <div class="ui message">
-        <template v-for="section in step.guidance">
-          <div class="header">{{section.heading}}</div>
-          <p v-for="para in section.text" v-html="para"></p>
-        </template>
-      </div>
-      `
-  }
-
   var vue_chargen = new Vue({
     el: '#chargen-grid',
     data: {
