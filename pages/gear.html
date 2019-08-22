@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+</head>
+
+<body>
+	<div id="geartesting"></div>
+</body>
+
+<script>
+	var vue_gear = new Vue({
+	  el: '#geartesting',
+	  data: {
+	    unsorted_gear: [],
+	    category_text: []
+	  },
+	  computed: {
+	  	categories: function() {
+	  		let new_cats = {};
+
+	  		//Iterate over what should be a rapidly shrinking list
+	  		this.unsorted_gear.forEach(function(item_object){
+	  			//What category is our contender?
+	  			let category = item_object.category;
+	  			
+	  			//We already have that one though
+	  			if(category in new_cats){return;}
+	  			
+	  			//Add it to our running object
+	  			let new_category = {"text":"","subcategories":{}};
+	  			
+	  			//Get all my items
+	  			let this_category = this.unsorted_gear.filter(function(maybe_mine,index){
+	  				if(maybe_mine.category == category){
+	  					this.unsorted_gear.splice(index,1); //It's sorted now, so go away
+	  					return true;
+	  				}
+	  			},this);
+
+	  			//I wish I had subcategories
+	  			this_category.forEach(function(my_item){
+	  				let subcategory = my_item.subcategory;
+	  				
+	  				//Oh you already know I exist okay then
+	  				if(subcategory in new_category.subcategories){
+	  					new_category['subcategories'][subcategory].items.push(my_item);
+	  					return; //Ok added bye
+	  				}
+	  				
+	  				//Oh a first timer
+	  				let new_subcategory = {"text":"","items":[]};
+	  				new_subcategory.items.push(my_item); //Hi I'm the first
+	  				new_category['subcategories'][subcategory] = new_subcategory;
+	  			},this);
+	  			new_cats[category] = new_category;
+	  		},this);
+	  		//Done!
+	  		return new_cats;
+	  	}
+	  },
+	  components: {
+	  	vcompSection: item_category
+	  }
+	});
+
+	var gear_jsons = [
+		"gear_bots.json",
+		"gear_comms.json",
+		"gear_creatures.json",
+		"gear_drugs.json",
+		"gear_items.json",
+		"gear_mission.json",
+		"gear_nano.json",
+		"gear_security.json",
+		"gear_software.json",
+		"gear_swarms.json",
+		"gear_vehicles.json",
+		"services.json"
+	];
+
+	gear_jsons.forEach(function(file){
+		$.getJSON('data/'+file).then( function(json){
+			vue_gear.unsorted_gear.push.apply(vue_gear.unsorted_gear,json);
+		});
+	});
+	
+</script>

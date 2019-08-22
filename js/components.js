@@ -13,6 +13,30 @@
       `
   }
 
+  var item_category = {
+    props: {
+      category: Object
+    },
+    components: {
+      vcompSubcategory: item_subcategory
+    },
+    template: `
+      <div class="ui tab segment inverted">
+        <template v-for="subcategory in category.subcategories">
+          <vcomp-subcategory :subcategory="subcategory"></vcomp-subcategory>
+        </template>
+      </div>
+      `
+  }
+
+  var item_subcategory = {
+    props: {
+      subcategory: Object
+    },
+    template: `
+      `
+  }
+
   var morphcard = {
     props: {
       morph: Object
