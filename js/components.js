@@ -1,3 +1,28 @@
+  Vue.component('movement-types', {
+    props: {
+      types: Array
+    },
+    template: `
+      <ul>
+        <li v-for="type in types">{{type.movement_type}} - {{type.base}}/{{type.full}}</li>
+      </ul>
+    `
+  });
+
+  Vue.component('info-modal', {
+    props: {
+      id: String,
+      title: String,
+      content: String
+    },
+    template: `
+      <div :id="id" class="ui inverted modal">
+        <div class="header">{{title}}</div>
+        <div class="scrolling content" v-html="content"></div>
+      </div>
+    `
+  });
+
   var chargen_message = {
     props: {
       step: Object
@@ -101,9 +126,7 @@
       <div class="extra content">
           <div class="header">Movement Types</div>
           <div class="description">
-            <ul>
-              <li v-for="mrate in morph.movement_rate">{{mrate.movement_type}} - {{mrate.base}} / {{mrate.full}}</li>
-            </ul>
+            <movement-types :types="morph.movement_rate"></movement-types>
           </div>
       </div>
           <template v-if="morph.ware.length">

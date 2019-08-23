@@ -30,6 +30,34 @@
 		.ui.message {
 			background-color: #BBBBBB;
 		}
+		/* Link underliney */
+		a {
+  			position: relative;
+  			color: #10A3A3 !important;
+  			text-decoration: none;
+		}
+		a:hover {
+  			color: #40D3D3 !important;
+		}
+		a:before {
+			content: "";
+			position: absolute;
+			width: 100%;
+			height: 1px;
+			bottom: 0;
+			left: 0;
+			background-color: #40D3D3;
+			visibility: hidden;
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+			-webkit-transition: all 0.3s ease-in-out 0s;
+			transition: all 0.3s ease-in-out 0s;
+		}
+		a:hover:before {
+			visibility: visible;
+			-webkit-transform: scaleX(1);
+			transform: scaleX(1);
+		}
 	</style>
 </head>
 <body>
@@ -39,16 +67,16 @@
 	    <a class="item" data-tab="chargen">Data - Chargen</a>
 	    <a class="item" data-tab="morphs">Data - Morphs</a>
 	    <a class="item" data-tab="gear">Data - Gear</a>
-	    <a class="item" data-tab="mods">Data - Mods</a>
-	    <a class="item" data-tab="services">Data - Services</a>
 	</div>
 	<div class="ui tab segment inverted active" id="quickrules" data-tab="quickrules">Failed to load this page?</div>
 	<div class="ui tab segment inverted" id="roller" data-tab="roller">Failed to load this page?</div>
 	<div class="ui tab segment inverted" id="chargen" data-tab="chargen">Failed to load this page?</div>
 	<div class="ui tab segment inverted" id="morphs" data-tab="morphs">Failed to load this page?</div>
 	<div class="ui tab segment inverted" id="gear" data-tab="gear">Failed to load this page?</div>
-	<div class="ui tab segment inverted" id="mods" data-tab="mods">Failed to load this page?</div>
-	<div class="ui tab segment inverted" id="services" data-tab="services">Failed to load this page?</div>
+	<div style="color:white;text-align:center;">
+		Data and text used on this website is from <a href="https://eclipsephase.com">Eclipse Phase books by Posthuman Studios</a>, licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+		The website itself is the same license where possible (libraries are under their own licenses).
+	</div>
 </body>
 
 <script>
@@ -57,8 +85,6 @@
 	$("#chargen").load("pages/chargen.html");
 	$("#morphs").load("pages/morphs.html");
 	$("#gear").load("pages/gear.html");
-	$("#mods").load("pages/mods.html");
-	$("#services").load("pages/services.html");
 
 	$.fn.timedDisable = function(time) {
 	    if (time == null) { time = 3000; }
