@@ -5,15 +5,28 @@
 </head>
 
 <body>
-	<div id="geartesting"></div>
+<div id="gear-grid" class="ui grid">
+  <div class="two wide column">
+    <div id="gear-tabs" class="ui vertical sticky fluid tabular menu inverted">
+    	<vcomp-gear-tab v-for="(useless,category) in categories" :categoryname="category" :key="category"></vcomp-gear-tab>
+    </div>
+  </div>
+  <div class="fourteen wide stretched column">
+  	<vcomp-gear-section v-for="(catobj,catname) in categories" :category="catobj" :categoryname="catname" :key="catname"></vcomp-gear-section>
+  </div>
+</div>
 </body>
-
 <script>
+	$('#gear-tabs').sticky({
+		context: '#gear-grid',
+		silent: true
+	});
+
 	var vue_gear = new Vue({
-	  el: '#geartesting',
+	  el: '#gear-grid',
 	  data: {
 	    unsorted_gear: [],
-	    category_text: []
+	    gear_types: {}
 	  },
 	  computed: {
 	  	categories: function() {
@@ -27,15 +40,22 @@
 	  			//We already have that one though
 	  			if(category in new_cats){return;}
 	  			
-	  			//Add it to our running object
-	  			let new_category = {"text":"","subcategories":{}};
+	  			//Make our new object
+	  			let new_category = {
+	  				"text":"",
+	  				"subcategories":{}
+	  			};
+
+	  			//Grab the text if it exists
+	  			if(category in this.gear_types){
+	  				if('text' in this.gear_types[category]){
+	  					new_category.text = this.gear_types[category]['text'];
+	  				}
+	  			}
 	  			
 	  			//Get all my items
 	  			let this_category = this.unsorted_gear.filter(function(maybe_mine,index){
-	  				if(maybe_mine.category == category){
-	  					this.unsorted_gear.splice(index,1); //It's sorted now, so go away
-	  					return true;
-	  				}
+	  					return maybe_mine.category == category;
 	  			},this);
 
 	  			//I wish I had subcategories
@@ -49,8 +69,31 @@
 	  				}
 	  				
 	  				//Oh a first timer
-	  				let new_subcategory = {"text":"","items":[]};
+	  				let new_subcategory = {
+	  					"text":"",
+	  					"items":[],
+	  					"columns":["name"]
+	  				};
 	  				new_subcategory.items.push(my_item); //Hi I'm the first
+	  				
+	  				//Grab the text if it exists
+	  				if(category in this.gear_types){
+	  					if(subcategory in this.gear_types[category]['subcategories']){
+	  						if('text' in this.gear_types[category]['subcategories'][subcategory]){
+		  						new_subcategory.text = this.gear_types[category]['subcategories'][subcategory]['text'];
+	  						}
+	  					}
+	  				}
+
+	  				//Surely there's a better way...
+	  				if(category in this.gear_types){
+	  					if(subcategory in this.gear_types[category]['subcategories']){
+	  						if('columns' in this.gear_types[category]['subcategories'][subcategory]){
+		  						new_subcategory.columns = this.gear_types[category]['subcategories'][subcategory]['columns'];
+	  						}
+	  					}
+	  				}
+
 	  				new_category['subcategories'][subcategory] = new_subcategory;
 	  			},this);
 	  			new_cats[category] = new_category;
@@ -60,7 +103,8 @@
 	  	}
 	  },
 	  components: {
-	  	vcompSection: item_category
+	  	vcompGearSection: gear_category_body,
+	  	vcompGearTab: gear_category_tab
 	  }
 	});
 
@@ -76,6 +120,7 @@
 		"gear_software.json",
 		"gear_swarms.json",
 		"gear_vehicles.json",
+		"gear_ware.json",
 		"services.json"
 	];
 
@@ -84,5 +129,16 @@
 			vue_gear.unsorted_gear.push.apply(vue_gear.unsorted_gear,json);
 		});
 	});
-	
+
+	$.getJSON('data/gear_text.json').then(function(json){vue_gear.gear_types = json;});
+
+	function quickhelp(){
+		for (const [key, value] of Object.entries(vue_gear.categories)) {
+			console.log(key);
+			let subcats = Object.keys(value.subcategories);
+			console.log(subcats.join(", "));
+		}
+	}
 </script>
+
+</html>

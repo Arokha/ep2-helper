@@ -13,27 +13,51 @@
       `
   }
 
-  var item_category = {
+  var gear_category_tab = {
     props: {
-      category: Object
+      categoryname: String
     },
-    components: {
-      vcompSubcategory: item_subcategory
+    template: `<a class="item" :data-tab="'geartab-'+categoryname">{{categoryname}}</a>`
+  }  
+
+  var gear_subcategory = {
+    props: {
+      subcategory: Object,
+      categoryname: String,
+      subcategoryname: String
+    },
+    computed: {
+      mytemplate: function() {
+        if(gear_templates[this.categoryname] && gear_templates[this.categoryname][this.subcategoryname]){
+          return gear_templates[this.categoryname][this.subcategoryname];
+        } else {
+          return gear_fallback;
+        }
+      }
     },
     template: `
-      <div class="ui tab segment inverted">
-        <template v-for="subcategory in category.subcategories">
-          <vcomp-subcategory :subcategory="subcategory"></vcomp-subcategory>
-        </template>
-      </div>
-      `
+      <div :is="mytemplate" :subcategory="subcategory" :categoryname="categoryname" :subcategoryname="subcategoryname"></div>
+    `
   }
 
-  var item_subcategory = {
+  var gear_category_body = {
     props: {
-      subcategory: Object
+      category: Object,
+      categoryname: String
+    },
+    components: {
+      vcompSubcategory: gear_subcategory
+    },
+    mounted: function () {
+      let my_connector = this.$el.getAttribute('data-tab');
+      let looking_for = ".item[data-tab='"+my_connector+"']";
+      $(looking_for).tab();
     },
     template: `
+      <div class="ui tab segment inverted" :data-tab="'geartab-'+categoryname">
+        <div v-html="category.text"></div>
+        <vcomp-subcategory v-for="(subobj, subname) in category.subcategories" :subcategory="subobj" :categoryname="categoryname" :subcategoryname="subname" :key="subname"></vcomp-subcategory>
+      </div>
       `
   }
 
