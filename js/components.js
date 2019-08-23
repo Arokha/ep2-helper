@@ -81,6 +81,7 @@
     template: `
       <div class="ui tab segment inverted" :data-tab="'geartab-'+categoryname">
         <div v-html="category.text"></div>
+        <br><p><b>[Click any item's name for a full description.]</b></p>
         <vcomp-subcategory v-for="(subobj, subname) in category.subcategories" :subcategory="subobj" :categoryname="categoryname" :subcategoryname="subname" :key="subname"></vcomp-subcategory>
       </div>
       `
