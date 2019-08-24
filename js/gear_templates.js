@@ -8,6 +8,15 @@ var gear_fallback = { props: { subcategory: Object, categoryname: String, subcat
   `}
 
 var gear_generic = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+  computed: {
+    notesnotsummary: function() {
+      //Just peek at the first one
+      let firstitem = this.subcategory.items[0];
+      if(firstitem && firstitem.notes){
+        return true;
+      }
+    }
+  },
   methods: {
     modal_show: function(item) {
       $("#"+item.id).modal('show');
@@ -21,13 +30,17 @@ var gear_generic = { props: { subcategory: Object, categoryname: String, subcate
       <table class="ui celled table inverted">
         <thead>
           <tr>
-            <th>Name</th><th>Cmp/GP</th><th>Summary</th>
+            <th>Name</th>
+            <th>Cmp/GP</th>
+            <th v-if="notesnotsummary">Notes</th><th v-else>Summary</th>
           </tr>
         </thead>
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td><td>{{item['complexity/gp']}}</td><td>{{item.summary}}</td>
+              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td>{{item['complexity/gp']}}</td>
+              <td v-if="notesnotsummary">{{item.notes}}</td><td v-else>{{item.summary}}</td>
             </tr>
             <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
           </template>
@@ -308,6 +321,237 @@ var gear_creatures = { props: { subcategory: Object, categoryname: String, subca
     </div>
 `}
 
+var gear_melee = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+  computed: {
+    warecategory: function (){
+      //Just peek at the first one
+      let firstitem = this.subcategory.items[0];
+      if(firstitem && firstitem.waretype){
+        return true;
+      }
+    }
+  },
+  methods: {
+    modal_show: function(item) {
+      $("#"+item.id).modal('show');
+    }
+  },
+  template: `
+    <div>
+      <div class="ui divider"></div>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <span v-html="subcategory.text"></span>
+      <table class="ui celled table inverted">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th v-if="warecategory">Ware Type</th>
+            <th>Damage [Avg]</th>
+            <th>Cmp/GP</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="item in subcategory.items">
+            <tr>
+              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td v-if="warecategory">{{item.waretype}}</td>
+              <td>{{item.damage}} [{{item.damage_avg}}]</td>
+              <td>{{item['complexity/gp']}}</td>
+              <td>{{item.notes}}</td>
+            </tr>
+            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+          </template>
+        </tbody>
+      </table>
+    </div>
+`}
+
+var gear_armor = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+  computed: {
+    warecategory: function (){
+      //Just peek at the first one
+      let firstitem = this.subcategory.items[0];
+      if(firstitem && firstitem.waretype){
+        return true;
+      }
+    }
+  },
+  methods: {
+    modal_show: function(item) {
+      $("#"+item.id).modal('show');
+    }
+  },
+  template: `
+    <div>
+      <div class="ui divider"></div>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <span v-html="subcategory.text"></span>
+      <table class="ui celled table inverted">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th v-if="warecategory">Ware Type</th>
+            <th>E/K Armor</th>
+            <th>Stackable</th>
+            <th>Cmp/GP</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="item in subcategory.items">
+            <tr>
+              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td v-if="warecategory">{{item.waretype}}</td>
+              <td>{{item.energy}} / {{item.kinetic}}</td>
+              <td><i v-if="item.stackable" class="large green checkmark icon"></i></td>
+              <td>{{item['complexity/gp']}}</td>
+              <td>{{item.notes}}</td>
+            </tr>
+            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+          </template>
+        </tbody>
+      </table>
+    </div>
+`}
+
+var gear_ranged = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+  computed: {
+    warecategory: function (){
+      //Just peek at the first one
+      let firstitem = this.subcategory.items[0];
+      if(firstitem && firstitem.waretype){
+        return true;
+      }
+    },
+    aoecategory: function (){
+      //Just peek at the first one
+      let firstitem = this.subcategory.items[0];
+      if(firstitem && firstitem.area){
+        return true;
+      }
+    }
+  },
+  methods: {
+    modal_show: function(item) {
+      $("#"+item.id).modal('show');
+    }
+  },
+  template: `
+    <div>
+      <div class="ui divider"></div>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <span v-html="subcategory.text"></span>
+      <table class="ui celled table inverted">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th v-if="warecategory">Ware Type</th>
+            <th v-if="aoecategory">AoE</th>
+            <th>Damage [Avg]</th>
+            <th>Firemodes</th>
+            <th>Ammo</th>
+            <th>Range</th>
+            <th v-if="aoecategory">Armor</th>
+            <th>Cmp/GP</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="item in subcategory.items">
+            <tr>
+              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td v-if="warecategory">{{item.waretype}}</td>
+              <td v-if="aoecategory">{{item.area}}</td>
+              <td v-if="item.damage">{{item.damage}} [{{item.damage_avg}}]</td><td v-else>See Ammo</td>
+              <td>{{item.firemodes}}</td>
+              <td>{{item.ammo}}</td>
+              <td>{{item.range}}</td>
+              <td v-if="aoecategory">{{item.armor}}</td>
+              <td>{{item['complexity/gp']}}</td>
+              <td>{{item.notes}}</td>
+            </tr>
+            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+          </template>
+        </tbody>
+      </table>
+    </div>
+`}
+
+var gear_ammo_kinetic = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+  methods: {
+    modal_show: function(item) {
+      $("#"+item.id).modal('show');
+    }
+  },
+  template: `
+    <div>
+      <div class="ui divider"></div>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <span v-html="subcategory.text"></span>
+      <table class="ui celled table inverted">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Damage</th>
+            <th>Cmp/GP<br>(per 100)</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="item in subcategory.items">
+            <tr>
+              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td>{{item.damage}}</td>
+              <td>{{item['complexity/gp']}}</td>
+              <td>{{item.notes}}</td>
+            </tr>
+            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+          </template>
+        </tbody>
+      </table>
+    </div>
+`}
+
+var gear_ammo_seeker = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+  methods: {
+    modal_show: function(item) {
+      $("#"+item.id).modal('show');
+    }
+  },
+  template: `
+    <div>
+      <div class="ui divider"></div>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <span v-html="subcategory.text"></span>
+      <table class="ui celled table inverted">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>AoE</th>
+            <th>Damage [Avg]</th>
+            <th>Armor</th>
+            <th>Cmp/GP<br>(per 5)</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="item in subcategory.items">
+            <tr>
+              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td>{{item.areaeffect}}
+              <td>{{item.damage}} [{{item.damage_avg}}]</td>
+              <td>{{item.armor}}</td>
+              <td>{{item['complexity/gp']}}</td>
+              <td>{{item.notes}}</td>
+            </tr>
+            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+          </template>
+        </tbody>
+      </table>
+    </div>
+`}
+
 //Map subcategories to templates to use
 var gear_templates = {
   "Comms":{
@@ -380,5 +624,25 @@ var gear_templates = {
       "Social":gear_ware,
       "Standard":gear_ware,
       "Meshware":gear_ware
+  },
+  "Melee Weapons":{
+      "Melee Ware":gear_melee,
+      "Melee Weapons":gear_melee,
+      "Improvised Melee":gear_melee
+  },
+  "Ranged Weapons":{
+      "Ranged Ware":gear_ranged,
+      "Beam Weapons":gear_ranged,
+      "Spray Weapons":gear_ranged,
+      "Kinetic Weapons":gear_ranged,
+      "Seeker Weapons":gear_ranged,
+      "Weapon Mods":gear_generic,
+      "Kinetic Ammo":gear_ammo_kinetic,
+      "Seeker/Grenade Ammo":gear_ammo_seeker
+  },
+  "Armor":{
+    "Armor Ware":gear_armor,
+    "Armor Gear":gear_armor,
+    "Armor Mods":gear_generic
   }
 }
