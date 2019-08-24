@@ -29,7 +29,11 @@
 	    traits: []
 	  },
 	  mounted: function() {
-		$('#traits-tabs .item').tab();
+		$('#traits-tabs .item').tab({
+	      onVisible: function(){
+	        $("#traits-tabs").sticky('refresh');
+	      }
+	    });
 	  },
 	  computed: {
 		traits_positive: function () {

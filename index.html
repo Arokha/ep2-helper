@@ -104,10 +104,10 @@
 	$(function () {
 	    //Tabs
 	    $('.menu .item').tab({
-	    	onVisible: function(){
-	    		//Sticky elements need to find where they are now
-	    		$('.ui.sticky').sticky('refresh');
-	    	}
+	        onVisible: function(tabPath){
+	            //Sticky elements need to find where they are now
+	            $('.ui.sticky', this).sticky('refresh');
+	        }
 	    });
 	});
 

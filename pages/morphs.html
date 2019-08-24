@@ -46,11 +46,11 @@
 	    morph_types: []
 	  },
 	  updated: function() {
-	  	$('#morph-tabs .item').tab();
-		$('#morph-tabs').sticky({
-			context: '#morph-grid',
-			silent: true
-		});
+	    $('#morph-tabs .item').tab({
+	      onVisible: function(){
+	        $("#morph-tabs").sticky('refresh');
+	      }
+	    });
 	  },
 	  components: {
 	  	vcompTypecard: morphtype

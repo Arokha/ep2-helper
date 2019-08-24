@@ -226,11 +226,11 @@
   })
 
   $(function() {
-    $('#chargen-tabs .item').tab();
-    $('#chargen-tabs').sticky({
-      context: '#chargen-grid',
-      silent: true
-    })
+    $('#chargen-tabs .item').tab({
+      onVisible: function(){
+        $("#chargen-tabs").sticky('refresh');
+      }
+    });
   });
 
   $.getJSON('data/chargen.json').then(function(json){vue_chargen.chargen = json;});

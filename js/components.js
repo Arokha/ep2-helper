@@ -76,7 +76,11 @@ var gear_category_body = {
   mounted: function () {
     let my_connector = this.$el.getAttribute('data-tab');
     let looking_for = ".item[data-tab='"+my_connector+"']";
-    $(looking_for).tab();
+    $(looking_for).tab({
+      onVisible: function(){
+        $("#gear-tabs").sticky('refresh');
+      }
+    });
   },
   template: `
     <div class="ui tab segment inverted" :data-tab="'geartab-'+categoryname">
