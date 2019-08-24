@@ -204,3 +204,41 @@
       vcompMorphcard: morphcard
     }
   }
+
+var trait_table = { props: { traits: Array },
+  methods: {
+    modal_show: function(item) {
+      $("#"+item.id).modal('show');
+    }
+  },
+  template: `
+    <div>
+      <table class="ui celled table inverted">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Cost</th>
+            <th>Ego</th>
+            <th>Morph</th>
+            <th>Auto</th>
+            <th>Noted</th>
+            <th>Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="item in traits">
+            <tr>
+              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.trait}}</a></td>
+              <td>{{item['cost']}}</td>
+              <td><i v-if="item.ego" class="large green checkmark icon"></i></td>
+              <td><i v-if="item.morph" class="large green checkmark icon"></i></td>
+              <td><i v-if="item.auto" class="large green checkmark icon"></i></td>
+              <td><i v-if="item.noted" class="large green checkmark icon"></i></td>
+              <td>{{item.summary}}</td>
+            </tr>
+            <info-modal :id="item.id" :title="item.trait" :content="item.description"></info-modal>
+          </template>
+        </tbody>
+      </table>
+    </div>
+`}

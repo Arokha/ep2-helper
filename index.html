@@ -68,12 +68,14 @@
 	    <a class="item" data-tab="chargen">Data - Chargen</a>
 	    <a class="item" data-tab="morphs">Data - Morphs</a>
 	    <a class="item" data-tab="gear">Data - Gear</a>
+	    <a class="item" data-tab="traits">Data - Traits</a>
 	</div>
 	<div class="ui tab segment inverted active" id="quickrules" data-tab="quickrules">Failed to load this page?</div>
 	<div class="ui tab segment inverted" id="roller" data-tab="roller">Failed to load this page?</div>
 	<div class="ui tab segment inverted" id="chargen" data-tab="chargen">Failed to load this page?</div>
 	<div class="ui tab segment inverted" id="morphs" data-tab="morphs">Failed to load this page?</div>
 	<div class="ui tab segment inverted" id="gear" data-tab="gear">Failed to load this page?</div>
+	<div class="ui tab segment inverted" id="traits" data-tab="traits">Failed to load this page?</div>
 	<div style="color:white;text-align:center;">
 		Data and text used on this website is from <a href="https://eclipsephase.com">Eclipse Phase books by Posthuman Studios</a>, licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
 		The website itself is the same license where possible (libraries are under their own licenses).
@@ -86,6 +88,7 @@
 	$("#chargen").load("pages/chargen.html");
 	$("#morphs").load("pages/morphs.html");
 	$("#gear").load("pages/gear.html");
+	$("#traits").load("pages/traits.html");
 
 	$.fn.timedDisable = function(time) {
 	    if (time == null) { time = 3000; }
