@@ -59,6 +59,13 @@
 			-webkit-transform: scaleX(1);
 			transform: scaleX(1);
 		}
+		/* Hide sub-menus until parent menu item is active. */
+		.item .menu {
+			display: none;
+		}
+		.item.active .menu {
+			display: inherit;
+		}
 	</style>
 </head>
 <body>

@@ -40,9 +40,22 @@ var chargen_message = {
 
 var gear_category_tab = {
   props: {
+    category: Object,
     categoryname: String
   },
-  template: `<a class="item" :data-tab="'geartab-'+categoryname">{{categoryname}}</a>`
+  methods: {
+	  scrollToTop: function() {
+		  window.scrollTo({top:0});
+	  }
+  },
+  template: `
+	<a class="item" :data-tab="'geartab-'+categoryname" v-on:click="scrollToTop">
+		{{categoryname}}
+		<div class="menu">
+			<div class="ui divider"></div>
+			<a v-for="(thekey,subcatname) in category.subcategories" class="item" :href="'#'+subcatname | despace" v-on:click.stop style="text-align: right;">{{subcatname}}</a>
+		</div>
+	</a>`
 }  
 
 var gear_subcategory = {
@@ -83,7 +96,7 @@ var gear_category_body = {
     });
   },
   template: `
-    <div class="ui tab segment inverted" :data-tab="'geartab-'+categoryname">
+    <div class="ui tab segment inverted" :data-tab="'geartab-'+categoryname" :id="'geartab-'+categoryname | despace">
       <div v-html="category.text"></div>
       <br><p><b>[Click any item's name for a full description.]</b></p>
       <vcomp-subcategory v-for="(subobj, subname) in category.subcategories" :subcategory="subobj" :categoryname="categoryname" :subcategoryname="subname" :key="subname"></vcomp-subcategory>
@@ -242,3 +255,10 @@ var trait_table = { props: { traits: Array },
       </table>
     </div>
 `}
+
+/** Filter to replace spaces and other strange characters with underscores. */
+Vue.filter('despace', function (value) {
+  if (!value) return '';
+  value = value.toString();
+  return value.replace(/[^#A-Za-z0-9]/, "_");;
+});

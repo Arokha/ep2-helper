@@ -1,7 +1,7 @@
 var gear_fallback = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       [No gear template for this subcategory!]
     </div>
@@ -24,7 +24,7 @@ var gear_generic = { props: { subcategory: Object, categoryname: String, subcate
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -57,7 +57,7 @@ var gear_drugs = { props: { subcategory: Object, categoryname: String, subcatego
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -98,7 +98,7 @@ var gear_ware = { props: { subcategory: Object, categoryname: String, subcategor
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -144,7 +144,7 @@ var gear_vehicles = { props: { subcategory: Object, categoryname: String, subcat
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -200,7 +200,7 @@ var gear_bots = { props: { subcategory: Object, categoryname: String, subcategor
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -261,7 +261,7 @@ var gear_creatures = { props: { subcategory: Object, categoryname: String, subca
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -338,7 +338,7 @@ var gear_melee = { props: { subcategory: Object, categoryname: String, subcatego
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -384,7 +384,7 @@ var gear_armor = { props: { subcategory: Object, categoryname: String, subcatego
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -439,7 +439,7 @@ var gear_ranged = { props: { subcategory: Object, categoryname: String, subcateg
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -486,7 +486,7 @@ var gear_ammo_kinetic = { props: { subcategory: Object, categoryname: String, su
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
@@ -521,7 +521,7 @@ var gear_ammo_seeker = { props: { subcategory: Object, categoryname: String, sub
   },
   template: `
     <div>
-      <div class="ui divider"></div>
+      <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">

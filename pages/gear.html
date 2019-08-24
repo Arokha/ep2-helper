@@ -8,7 +8,7 @@
 <div id="gear-grid" class="ui grid">
   <div class="two wide column">
     <div id="gear-tabs" class="ui vertical sticky fluid tabular menu inverted">
-    	<vcomp-gear-tab v-for="(useless,category) in categories" :categoryname="category" :key="category"></vcomp-gear-tab>
+       <vcomp-gear-tab v-for="(catobj,catname) in categories" :category="catobj" :categoryname="catname" :key="catname"></vcomp-gear-tab>
     </div>
   </div>
   <div class="fourteen wide stretched column">
