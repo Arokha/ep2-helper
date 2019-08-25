@@ -91,7 +91,9 @@ var gear_category_body = {
     let looking_for = ".item[data-tab='"+my_connector+"']";
     $(looking_for).tab({
       onVisible: function(){
-        $("#gear-tabs").sticky('refresh');
+        Vue.nextTick(function() {
+          $("#gear-tabs").sticky('refresh'); // Defer to next tick to give time for height to adjust (I guess)
+        });
       }
     });
   },
