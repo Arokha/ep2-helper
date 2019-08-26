@@ -78,40 +78,60 @@ const vr_roller = {
 	}
 }
 
-const vr_chargen = { 
-	template: '<ajax-tab v-on:ajaxupdated="innerupdate()" path="static/chargen.html"></ajax-tab>',
-	methods: {
-		innerupdate: function(){
-			var vue_chargen = new Vue({
-		    el: '#chargen-grid',
-		    data: {
-		      chargen: [],
-		      backgrounds: [],
-		      careers: [],
-		      interests: [],
-		      factions: [],
-		      aptemps: [],
-		      reputations: [],
-		      gearpacks: []
-		    },
-		    methods: {
-		      or_list: function (arr) {
-		        return arr.join(", ").replace(/, ((?:.(?!, ))+)$/, ', or $1');
-		      }
-		    }
-		  });
 
-		  $.getJSON('data/chargen.json').then(function(json){vue_chargen.chargen = json;});
-		  $.getJSON('data/backgrounds.json').then(function(json){vue_chargen.backgrounds = json;});
-		  $.getJSON('data/careers.json').then(function(json){vue_chargen.careers = json;});
-		  $.getJSON('data/interests.json').then(function(json){vue_chargen.interests = json;});
-		  $.getJSON('data/factions.json').then(function(json){vue_chargen.factions = json;});
-		  $.getJSON('data/aptitude_templates.json').then(function(json){vue_chargen.aptemps = json;});
-		  $.getJSON('data/reputations.json').then(function(json){vue_chargen.reputations = json;});
-		  $.getJSON('data/gear_packs.json').then(function(json){vue_chargen.gearpacks = json;});
-		}
-	}
+const vr_chargen = function() {
+	return $.ajax("static/chargen.html").then(function(templateHtml) {
+		return {
+			template: templateHtml,
+			data: function() {
+				return {
+				  chargen: [],
+				  backgrounds: [],
+				  careers: [],
+				  interests: [],
+				  factions: [],
+				  aptemps: [],
+				  reputations: [],
+				  gearpacks: []
+				};
+			},
+			methods: {
+			  or_list: function (arr) {
+				return arr.join(", ").replace(/, ((?:.(?!, ))+)$/, ', or $1');
+			  }
+			},
+			watch: {
+				'$route' (to, from) {
+					// Handle the showing & hiding of the target segment!
+					$(this.$el).find("#chargen-" + from.params.step).removeClass("active");
+					$(this.$el).find("#chargen-" + to.params.step).addClass("active");
+					$(".sticky", this.$el).sticky('refresh');
+				}
+			},
+			mounted: function(){
+			  // Tabs are already hard coded in the template, we'e good to initialize tabs
+			  $(this.$el).find("#chargen-" + this.$route.params.step).addClass("active");
+			  
+			  // When all data is loaded, the active tab will be at proper height and we can refresh sticky.
+			  Promise.all([
+				  $.getJSON('data/chargen.json').then((json) => {this.chargen = json;}),
+				  $.getJSON('data/backgrounds.json').then((json) => {this.backgrounds = json;}),
+				  $.getJSON('data/careers.json').then((json) => {this.careers = json;}),
+				  $.getJSON('data/interests.json').then((json) => {this.interests = json;}),
+				  $.getJSON('data/factions.json').then((json) => {this.factions = json;}),
+				  $.getJSON('data/aptitude_templates.json').then((json) => {this.aptemps = json;}),
+				  $.getJSON('data/reputations.json').then((json) => {this.reputations = json;}),
+				  $.getJSON('data/gear_packs.json').then((json) => {this.gearpacks = json;})
+			  ]).then(() => {
+				  Vue.nextTick(() => {
+					  $(".sticky", this.$el).sticky();
+				  });
+			  });
+			}
+		};
+	});
 }
+
 
 const vr_morphs = {
 	data: function () {
@@ -381,7 +401,8 @@ const vr_routes = [
   { path: '*', redirect: '/quickrules' },
   { path: '/quickrules', component: vr_quickrules },
   { path: '/roller', component: vr_roller },
-  { path: '/chargen', component: vr_chargen },
+  { path: '/chargen', redirect: '/chargen/1' },
+  { path: '/chargen/:step', component: vr_chargen },
   { path: '/morphs', component: vr_morphs },
   { path: '/gear', component: vr_gear },
   { path: '/traits', component: vr_traits }

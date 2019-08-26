@@ -1,26 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<body>
+<div class="ui tab segment active inverted">
 <div id="chargen-grid" class="ui grid">
   <div class="three wide column">
     <div id="chargen-tabs" class="ui vertical sticky fluid tabular menu inverted">
-      <a class="item active" data-tab="chargen-1">1: Background</a>
-      <a class="item" data-tab="chargen-2">2: Career</a>
-      <a class="item" data-tab="chargen-3">3: Interests</a>
-      <a class="item" data-tab="chargen-4">4: Faction</a>
-      <a class="item" data-tab="chargen-5">5: Aptitudes</a>
-      <a class="item" data-tab="chargen-6">6: Total Skills</a>
-      <a class="item" data-tab="chargen-7">7: Languages</a>
-      <a class="item" data-tab="chargen-8">8: Flex</a>
-      <a class="item" data-tab="chargen-9">9: Reputation</a>
-      <a class="item" data-tab="chargen-10">10: Customization</a>
-      <a class="item" data-tab="chargen-11">11: Derived Stats</a>
-      <a class="item" data-tab="chargen-12">12: Morph & Gear</a>
-      <a class="item" data-tab="chargen-13">13: Motivation</a>
+      <router-link class="item" to="1">1: Background</router-link>
+      <router-link class="item" to="2">2: Career</router-link>
+      <router-link class="item" to="3">3: Interests</router-link>
+      <router-link class="item" to="4">4: Faction</router-link>
+      <router-link class="item" to="5">5: Aptitudes</router-link>
+      <router-link class="item" to="6">6: Total Skills</router-link>
+      <router-link class="item" to="7">7: Languages</router-link>
+      <router-link class="item" to="8">8: Flex</router-link>
+      <router-link class="item" to="9">9: Reputation</router-link>
+      <router-link class="item" to="10">10: Customization</router-link>
+      <router-link class="item" to="11">11: Derived Stats</router-link>
+      <router-link class="item" to="12">12: Morph & Gear</router-link>
+      <router-link class="item" to="13">13: Motivation</router-link>
     </div>
   </div>
   <div class="thirteen wide stretched column">
-    <div class="ui tab segment inverted active" id="chargen-1" data-tab="chargen-1">
+    <div class="ui tab segment inverted" id="chargen-1" data-tab="chargen-1">
       <vcomp-stepdesc v-if="chargen.length" :step="chargen[0]"></vcomp-stepdesc>
       
       <div class="ui three doubling cards inverted">
@@ -192,5 +190,4 @@
     
   </div> <!-- Col2 end -->
 </div> <!-- Grid end -->
-</body>
-</html>
+</div>
