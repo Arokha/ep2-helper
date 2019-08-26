@@ -1,6 +1,10 @@
 Vue.use(VueRouter);
 
-const vr_quickrules = { template: '<ajax-tab path="static/quickrules.html"></ajax-tab>' }
+const vr_quickrules = function() {
+	return $.ajax("static/quickrules.html").then(function(templateHtml) {
+		return {template: templateHtml};
+	});
+};
 
 const vr_roller = {
 	template: `
