@@ -37,15 +37,10 @@ Vue.component('ajax-tab', {
     active: {
       type: Boolean,
       default: false
-    }
-  },
-  computed: {
-    classes: function () {
-      let most = "ui tab segment active inverted";
-      if(this.active){
-        most += " active";
-      }
-      return most;
+    },
+    classes: {
+      type: String,
+      default: "ui tab segment active inverted"
     }
   },
   methods: {
