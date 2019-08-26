@@ -97,6 +97,9 @@ var gear_category_body = {
       }
     });
   },
+  updated: function () {
+    $(this.$el).find('table').tablesort();
+  },
   template: `
     <div class="ui tab segment inverted" :data-tab="'geartab-'+categoryname" :id="'geartab-'+categoryname | despace">
       <div v-html="category.text"></div>

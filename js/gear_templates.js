@@ -27,7 +27,7 @@ var gear_generic = { props: { subcategory: Object, categoryname: String, subcate
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -38,7 +38,7 @@ var gear_generic = { props: { subcategory: Object, categoryname: String, subcate
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td v-if="notesnotsummary">{{item.notes}}</td><td v-else>{{item.summary}}</td>
             </tr>
@@ -60,7 +60,7 @@ var gear_drugs = { props: { subcategory: Object, categoryname: String, subcatego
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -75,7 +75,7 @@ var gear_drugs = { props: { subcategory: Object, categoryname: String, subcatego
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.type}}</td>
               <td>{{item.application}}</td>
@@ -101,7 +101,7 @@ var gear_ware = { props: { subcategory: Object, categoryname: String, subcategor
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -117,7 +117,7 @@ var gear_ware = { props: { subcategory: Object, categoryname: String, subcategor
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td><i v-if="item.bioware" class="large green checkmark icon"></i></td>
               <td><i v-if="item.cyberware" class="large green checkmark icon"></i></td>
@@ -147,7 +147,7 @@ var gear_vehicles = { props: { subcategory: Object, categoryname: String, subcat
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -168,7 +168,7 @@ var gear_vehicles = { props: { subcategory: Object, categoryname: String, subcat
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.passengers}}</td>
               <td>{{item.vigor}}</td>
@@ -203,7 +203,7 @@ var gear_bots = { props: { subcategory: Object, categoryname: String, subcategor
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -221,7 +221,7 @@ var gear_bots = { props: { subcategory: Object, categoryname: String, subcategor
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)" rowspan="2"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)" rowspan="2"><a>{{item.name}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.vigor}}<span v-if="item.vigor2">&nbsp;({{item.vigor2}})</span></td>
               <td>{{item.flex}}</td>
@@ -264,7 +264,7 @@ var gear_creatures = { props: { subcategory: Object, categoryname: String, subca
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -285,7 +285,7 @@ var gear_creatures = { props: { subcategory: Object, categoryname: String, subca
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)" :rowspan="namerowspan(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)" :rowspan="namerowspan(item)"><a>{{item.name}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.attributes.cognition}}<sup>{{item.attributes.cognition_check}}</sup></td>
               <td>{{item.attributes.intuition}}<sup>{{item.attributes.intuition_check}}</sup></td>
@@ -341,7 +341,7 @@ var gear_melee = { props: { subcategory: Object, categoryname: String, subcatego
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -354,7 +354,7 @@ var gear_melee = { props: { subcategory: Object, categoryname: String, subcatego
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td v-if="warecategory">{{item.waretype}}</td>
               <td>{{item.damage}} [{{item.damage_avg}}]</td>
               <td>{{item['complexity/gp']}}</td>
@@ -387,7 +387,7 @@ var gear_armor = { props: { subcategory: Object, categoryname: String, subcatego
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -401,7 +401,7 @@ var gear_armor = { props: { subcategory: Object, categoryname: String, subcatego
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td v-if="warecategory">{{item.waretype}}</td>
               <td>{{item.energy}} / {{item.kinetic}}</td>
               <td><i v-if="item.stackable" class="large green checkmark icon"></i></td>
@@ -442,7 +442,7 @@ var gear_ranged = { props: { subcategory: Object, categoryname: String, subcateg
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -460,7 +460,7 @@ var gear_ranged = { props: { subcategory: Object, categoryname: String, subcateg
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td v-if="warecategory">{{item.waretype}}</td>
               <td v-if="aoecategory">{{item.area}}</td>
               <td v-if="item.damage">{{item.damage}} [{{item.damage_avg}}]</td><td v-else>See Ammo</td>
@@ -489,7 +489,7 @@ var gear_ammo_kinetic = { props: { subcategory: Object, categoryname: String, su
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -501,7 +501,7 @@ var gear_ammo_kinetic = { props: { subcategory: Object, categoryname: String, su
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td>{{item.damage}}</td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.notes}}</td>
@@ -524,7 +524,7 @@ var gear_ammo_seeker = { props: { subcategory: Object, categoryname: String, sub
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui celled table inverted">
+      <table class="ui sortable celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -538,7 +538,7 @@ var gear_ammo_seeker = { props: { subcategory: Object, categoryname: String, sub
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
               <td>{{item.areaeffect}}
               <td>{{item.damage}} [{{item.damage_avg}}]</td>
               <td>{{item.armor}}</td>
