@@ -294,6 +294,7 @@ Vue.component('vcomp-trait-table', {
   },
   template: `
     <div>
+      <b>[Click the trait name for a full description.]</b>
       <table class="ui celled table inverted">
         <thead>
           <tr>
