@@ -9,10 +9,13 @@
     <!-- Libs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js" integrity="sha256-ufGElb3TnOtzl5E4c/qQnZFGP+FYEZj5kbSEdJNrw0A=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.1.2/vue-router.js" integrity="sha256-J8FoD0Yt1A0YS9yENPIEWQBbjAi+w9eE2wH/KqGTb2g=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.css" integrity="sha256-R0iK59NZuc4WqlwHXje+t3E1xLMgNGg/yEorSnXUnQM=" crossorigin="anonymous" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.min.css" integrity="sha256-R5nBNKPoJrsn3nPBR6SnXHR0612Bd8Siru2igAua8JU=" crossorigin="anonymous" />
 	<script src="js/gear_templates.js"></script>
 	<script src="js/components.js"></script>
+	<script src="js/tablesort.js"></script>
+	<script src="js/routing.js"></script>
 
 	<style>
 		body {
@@ -31,6 +34,9 @@
 		.ui.message {
 			background-color: #BBBBBB;
 		}
+	    .ui.vertical.tabular.menu .active.item {
+      		background-color: #3D3E3F;
+    	}
 		/* Link underliney */
 		a {
   			position: relative;
@@ -66,36 +72,59 @@
 		.item.active .menu {
 			display: inherit;
 		}
+		/* Mostly for the roller */
+		.rainbow-text {
+	  		background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
+	  		background-size: 800% 800%;
+	  		-webkit-background-clip: text;
+	  		-webkit-text-fill-color: transparent;
+	  		animation: rainbow 8s ease infinite;
+		}
+		@keyframes rainbow { 
+    		0%{background-position:0% 50%}
+    		50%{background-position:100% 25%}
+    		100%{background-position:0% 50%}
+		}
+		/* Morph stuff */
+		.morph-pic {
+			text-align: center;
+		}
+		.morph-pic img {
+			width: auto;
+			height: auto;
+			max-width: 100%;
+			max-height: 24rem;
+		}
+		.ui.horizontal.segments.inverted {
+			border: 1px solid rgba(255, 255, 255, 0.15);
+		}
 	</style>
 </head>
 <body>
-	<div id="global-tabs" class="ui large top secondary inverted stackable pointing menu">
-		<a class="item active" data-tab="quickrules">Quick Rules</a>
-	    <a class="item" data-tab="roller">Dice Roller</a>
-	    <a class="item" data-tab="chargen">Data - Chargen</a>
-	    <a class="item" data-tab="morphs">Data - Morphs</a>
-	    <a class="item" data-tab="gear">Data - Gear</a>
-	    <a class="item" data-tab="traits">Data - Traits</a>
-	</div>
-	<div class="ui tab segment inverted active" id="quickrules" data-tab="quickrules">Failed to load this page?</div>
-	<div class="ui tab segment inverted" id="roller" data-tab="roller">Failed to load this page?</div>
-	<div class="ui tab segment inverted" id="chargen" data-tab="chargen">Failed to load this page?</div>
-	<div class="ui tab segment inverted" id="morphs" data-tab="morphs">Failed to load this page?</div>
-	<div class="ui tab segment inverted" id="gear" data-tab="gear">Failed to load this page?</div>
-	<div class="ui tab segment inverted" id="traits" data-tab="traits">Failed to load this page?</div>
-	<div style="color:white;text-align:center;">
-		Data and text used on this website is from <a href="https://eclipsephase.com">Eclipse Phase books by Posthuman Studios</a>, licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
-		The website itself is the same license where possible (libraries are under their own licenses).
+	<div id="app">
+		<div id="global-tabs" class="ui large top secondary inverted stackable pointing menu">
+			<router-link class="item" to="/quickrules">Quick Rules</router-link>
+		    <router-link class="item" to="/roller">Dice Roller</router-link>
+		    <router-link class="item" to="/chargen">Data - Chargen</router-link>
+		    <router-link class="item" to="/morphs">Data - Morphs</router-link>
+		    <router-link class="item" to="/gear">Data - Gear</router-link>
+		    <router-link class="item" to="/traits">Data - Traits</router-link>
+		</div>
+		<keep-alive>
+			<router-view></router-view>
+		</keep-alive>
+		<div style="color:white;text-align:center;">
+			Data and text used on this website is from <a href="https://eclipsephase.com">Eclipse Phase books by Posthuman Studios</a>, licensed <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a>.<br>
+			The website itself is the same license where possible (libraries are under their own licenses).
+		</div>
 	</div>
 </body>
 
 <script>
-	$("#quickrules").load("pages/quickrules.html");
-	$("#roller").load("pages/roller.html");
-	$("#chargen").load("pages/chargen.html");
-	$("#morphs").load("pages/morphs.html");
-	$("#gear").load("pages/gear.html");
-	$("#traits").load("pages/traits.html");
+	var mainVue = new Vue({
+		el: "#app",
+		router: vr_router
+	})
 
 	$.fn.timedDisable = function(time) {
 	    if (time == null) { time = 3000; }
@@ -107,15 +136,4 @@
 	        }, time);
 	    });
 	};
-
-	$(function () {
-	    //Tabs
-	    $('.menu .item').tab({
-	        onVisible: function(tabPath){
-	            //Sticky elements need to find where they are now
-	            $('.ui.sticky', this).sticky('refresh');
-	        }
-	    });
-	});
-
 </script>

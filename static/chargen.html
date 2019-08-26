@@ -1,13 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <style>
-    .ui.vertical.tabular.menu .active.item {
-      background-color: #3D3E3F;
-    }
-  </style>
-</head>
-
 <body>
 <div id="chargen-grid" class="ui grid">
   <div class="three wide column">
@@ -201,46 +193,4 @@
   </div> <!-- Col2 end -->
 </div> <!-- Grid end -->
 </body>
-
-<script>
-  var vue_chargen = new Vue({
-    el: '#chargen-grid',
-    data: {
-      chargen: [],
-      backgrounds: [],
-      careers: [],
-      interests: [],
-      factions: [],
-      aptemps: [],
-      reputations: [],
-      gearpacks: []
-    },
-    methods: {
-      or_list: function (arr) {
-        return arr.join(", ").replace(/, ((?:.(?!, ))+)$/, ', or $1');
-      }
-    },
-    components: {
-      vcompStepdesc: chargen_message
-    }
-  })
-
-  $(function() {
-    $('#chargen-tabs .item').tab({
-      onVisible: function(){
-        $("#chargen-tabs").sticky('refresh');
-      }
-    });
-  });
-
-  $.getJSON('data/chargen.json').then(function(json){vue_chargen.chargen = json;});
-  $.getJSON('data/backgrounds.json').then(function(json){vue_chargen.backgrounds = json;});
-  $.getJSON('data/careers.json').then(function(json){vue_chargen.careers = json;});
-  $.getJSON('data/interests.json').then(function(json){vue_chargen.interests = json;});
-  $.getJSON('data/factions.json').then(function(json){vue_chargen.factions = json;});
-  $.getJSON('data/aptitude_templates.json').then(function(json){vue_chargen.aptemps = json;});
-  $.getJSON('data/reputations.json').then(function(json){vue_chargen.reputations = json;});
-  $.getJSON('data/gear_packs.json').then(function(json){vue_chargen.gearpacks = json;});
-  
-</script>
 </html>

@@ -1,3 +1,65 @@
+Vue.component('ajax', {
+  data: function() {
+    return {
+      content: "<div style='height:100px;' class='ui active inverted loader'>Loading Page...</div>",
+      currentclasses: ""
+    };
+  },
+  props: {
+    preclasses: {
+      type: String,
+      default: "ui inverted segment"
+    },
+    postclasses: {
+      type: String,
+      default: "ui inverted segment"
+    },
+    path: String
+  },
+  created: function() {
+    this.currentclasses = this.preclasses;
+    $.get(this.path).then((response) => {
+      this.content = response
+      this.currentclasses = this.postclasses;
+      this.$nextTick(function() {
+        this.$emit('ajaxupdated');
+      });
+    });
+  },
+  template: `
+    <div :class="currentclasses" v-html="content"></div>
+  `
+});
+
+Vue.component('ajax-tab', {
+  props: {
+    path: String,
+    active: {
+      type: Boolean,
+      default: false
+    },
+    classes: {
+      type: String,
+      default: "ui tab segment active inverted"
+    }
+  },
+  methods: {
+    innerupdate: function() {
+      this.$emit('ajaxupdated');
+      $('.ui.sticky', this.$el).sticky('refresh');
+      $('.menu .item', this.$el).tab();
+    }
+  },
+  template: `
+      <ajax 
+        :preclasses="classes"
+        :postclasses="classes"
+        :path="path"
+        v-on:ajaxupdated="innerupdate()"
+      ></ajax>
+  `
+});
+
 Vue.component('movement-types', {
   props: {
     types: Array
@@ -23,7 +85,7 @@ Vue.component('info-modal', {
   `
 });
 
-var chargen_message = {
+Vue.component('vcomp-stepdesc', {
   props: {
     step: Object
   },
@@ -36,9 +98,9 @@ var chargen_message = {
       </template>
     </div>
     `
-}
+});
 
-var gear_category_tab = {
+Vue.component('vcomp-gear-tab', {
   props: {
     category: Object,
     categoryname: String
@@ -56,9 +118,9 @@ var gear_category_tab = {
 			<a v-for="(thekey,subcatname) in category.subcategories" class="item" :href="'#'+subcatname | despace" v-on:click.stop style="text-align: right;">{{subcatname}}</a>
 		</div>
 	</a>`
-}  
+});
 
-var gear_subcategory = {
+Vue.component('vcomp-subcategory', {
   props: {
     subcategory: Object,
     categoryname: String,
@@ -76,15 +138,12 @@ var gear_subcategory = {
   template: `
     <div :is="mytemplate" :subcategory="subcategory" :categoryname="categoryname" :subcategoryname="subcategoryname"></div>
   `
-}
+});
 
-var gear_category_body = {
+Vue.component('vcomp-gear-section', {
   props: {
     category: Object,
     categoryname: String
-  },
-  components: {
-    vcompSubcategory: gear_subcategory
   },
   mounted: function () {
     let my_connector = this.$el.getAttribute('data-tab');
@@ -97,6 +156,9 @@ var gear_category_body = {
       }
     });
   },
+  updated: function () {
+    $(this.$el).find('table').tablesort();
+  },
   template: `
     <div class="ui tab segment inverted" :data-tab="'geartab-'+categoryname" :id="'geartab-'+categoryname | despace">
       <div v-html="category.text"></div>
@@ -104,9 +166,9 @@ var gear_category_body = {
       <vcomp-subcategory v-for="(subobj, subname) in category.subcategories" :subcategory="subobj" :categoryname="categoryname" :subcategoryname="subname" :key="subname"></vcomp-subcategory>
     </div>
     `
-}
+});
 
-var morphcard = {
+Vue.component('vcomp-morphcard', {
   props: {
     morph: Object
   },
@@ -180,9 +242,9 @@ var morphcard = {
       </div>
     </div>
   `
-}
+});
 
-var morphtype = {
+Vue.component('vcomp-typecard', {
   props: {
     morphs: Array,
     morph_types: Array,
@@ -218,13 +280,13 @@ var morphtype = {
               <vcomp-morphcard v-for="morph in mymorphs" :morph="morph" :key="morph.name"></vcomp-morphcard>
           </div>
         </div>
-  `,
-  components: {
-    vcompMorphcard: morphcard
-  }
-}
+  `
+});
 
-var trait_table = { props: { traits: Array },
+Vue.component('vcomp-trait-table', {
+  props: { 
+    traits: Array 
+  },
   methods: {
     modal_show: function(item) {
       $("#"+item.id).modal('show');
@@ -256,7 +318,8 @@ var trait_table = { props: { traits: Array },
         </tbody>
       </table>
     </div>
-`}
+`
+});
 
 /** Filter to replace spaces and other strange characters with underscores. */
 Vue.filter('despace', function (value) {
