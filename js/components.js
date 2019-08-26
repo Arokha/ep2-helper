@@ -308,7 +308,7 @@ Vue.component('vcomp-trait-table', {
         <tbody>
           <template v-for="item in traits">
             <tr>
-              <td style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.trait}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.trait}}</a></td>
               <td class="single line">{{item['cost']}}</td>
               <td><i v-if="item.ego" class="large green checkmark icon"></i></td>
               <td><i v-if="item.morph" class="large green checkmark icon"></i></td>
