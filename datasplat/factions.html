@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Primary Meta Tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Libs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.min.css" integrity="sha256-R5nBNKPoJrsn3nPBR6SnXHR0612Bd8Siru2igAua8JU=" crossorigin="anonymous" />
+
+    <style>
+        body {
+        			margin: 0.5rem;
+        			background-color: #000;
+        		}
+        		.ui.segment.tab {
+        			margin: 0px;
+        		}
+        		.ui.inverted.menu .active.item {
+        			color: #10A3A3 !important;
+        		}
+        		.ui.inverted.menu .active.item:hover {
+        			color: #40D3D3 !important;
+        		}
+        		.ui.message {
+        			background-color: #BBBBBB;
+        		}
+        	    .ui.vertical.tabular.menu .active.item {
+              		background-color: #3D3E3F;
+            	}
+        		/* Link underliney */
+        		a {
+          			position: relative;
+          			color: #10A3A3 !important;
+          			text-decoration: none;
+        		}
+        		a:hover {
+          			color: #40D3D3 !important;
+        		}
+        		a:before {
+        			content: "";
+        			position: absolute;
+        			width: 100%;
+        			height: 1px;
+        			bottom: 0;
+        			left: 0;
+        			background-color: #40D3D3;
+        			visibility: hidden;
+        			-webkit-transform: scaleX(0);
+        			transform: scaleX(0);
+        			-webkit-transition: all 0.3s ease-in-out 0s;
+        			transition: all 0.3s ease-in-out 0s;
+        		}
+        		a:hover:before {
+        			visibility: visible;
+        			-webkit-transform: scaleX(1);
+        			transform: scaleX(1);
+        		}
+        		/* Hide sub-menus until parent menu item is active. */
+        		.item .menu {
+        			display: none;
+        		}
+        		.item.active .menu {
+        			display: inherit;
+        		}
+        		/* Mostly for the roller */
+        		.rainbow-text {
+        	  		background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
+        	  		background-size: 800% 800%;
+        	  		-webkit-background-clip: text;
+        	  		-webkit-text-fill-color: transparent;
+        	  		animation: rainbow 8s ease infinite;
+        		}
+        		@keyframes rainbow { 
+            		0%{background-position:0% 50%}
+            		50%{background-position:100% 25%}
+            		100%{background-position:0% 50%}
+        		}
+        		/* Morph stuff */
+        		.morph-pic {
+        			text-align: center;
+        		}
+        		.morph-pic img {
+        			width: auto;
+        			height: auto;
+        			max-width: 100%;
+        			max-height: 24rem;
+        		}
+        		.ui.horizontal.segments.inverted {
+        			border: 1px solid rgba(255, 255, 255, 0.15);
+        		}
+    </style>
+</head>
+
+<body>
+<div class="ui three doubling cards inverted">
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Anarchist</div>
+            <div class="description">You believe power is corrupt and favor voluntary, non-hierarchical organizations based on direct democracy.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Argonaut</div>
+            <div class="description">You seek technoprogressive solutions to transhumanity’s injustices and inequalities.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Barsoomian</div>
+            <div class="description">You wish to see Mars liberated from hypercorp control.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Brinker</div>
+            <div class="description">You belong to a cult, commune, or other group that seeks isolation from the rest of transhumanity.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Criminal</div>
+            <div class="description">You are associated with the underworld, either part of a large cartel, smaller gang, or as an independent operator.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Extropian</div>
+            <div class="description">You believe in unrestricted free markets and that taking proactive risks with technology is better than playing it safe.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Hypercorp</div>
+            <div class="description">You support hypercapitalist expansion and competitive-economics-driven social order. You accept that certain liberties must be restricted for security and freedom.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Jovian</div>
+            <div class="description">You are a bioconservative concerned about out-of-control transhuman technologies.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Lunar/Orbital</div>
+            <div class="description">You support the conservative economics, Earth-tied nationalism, and traditionalism of the Lunar-Lagrange Alliance.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Mercurial</div>
+            <div class="description">You oppose the assimilation and oppression of AGIs and uplifts, supporting self-determination for your kind.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Reclaimer</div>
+            <div class="description">You believe transhumanity should be focused on reclaiming, terraforming, and repopulating Earth.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Scum</div>
+            <div class="description">You push the boundaries of the experimental, fully testing what it means to be transhuman.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Socialite</div>
+            <div class="description">You are a part of the glitterati, defining and defined by inner-system media culture.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Titanian</div>
+            <div class="description">You are a technosocialist, believing that science and technology can provide for the well-being of all.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Venusian</div>
+            <div class="description">You adhere to the Morningstar Constellation’s vision for a more socialized, friendlier hypercapitalism.</div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Regional</div>
+            <div class="description">You are a Solarian, Sifter, Belter, Europan, Ringer, or Skimmer invested in the culture, prosperity, and security of your area of the Solar System.</div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

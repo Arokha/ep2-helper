@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Primary Meta Tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Libs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.min.css" integrity="sha256-R5nBNKPoJrsn3nPBR6SnXHR0612Bd8Siru2igAua8JU=" crossorigin="anonymous" />
+
+    <style>
+        body {
+        			margin: 0.5rem;
+        			background-color: #000;
+        		}
+        		.ui.segment.tab {
+        			margin: 0px;
+        		}
+        		.ui.inverted.menu .active.item {
+        			color: #10A3A3 !important;
+        		}
+        		.ui.inverted.menu .active.item:hover {
+        			color: #40D3D3 !important;
+        		}
+        		.ui.message {
+        			background-color: #BBBBBB;
+        		}
+        	    .ui.vertical.tabular.menu .active.item {
+              		background-color: #3D3E3F;
+            	}
+        		/* Link underliney */
+        		a {
+          			position: relative;
+          			color: #10A3A3 !important;
+          			text-decoration: none;
+        		}
+        		a:hover {
+          			color: #40D3D3 !important;
+        		}
+        		a:before {
+        			content: "";
+        			position: absolute;
+        			width: 100%;
+        			height: 1px;
+        			bottom: 0;
+        			left: 0;
+        			background-color: #40D3D3;
+        			visibility: hidden;
+        			-webkit-transform: scaleX(0);
+        			transform: scaleX(0);
+        			-webkit-transition: all 0.3s ease-in-out 0s;
+        			transition: all 0.3s ease-in-out 0s;
+        		}
+        		a:hover:before {
+        			visibility: visible;
+        			-webkit-transform: scaleX(1);
+        			transform: scaleX(1);
+        		}
+        		/* Hide sub-menus until parent menu item is active. */
+        		.item .menu {
+        			display: none;
+        		}
+        		.item.active .menu {
+        			display: inherit;
+        		}
+        		/* Mostly for the roller */
+        		.rainbow-text {
+        	  		background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
+        	  		background-size: 800% 800%;
+        	  		-webkit-background-clip: text;
+        	  		-webkit-text-fill-color: transparent;
+        	  		animation: rainbow 8s ease infinite;
+        		}
+        		@keyframes rainbow { 
+            		0%{background-position:0% 50%}
+            		50%{background-position:100% 25%}
+            		100%{background-position:0% 50%}
+        		}
+        		/* Morph stuff */
+        		.morph-pic {
+        			text-align: center;
+        		}
+        		.morph-pic img {
+        			width: auto;
+        			height: auto;
+        			max-width: 100%;
+        			max-height: 24rem;
+        		}
+        		.ui.horizontal.segments.inverted {
+        			border: 1px solid rgba(255, 255, 255, 0.15);
+        		}
+    </style>
+</head>
+
+<body>
+<div class="ui three doubling cards inverted">
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Actioneer</div>
+            <div class="description">
+                You are more comfortable with physicality than talking or thinking.
+                <ul>
+                    <li>COG: 10</li>
+                    <li>INT: 15</li>
+                    <li>REF: 20</li>
+                    <li>SAV: 10</li>
+                    <li>SOM: 20</li>
+                    <li>WIL: 15</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Extrovert</div>
+            <div class="description">
+                You can talk your way through most situations.
+                <ul>
+                    <li>COG: 10</li>
+                    <li>INT: 20</li>
+                    <li>REF: 15</li>
+                    <li>SAV: 20</li>
+                    <li>SOM: 15</li>
+                    <li>WIL: 10</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Facilitator</div>
+            <div class="description">
+                You’re good with people, planning, and seeing things through.
+                <ul>
+                    <li>COG: 15</li>
+                    <li>INT: 15</li>
+                    <li>REF: 10</li>
+                    <li>SAV: 20</li>
+                    <li>SOM: 10</li>
+                    <li>WIL: 20</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Factotum</div>
+            <div class="description">
+                You’ve never quite stood out, but you exhibit broad competence.
+                <ul>
+                    <li>COG: 15</li>
+                    <li>INT: 15</li>
+                    <li>REF: 15</li>
+                    <li>SAV: 15</li>
+                    <li>SOM: 15</li>
+                    <li>WIL: 15</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Inquirer</div>
+            <div class="description">
+                Your creative mind is good at figuring things out.
+                <ul>
+                    <li>COG: 20</li>
+                    <li>INT: 20</li>
+                    <li>REF: 10</li>
+                    <li>SAV: 15</li>
+                    <li>SOM: 10</li>
+                    <li>WIL: 15</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Survivor</div>
+            <div class="description">
+                You have the will and stamina to scrape by in tough situations.
+                <ul>
+                    <li>COG: 15</li>
+                    <li>INT: 10</li>
+                    <li>REF: 15</li>
+                    <li>SAV: 10</li>
+                    <li>SOM: 20</li>
+                    <li>WIL: 20</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Thrill Seeker</div>
+            <div class="description">
+                You’ve never said no to a dare, but your fast reaction time and quick thinking compensate for your lack of foresight.
+                <ul>
+                    <li>COG: 20</li>
+                    <li>INT: 10</li>
+                    <li>REF: 20</li>
+                    <li>SAV: 15</li>
+                    <li>SOM: 15</li>
+                    <li>WIL: 10</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

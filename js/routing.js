@@ -460,11 +460,38 @@ const vr_traits = {
   }
 }
 
+const vr_primer = function() {
+  return $.ajax("static/primer.html").then(function(templateHtml) {
+    return {
+      template: templateHtml,
+      methods: {
+        or_list: function (arr) {
+        return arr.join(", ").replace(/, ((?:.(?!, ))+)$/, ', or $1');
+        }
+      },
+      watch: {
+        '$route' (to, from) {
+          // Handle the showing & hiding of the target segment!
+          $(this.$el).find("#primer-" + from.params.step).removeClass("active");
+          $(this.$el).find("#primer-" + to.params.step).addClass("active");
+          $(".sticky", this.$el).sticky('refresh');
+        }
+      },
+      mounted: function(){
+        // Tabs are already hard coded in the template, we'e good to initialize tabs
+        $(this.$el).find("#primer-" + this.$route.params.step).addClass("active");
+      }
+    }
+  });
+}
+
 const vr_routes = [
   { path: '/quickrules', component: vr_quickrules },
   { path: '/roller', component: vr_roller },
   { path: '/chargen', redirect: '/chargen/1' },
   { path: '/chargen/:step', component: vr_chargen },
+  { path: '/primer', redirect: '/primer/whatis' },
+  { path: '/primer/:step', component: vr_primer },
   { path: '/morphs/:morphtype', component: vr_morphs, props: true },
   { path: '/morphs', redirect: '/morphs/biomorph' },
   { path: '/gear/:category/:subcategory', component: vr_gear, props: true },

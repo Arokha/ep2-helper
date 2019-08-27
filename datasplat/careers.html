@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Primary Meta Tags -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <!-- Libs -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.min.css" integrity="sha256-R5nBNKPoJrsn3nPBR6SnXHR0612Bd8Siru2igAua8JU=" crossorigin="anonymous" />
+
+    <style>
+        body {
+        			margin: 0.5rem;
+        			background-color: #000;
+        		}
+        		.ui.segment.tab {
+        			margin: 0px;
+        		}
+        		.ui.inverted.menu .active.item {
+        			color: #10A3A3 !important;
+        		}
+        		.ui.inverted.menu .active.item:hover {
+        			color: #40D3D3 !important;
+        		}
+        		.ui.message {
+        			background-color: #BBBBBB;
+        		}
+        	    .ui.vertical.tabular.menu .active.item {
+              		background-color: #3D3E3F;
+            	}
+        		/* Link underliney */
+        		a {
+          			position: relative;
+          			color: #10A3A3 !important;
+          			text-decoration: none;
+        		}
+        		a:hover {
+          			color: #40D3D3 !important;
+        		}
+        		a:before {
+        			content: "";
+        			position: absolute;
+        			width: 100%;
+        			height: 1px;
+        			bottom: 0;
+        			left: 0;
+        			background-color: #40D3D3;
+        			visibility: hidden;
+        			-webkit-transform: scaleX(0);
+        			transform: scaleX(0);
+        			-webkit-transition: all 0.3s ease-in-out 0s;
+        			transition: all 0.3s ease-in-out 0s;
+        		}
+        		a:hover:before {
+        			visibility: visible;
+        			-webkit-transform: scaleX(1);
+        			transform: scaleX(1);
+        		}
+        		/* Hide sub-menus until parent menu item is active. */
+        		.item .menu {
+        			display: none;
+        		}
+        		.item.active .menu {
+        			display: inherit;
+        		}
+        		/* Mostly for the roller */
+        		.rainbow-text {
+        	  		background-image: repeating-linear-gradient(45deg, violet, indigo, blue, green, yellow, orange, red, violet);
+        	  		background-size: 800% 800%;
+        	  		-webkit-background-clip: text;
+        	  		-webkit-text-fill-color: transparent;
+        	  		animation: rainbow 8s ease infinite;
+        		}
+        		@keyframes rainbow { 
+            		0%{background-position:0% 50%}
+            		50%{background-position:100% 25%}
+            		100%{background-position:0% 50%}
+        		}
+        		/* Morph stuff */
+        		.morph-pic {
+        			text-align: center;
+        		}
+        		.morph-pic img {
+        			width: auto;
+        			height: auto;
+        			max-width: 100%;
+        			max-height: 24rem;
+        		}
+        		.ui.horizontal.segments.inverted {
+        			border: 1px solid rgba(255, 255, 255, 0.15);
+        		}
+    </style>
+</head>
+
+<body>
+<div class="ui three doubling cards inverted">
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Academic</div>
+            <div class="description">You devote your efforts to the pursuit of knowledge.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Interface: 30
+                        <!---->
+                    </li>
+                    <li>Research: 60
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Any)</span></li>
+                    <li>Know2: 40 <span>(Any)</span></li>
+                    <li>Know3: 30 <span>(Administration, Instruction, or Lab Ops)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Covert Operative</div>
+            <div class="description">You are a spy, infiltrator, thief, or undercover agent, skilled at accessing places you don’t belong.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Deceive: 40
+                        <!---->
+                    </li>
+                    <li>Infiltrate: 60
+                        <!---->
+                    </li>
+                    <li>Infosec: 30
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Security Ops, Smuggling, or Spycraft)</span></li>
+                    <li>Know2: 30 <span>(Black Markets, Current Events, or Politics)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Enforcer</div>
+            <div class="description">You’re a thug, whether you’re wielding force for a hypercorp, cartel, habitat overseer, or autonomist militia.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Fray: 30
+                        <!---->
+                    </li>
+                    <li>Guns: 20
+                        <!---->
+                    </li>
+                    <li>Melee: 50
+                        <!---->
+                    </li>
+                    <li>Provoke: 30
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Bodyguarding, Racketeering, or Security Ops)</span></li>
+                    <li>Know2: 30 <span>(Cartel Politics, Gambling, or Night Clubs)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Explorer</div>
+            <div class="description">You’ve walked on alien worlds and seen things with your own eyes that others wouldn’t believe.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Athletics: 30
+                        <!---->
+                    </li>
+                    <li>Medicine: 20 <span>(Paramedic)</span></li>
+                    <li>Pilot: 20 <span>(Air, Ground, Nautical, or Space)</span></li>
+                    <li>Survival: 60
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(First-Contact Ops, Gatecrashing, or Surveying)</span></li>
+                    <li>Know2: 30 <span>(Astrobiology, Geology, or Xenoarcheology)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Face</div>
+            <div class="description">You excel at convincing others, even when it’s not in their best interest.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Deceive: 40
+                        <!---->
+                    </li>
+                    <li>Kinesics: 30
+                        <!---->
+                    </li>
+                    <li>Persuade: 60
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Fencing, Police Ops, or Smuggling)</span></li>
+                    <li>Know2: 30 <span>(Black Markets, Drugs, or Underground XP)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Genehacker</div>
+            <div class="description">DNA is your artistic medium, proteins your weapon of choice.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Medicine: 60 <span>(Biotech)</span></li>
+                    <li>Medicine2: 40 <span>(Pharmacology)</span></li>
+                    <li>Program: 30
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Biology, Genetics, or Physiology)</span></li>
+                    <li>Know2: 30 <span>(Lab Ops, Medical Services, or Morph Design)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Hacker</div>
+            <div class="description">Software heeds your beck and call, whether you seek to exploit systems or protect them.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Infosec: 60
+                        <!---->
+                    </li>
+                    <li>Interface: 40
+                        <!---->
+                    </li>
+                    <li>Program: 30
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Computer Science, Cryptography, or Mathematics)</span></li>
+                    <li>Know2: 30 <span>(Data Processing, Network Engineering, or System Administration)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Investigator</div>
+            <div class="description">Few details escape your scrutiny, whether you are a journalist, private investigator, detective, or insurance claims investigator.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Kinesics: 30
+                        <!---->
+                    </li>
+                    <li>Perceive: 40
+                        <!---->
+                    </li>
+                    <li>Research: 60
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Ego Hunting, Investigation, or Journalism)</span></li>
+                    <li>Know2: 30 <span>(Black Markets, Current Events, or Cartels)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Medic</div>
+            <div class="description">You have a background in medicine and experience as a physician, surgeon, paramedic, body bank tech, or other type of medical specialist.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Kinesics: 30
+                        <!---->
+                    </li>
+                    <li>Medicine: 60 <span>(Paramedic)</span></li>
+                    <li>Medicine2: 40 <span>(Biotech)</span></li>
+                    <li>Know: 60 <span>(Biology, Genetics, or Psychology)</span></li>
+                    <li>Know2: 30 <span>(Body Bank Ops, Emergency Services, or Surgical Ops)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Mindhacker</div>
+            <div class="description">You meld and shape minds and memories. You might be a therapist, memeticist, or psychosurgeon pushing the bounds of cognition.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Infosec: 30
+                        <!---->
+                    </li>
+                    <li>Medicine: 40 <span>(Pharmacology)</span></li>
+                    <li>Medicine2: 60 <span>(Psychosurgery)</span></li>
+                    <li>Know: 60 <span>(Cognitive Science, Memetics, or Psychology)</span></li>
+                    <li>Know2: 30 <span>(Body Bank Ops, Medical Services, or Social Services)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Scavenger</div>
+            <div class="description">You scrounge through wrecks and ruins of the Fall, seeking value in the destruction.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Hardware: 60 <span>(Electronics, Industrial, or Robotics)</span></li>
+                    <li>Hardware2: 40 <span>(Demolitions)</span></li>
+                    <li>Pilot: 30 <span>(Air, Ground, Nautical, or Space)</span></li>
+                    <li>Know: 60 <span>(Flight Crew Ops, Scavenging, or Smuggling)</span></li>
+                    <li>Know2: 30 <span>(Black Markets, Spacecraft, or TITAN Machines)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Scientist</div>
+            <div class="description">You scrounge through wrecks and ruins of the Fall, seeking value in the destruction.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Hardware: 40 <span>(Electronics, or Robotics)</span></li>
+                    <li>Program: 30
+                        <!---->
+                    </li>
+                    <li>Research: 60
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Astrobiology, Memetics, or Physics)</span></li>
+                    <li>Know2: 30 <span>(Field Science, Investigation, or Lab Ops)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Soldier</div>
+            <div class="description">You serve a habitat polity, hypercorp, or mercenary outfit.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Fray: 40
+                        <!---->
+                    </li>
+                    <li>Guns: 60
+                        <!---->
+                    </li>
+                    <li>Melee: 30
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Bodyguarding, Military Ops, or Security Ops)</span></li>
+                    <li>Know2: 30 <span>(Conflict Zones, Gambling, or Mercenary Groups)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="ui centered card">
+        <div class="content">
+            <div class="header">Techie</div>
+            <div class="description">You make and fix things. You might be a roboticist, habitat tech, or artifex nano-engineer.</div> <br>
+            <div class="description">
+                <div class="header">Skills</div>
+                <ul>
+                    <li>Hardware: 60 <span>(Electronics, Industrial, or Robotics)</span></li>
+                    <li>Infosec: 40
+                        <!---->
+                    </li>
+                    <li>Program: 30
+                        <!---->
+                    </li>
+                    <li>Know: 60 <span>(Construction, Habitat Ops, Mining, or Nanofacturing)</span></li>
+                    <li>Know2: 30 <span>(Computer Science, Engineering, or Nanotechnology)</span></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
