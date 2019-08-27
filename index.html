@@ -121,6 +121,11 @@
 </body>
 
 <script>
+	function global_despace(value){
+		value = value.toString();
+		return value.replace(/[^#A-Za-z0-9]/, "_");
+	}
+
 	var mainVue = new Vue({
 		el: "#app",
 		router: vr_router
