@@ -512,7 +512,6 @@ const vr_router = new VueRouter({
   	}
 
   	for(key in to.params){
-  		console.log("Maybe "+key+" is in scrollables...");
   		if(scrollables.indexOf(key) > -1){
   			let rawid = to.params[key];
   			let cleanid = "#"+global_despace(rawid);
