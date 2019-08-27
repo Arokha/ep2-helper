@@ -1,65 +1,3 @@
-Vue.component('ajax', {
-  data: function() {
-    return {
-      content: "<div style='height:100px;' class='ui active inverted loader'>Loading Page...</div>",
-      currentclasses: ""
-    };
-  },
-  props: {
-    preclasses: {
-      type: String,
-      default: "ui inverted segment"
-    },
-    postclasses: {
-      type: String,
-      default: "ui inverted segment"
-    },
-    path: String
-  },
-  created: function() {
-    this.currentclasses = this.preclasses;
-    $.get(this.path).then((response) => {
-      this.content = response
-      this.currentclasses = this.postclasses;
-      this.$nextTick(function() {
-        this.$emit('ajaxupdated');
-      });
-    });
-  },
-  template: `
-    <div :class="currentclasses" v-html="content"></div>
-  `
-});
-
-Vue.component('ajax-tab', {
-  props: {
-    path: String,
-    active: {
-      type: Boolean,
-      default: false
-    },
-    classes: {
-      type: String,
-      default: "ui tab segment active inverted"
-    }
-  },
-  methods: {
-    innerupdate: function() {
-      this.$emit('ajaxupdated');
-      $('.ui.sticky', this.$el).sticky('refresh');
-      $('.menu .item', this.$el).tab();
-    }
-  },
-  template: `
-      <ajax 
-        :preclasses="classes"
-        :postclasses="classes"
-        :path="path"
-        v-on:ajaxupdated="innerupdate()"
-      ></ajax>
-  `
-});
-
 Vue.component('movement-types', {
   props: {
     types: Array
@@ -98,26 +36,6 @@ Vue.component('vcomp-stepdesc', {
       </template>
     </div>
     `
-});
-
-Vue.component('vcomp-gear-tab', {
-  props: {
-    category: Object,
-    categoryname: String
-  },
-  methods: {
-	  scrollToTop: function() {
-		  window.scrollTo({top:0});
-	  }
-  },
-  template: `
-	<a class="item" :data-tab="'geartab-'+categoryname" v-on:click="scrollToTop">
-		{{categoryname}}
-		<div class="menu">
-			<div class="ui divider"></div>
-			<a v-for="(thekey,subcatname) in category.subcategories" class="item" :href="'#'+subcatname | despace" v-on:click.stop style="text-align: right;">{{subcatname}}</a>
-		</div>
-	</a>`
 });
 
 Vue.component('vcomp-subcategory', {
@@ -160,7 +78,7 @@ Vue.component('vcomp-gear-section', {
     $(this.$el).find('table').tablesort();
   },
   template: `
-    <div class="ui tab segment inverted" :data-tab="'geartab-'+categoryname" :id="'geartab-'+categoryname | despace">
+    <div class="ui segment inverted">
       <div v-html="category.text"></div>
       <br><p><b>[Click any item's name for a full description.]</b></p>
       <vcomp-subcategory v-for="(subobj, subname) in category.subcategories" :subcategory="subobj" :categoryname="categoryname" :subcategoryname="subname" :key="subname"></vcomp-subcategory>
@@ -246,40 +164,22 @@ Vue.component('vcomp-morphcard', {
 
 Vue.component('vcomp-typecard', {
   props: {
-    morphs: Array,
-    morph_types: Array,
-    mytype: String,
-    active: Boolean,
-    idappend: String
-  },
-  computed: {
-    mymorphs: function() {
-       let actual_mytype = this.mytype;
-       return this.morphs.filter(function(element){
-        return element.type == actual_mytype;
-      });
-    },
-    mytype_obj: function() {
-      let actual_mytype = this.mytype;
-      return this.morph_types.find(function(element){
-        return element.name == actual_mytype;
-      });
-    },
-    classes: function () {
-      return this.active ? "ui tab segment inverted active" : "ui tab segment inverted"
-    }
+    mymorphs: Array,
+    mytype_obj: Object,
+    mytype: String
   },
   template: `
-      <div :class="classes" :id="'morphs-'+ idappend" :data-tab="'morphs-'+ idappend">
-        <div class="ui message">
-          <div class="header">{{mytype}}</div>
-          <span v-if="mytype_obj" v-html="mytype_obj.description"></span>
+    <div class="ui segment inverted">
+      <div class="ui message">
+        <div class="header" v-if="mytype_obj">{{mytype_obj.name}}</div>
+        <span v-if="mytype_obj" v-html="mytype_obj.description"></span>
+      </div>
+      <br>
+      <div class="ui three doubling cards inverted">
+            <vcomp-morphcard v-for="morph in mymorphs" :morph="morph" :key="morph.name"></vcomp-morphcard>
         </div>
-        <br>
-        <div class="ui three doubling cards inverted">
-              <vcomp-morphcard v-for="morph in mymorphs" :morph="morph" :key="morph.name"></vcomp-morphcard>
-          </div>
-        </div>
+      </div>
+    </div>
   `
 });
 
@@ -325,6 +225,5 @@ Vue.component('vcomp-trait-table', {
 /** Filter to replace spaces and other strange characters with underscores. */
 Vue.filter('despace', function (value) {
   if (!value) return '';
-  value = value.toString();
-  return value.replace(/[^#A-Za-z0-9]/, "_");;
+  return global_despace(value);
 });
