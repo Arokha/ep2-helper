@@ -248,12 +248,12 @@ const vr_gear = {
         <div id="gear-tabs" class="ui vertical sticky fluid tabular menu inverted">
           <template v-for="(catobj,catname) in categories">
           	<router-link class="item" :to="'/gear/'+catname">
-		      {{catname}}
-		      <div class="menu">
-			    <div class="ui divider"></div>
-			    <router-link v-for="(thekey,subcatname) in catobj.subcategories" class="item" :to="'/gear/'+catname+'/'+despace(subcatname)" v-on:click.stop style="text-align: right;" :key="'link'+catname+subcatname">{{subcatname}}</router-link>
-		      </div>
-	        </router-link>
+		          {{catname}}
+		          <div class="menu">
+			          <div class="ui divider"></div>
+			          <router-link v-for="(thekey,subcatname) in catobj.subcategories" class="item" :to="'/gear/'+catname+'/'+despace(subcatname)" v-on:click.stop style="text-align: right;" :key="'link'+catname+subcatname">{{subcatname}}</router-link>
+		          </div>
+	          </router-link>
           </template>
         </div>
       </div>
@@ -295,15 +295,15 @@ const vr_gear = {
     });
   },
   mounted: function() {
-    $('.item', this.$el).tab({
-        onVisible: function(){
-          $(".sticky", this.$el).sticky('refresh');
-        }
-    });
+      this.$nextTick(function (){
+        $(".sticky", this.$el).sticky('refresh');
+      });
   },
   watch: {
     '$route' (to, from) {
-      $(".sticky", this.$el).sticky('refresh');
+      this.$nextTick(function (){
+        $(".sticky", this.$el).sticky('refresh');
+      });
     }
   },
   methods: {
