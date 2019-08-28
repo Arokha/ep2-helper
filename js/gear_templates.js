@@ -147,7 +147,7 @@ var gear_vehicles = { props: { subcategory: Object, categoryname: String, subcat
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui sortable celled table inverted">
+      <table class="ui celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -203,7 +203,7 @@ var gear_bots = { props: { subcategory: Object, categoryname: String, subcategor
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui sortable celled table inverted">
+      <table class="ui celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
@@ -264,7 +264,7 @@ var gear_creatures = { props: { subcategory: Object, categoryname: String, subca
       <div :id="subcategoryname | despace" class="ui divider"></div>
       <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
       <span v-html="subcategory.text"></span>
-      <table class="ui sortable celled table inverted">
+      <table class="ui celled table inverted">
         <thead>
           <tr>
             <th>Name</th>
