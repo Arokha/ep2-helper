@@ -151,6 +151,7 @@ const vr_morphs = {
           <router-link class="item" to="uplift">Uplift Biomorhs</router-link>
           <router-link class="item" to="synthmorph">Synthmorphs</router-link>
           <router-link class="item" to="infomorph">Infomorphs</router-link>
+          <router-link class="item" to="flexbot">Flexbots</router-link>
         </div>
       </div>
       <div class="fourteen wide stretched column">
@@ -187,6 +188,8 @@ const vr_morphs = {
           return this.synthmorphs;
         case "infomorph":
           return this.infomorphs;
+        case "flexbot":
+          return this.flexbot_parts;
         default:
           return [];
       }
@@ -224,7 +227,7 @@ const vr_morphs = {
     },
     flexbot_parts: function () {
       return this.morphs.filter(function(element){
-        if(element.type == "Flexbot Part"){return true;}
+        if(element.type == "Flexbot"){return true;}
       });
     }
   }

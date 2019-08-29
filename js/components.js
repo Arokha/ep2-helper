@@ -123,43 +123,45 @@ Vue.component('vcomp-morphcard', {
           </div>
         </div>
     </div>
-    <div class="extra content">
-        <div class="header">Movement Types</div>
-        <div class="description">
-          <movement-types :types="morph.movement_rate"></movement-types>
-        </div>
-    </div>
-        <template v-if="morph.ware.length">
-          <div class="extra content">
-            <div class="header">Included Ware</div>
-            <div class="description">{{english_list(morph.ware)}}</div>
+    <template v-if="morph.movement_rate.length">
+      <div class="extra content">
+          <div class="header">Movement Types</div>
+          <div class="description">
+            <movement-types :types="morph.movement_rate"></movement-types>
           </div>
-        </template>
-        <template v-if="morph.morph_traits.length">
-          <div class="extra content">
-            <div class="header">Morph Traits</div>
-            <div class="description">
-              <ul>
-                <li v-for="trait in morph.morph_traits">{{trait.name}} - Level {{trait.level}}</li>
-              </ul>
-            </div>
-          </div>
-        </template>
-        <template v-if="morph.common_extras.length">
-          <div class="extra content">
-            <div class="header">Common Extras</div>
-            <div class="description">{{english_list(morph.common_extras)}}</div>
-          </div>
-        </template>
-        <template v-if="morph.notes.length">
-          <div class="extra content">
-            <div class="header">Additional Notes</div>
-            <div class="description">{{english_list(morph.notes)}}</div>
-          </div>
-        </template>
       </div>
-    </div>
-  `
+    </template>
+    <template v-if="morph.ware.length">
+      <div class="extra content">
+        <div class="header">Included Ware</div>
+        <div class="description">{{english_list(morph.ware)}}</div>
+      </div>
+    </template>
+    <template v-if="morph.morph_traits.length">
+      <div class="extra content">
+        <div class="header">Morph Traits</div>
+        <div class="description">
+          <ul>
+            <li v-for="trait in morph.morph_traits">{{trait.name}} - Level {{trait.level}}</li>
+          </ul>
+        </div>
+      </div>
+    </template>
+    <template v-if="morph.common_extras.length">
+      <div class="extra content">
+        <div class="header">Common Extras</div>
+        <div class="description">{{english_list(morph.common_extras)}}</div>
+      </div>
+    </template>
+    <template v-if="morph.notes.length">
+      <div class="extra content">
+        <div class="header">Additional Notes</div>
+        <div class="description">{{english_list(morph.notes)}}</div>
+      </div>
+    </template>
+  </div>
+</div>
+`
 });
 
 Vue.component('vcomp-typecard', {
