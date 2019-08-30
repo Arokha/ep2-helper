@@ -229,3 +229,8 @@ Vue.filter('despace', function (value) {
   if (!value) return '';
   return global_despace(value);
 });
+
+Vue.filter('commalist', function (array) {
+  if (!array) return '';
+  return array.join(", ");
+});
