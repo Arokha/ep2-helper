@@ -91,7 +91,8 @@ const vr_chargen = function() {
           factions: [],
           aptemps: [],
           reputations: [],
-          gearpacks: []
+          gearpacks: [],
+          skills: []
         };
       },
       methods: {
@@ -107,6 +108,9 @@ const vr_chargen = function() {
           $(".sticky", this.$el).sticky('refresh');
         }
       },
+      updated: function () {
+        $(this.$el).find('table').tablesort();
+      },
       mounted: function(){
         // Tabs are already hard coded in the template, we'e good to initialize tabs
         $(this.$el).find("#chargen-" + this.$route.params.step).addClass("active");
@@ -120,7 +124,8 @@ const vr_chargen = function() {
           $.getJSON('data/factions.json').then((json) => {this.factions = json;}),
           $.getJSON('data/aptitude_templates.json').then((json) => {this.aptemps = json;}),
           $.getJSON('data/reputations.json').then((json) => {this.reputations = json;}),
-          $.getJSON('data/gear_packs.json').then((json) => {this.gearpacks = json;})
+          $.getJSON('data/gear_packs.json').then((json) => {this.gearpacks = json;}),
+          $.getJSON('data/skills.json').then((json) => {this.skills = json;})
         ]).then(() => {
           Vue.nextTick(() => {
             $(".sticky", this.$el).sticky();

@@ -126,6 +126,29 @@
 
     <div class="ui tab segment inverted" id="chargen-6" data-tab="chargen-6">
       <vcomp-stepdesc v-if="chargen.length" :step="chargen[5]"></vcomp-stepdesc>
+      <div class="ui segment inverted">
+        <h3>Skill List</h3>
+        <table class="ui sortable celled table inverted">
+          <thead>
+            <tr class="center aligned">
+              <th>Skill<br>Name</th>
+              <th>Associated<br>Aptitude</th>
+              <th>Skill<br>Type</th>
+              <th>Description</th>
+              <th>Sample<br>Specializations</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-if="skills.length" v-for="skill in skills">
+              <td class="ui single line">{{skill.name}}</td>
+              <td class="ui single line">{{skill.aptitude}}</td>
+              <td class="ui single line">{{skill.type}}</td>
+              <td v-html="skill.description"></td>
+              <td class="ui single line">{{skill.specializations | commalist}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="ui tab segment inverted" id="chargen-7" data-tab="chargen-7">
