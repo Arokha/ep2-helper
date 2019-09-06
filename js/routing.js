@@ -19,10 +19,10 @@ const vr_sheet = function() {
       },
       methods: {
         new_morph_trait(type){
-          this.character.morph_traits.push(new trait(null,type));
+          this.character.morph_traits.push(new Trait(null,type));
         },
         new_ego_trait(type){
-          this.character.ego_traits.push(new trait(null,type));
+          this.character.ego_traits.push(new Trait(null,type));
         },
         new_morph_ware(){
           this.character.ware.push(new InvWare());
@@ -52,7 +52,7 @@ const vr_sheet = function() {
           vehicle.ware.push(new InvWare());
         },
         new_skill(){
-          this.character.skills.push(new skill());
+          this.character.skills.push(new Skill());
         },
         add_item_mod(item,event){
           item.mods.push(prompt("Please enter the new mod:", ""));
@@ -72,7 +72,7 @@ const vr_sheet = function() {
           this.character.influence_events.push({event:"<Input Event Info>"});
         },
         new_psi_sleight(){
-          this.character.sleights.push(new sleight());
+          this.character.sleights.push(new Sleight());
         },
         cycle_morph_type(){
           var index = -1;
