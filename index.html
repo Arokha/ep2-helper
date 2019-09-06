@@ -11,8 +11,11 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js" integrity="sha256-ufGElb3TnOtzl5E4c/qQnZFGP+FYEZj5kbSEdJNrw0A=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.1.2/vue-router.js" integrity="sha256-J8FoD0Yt1A0YS9yENPIEWQBbjAi+w9eE2wH/KqGTb2g=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js" integrity="sha256-nRoO8HoupfqozUr7YKBRgHXmdx40Hl/04OSBzv7e7L8=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.min.css" integrity="sha256-R5nBNKPoJrsn3nPBR6SnXHR0612Bd8Siru2igAua8JU=" crossorigin="anonymous" />
+	<script src="js/character.js"></script>
 	<script src="js/gear_templates.js"></script>
+	<script src="js/sheet_templates.js"></script>
 	<script src="js/components.js"></script>
 	<script src="js/tablesort.js"></script>
 	<script src="js/routing.js"></script>
@@ -79,6 +82,7 @@
 	  		-webkit-background-clip: text;
 	  		-webkit-text-fill-color: transparent;
 	  		animation: rainbow 8s ease infinite;
+	  		font-weight: bold;
 		}
 		@keyframes rainbow { 
     		0%{background-position:0% 50%}
@@ -98,14 +102,37 @@
 		.ui.horizontal.segments.inverted {
 			border: 1px solid rgba(255, 255, 255, 0.15);
 		}
+		/* Charsheet stuff */
+		.centerflow {
+			width: 100%;
+			text-align: center;
+		}
+		.prop:empty {
+			display: inline-block;
+			background: dimgray;
+			width:4em;
+			height:1em;
+		}
+		tr td:first-child.selectable {
+			padding-left:1rem !important;
+		}
+		.transparent {
+			background-color: #00000000 !important;
+		}
+		.addbutton {
+			display: none !important;
+		}
+		td:hover .addbutton {
+			display: inline-block !important;
+		}
 	</style>
 </head>
 <body>
 	<div id="app">
 		<div id="global-tabs" class="ui large top secondary inverted stackable pointing menu">
 			<router-link class="item" to="/quickrules">Quick Rules</router-link>
-		    <router-link class="item" to="/roller">Dice Roller</router-link>
 		    <router-link class="item" to="/primer">EP2 Primer</router-link>
+		    <router-link class="item" to="/sheet">Character Sheet</router-link>
 		    <router-link class="item" to="/chargen">Data - Chargen</router-link>
 		    <router-link class="item" to="/morphs">Data - Morphs</router-link>
 		    <router-link class="item" to="/gear">Data - Gear</router-link>
@@ -122,15 +149,297 @@
 </body>
 
 <script>
+	var unsorted_gear = [];
+	var traits = [];
+	var morphs = [];
+    var backgrounds = [];
+    var careers = [];
+    var interests = [];
+    var factions = [];
+    var aptemps = [];
+    var reputations = [];
+    var gearpacks = [];
+    var skills = [];
+    var aptitudes = [];
+    var morph_types = [];
+    var sleights = [];
+
+    $.getJSON('data/backgrounds.json').then( (json) => {
+    	backgrounds.push.apply(backgrounds,json);
+    });
+    $.getJSON('data/careers.json').then( (json) => {
+    	careers.push.apply(careers,json);
+    });
+    $.getJSON('data/interests.json').then( (json) => {
+    	interests.push.apply(interests,json);
+    });
+    $.getJSON('data/factions.json').then( (json) => {
+    	factions.push.apply(factions,json);
+    });
+    $.getJSON('data/aptitude_templates.json').then( (json) => {
+    	aptemps.push.apply(aptemps,json);
+    });
+    $.getJSON('data/reputations.json').then( (json) => {
+    	reputations.push.apply(reputations,json);
+    });
+    $.getJSON('data/gear_packs.json').then( (json) => {
+    	gearpacks.push.apply(gearpacks,json);
+    });
+    $.getJSON('data/skills.json').then( (json) => {
+    	skills.push.apply(skills,json);
+    });
+	$.getJSON('data/morphs.json').then( (json) => {
+      morphs.push.apply(morphs,json);
+    });
+    $.getJSON('data/traits.json').then( (json) => {
+      traits.push.apply(traits,json);
+    });
+    $.getJSON('data/aptitudes.json').then( (json) => {
+      aptitudes.push.apply(aptitudes,json);
+    });
+    $.getJSON('data/morph_types.json').then( (json) => {
+      morph_types.push.apply(morph_types,json);
+    });
+    $.getJSON('data/sleights.json').then( (json) => {
+      sleights.push.apply(sleights,json);
+    });
+
+    var gear_jsons = [
+      "gear_bots.json",
+      "gear_comms.json",
+      "gear_creatures.json",
+      "gear_drugs.json",
+      "gear_items.json",
+      "gear_mission.json",
+      "gear_nano.json",
+      "gear_security.json",
+      "gear_software.json",
+      "gear_swarms.json",
+      "gear_vehicles.json",
+      "gear_ware.json",
+      "services.json",
+      "weapons_melee.json",
+      "weapons_ranged.json",
+      "weapons_ammo.json",
+      "gear_armor.json"
+    ];
+
+    gear_jsons.forEach( (file) => {
+      $.getJSON('data/'+file).then( (json) => {
+        unsorted_gear.push.apply(this.unsorted_gear,json);
+      });
+    });
+
 	function global_despace(value){
 		value = value.toString();
 		return value.replace(/[^#A-Za-z0-9]/g, "_");
 	}
 
+	function icon_swap(element, from, to) {
+		$(element).siblings("a").find("."+from).removeClass(from).addClass(to);
+	}
+
+	function isNumeric(value) {
+		//*sigh* Empty string is falsey which is '0' for isNaN and considerd a number.
+		if(value === ""){
+			return false;
+		}
+		return !isNaN(value);
+	}
+
+    function roll_dice(target){
+      var result = Math.floor(Math.random() * 100); //Just a normal d100 roll, from 00-99.
+
+      var success = (result <= target);
+
+      var text = success ? "Success!" : "Failure!";
+      //"Superiors"
+      if(target){
+        //Success
+        if((result >= 66) && (result <= target)){text = "Two Superior Successes!";} else
+        if((result >= 33) && (result <= target)){text = "One Superior Success!";} else
+        //Failure
+        if((result <= 33) && (result > target)){text = "Two Superior Failures!";} else
+        if((result <= 66) && (result > target)){text = "One Superior Failure!";}
+      }
+
+      //Criticals
+      if(result === 0){text = "Critical Success!";} else
+      if(result === 99){text = "Critical Failure!";} else
+      if((result % 11) === 0) {
+      	if(result <= target) {
+      		text = "Critical Success!";
+      	} else {
+      		text = "Critical Failure!";
+      	}
+      }
+
+      //Return our results
+      return {
+      	result,
+      	success,
+      	text
+      };
+
+    }
+
+    function export_properties(from,to,template){
+    	//For each key in the template
+    	Object.keys(template).forEach(function(key,index) {
+			//If it's an array
+			if(Array.isArray(template[key])) {
+				let newArray = [];
+				//For the elements in the from array
+				from[key].forEach(function(element){
+					//If it's an object
+					if(typeof element === 'object'){
+						//It has a serialize method
+						if("serialize" in element){
+							//We use their serializer
+							newArray.push(element.serialize());
+						} else {
+							//We use a generic method
+							newArray.push($.extend(true,{},element));
+						}
+					}
+				});
+				to[key] = newArray;
+            } else if(typeof(template[key]) === 'object' && template[key] !== null){
+				export_properties(from[key],to[key],template[key]);
+            } else {
+            	to[key] = from[key];
+            }
+        });
+    }
+
+    function import_properties(from,to,template){
+    	//For each key in the template
+    	Object.keys(template).forEach(function(key,index) {
+			//If it's an array
+			if(Array.isArray(template[key])) {
+				//The array contains a class hint
+				if(template[key].length){
+					let hint = template[key][0];
+					let inflatedArray = [];
+					from[key].forEach(function(deflated){
+						inflatedArray.push(hint.deserialize(deflated,hint));
+					});
+					to[key] = inflatedArray;
+				} else {
+					//Generic array copy w/o stealing reference
+					to[key] = from[key].slice();
+				}
+            } else if(typeof(template[key]) === 'object' && template[key] !== null){
+				import_properties(from[key],to[key],template[key]);
+            } else {
+            	to[key] = from[key];
+            }
+        });
+    }
+
+    //Mostly a wrapper for a character's add_to()
+	function add_to_character(location,item,message){
+		//What character?
+		if(!character_loaded) {
+			show_toast("Open your character sheet once first!","Just click the tab to load a charcter.","warning");
+			return;
+		}
+
+		character_loaded.add_to(location,item,message);
+	}
+
+	function show_toast(title, message, style = "info", displayTime = 5000, compact = false) {
+		$('body').toast({
+			title,
+			class: style,
+			message,
+			displayTime,
+			compact,
+			showProgress: "bottom"
+		});
+	}
+
+	function find_by_name(array,name){
+		//Clean name
+		name = colon_truncate(name);
+		name = name.toLowerCase();
+
+		//Look
+		return array.find((element) => {
+			let elname = colon_truncate(element.name);
+			elname = elname.toLowerCase();
+			return elname == name;
+		});
+	}
+
+	function colon_truncate(string){
+		let colonated = string.indexOf(":");
+		if(colonated > -1){
+			string = string.substring(0, colonated);
+		}
+		return string;
+	}
+
 	var mainVue = new Vue({
 		el: "#app",
 		router: vr_router
-	})
+	});
+
+	// https://github.com/gouch/to-title-case/blob/master/to-title-case.js
+	// License: http://www.opensource.org/licenses/mit-license.php
+	String.prototype.toTitleCase = function () {
+	  'use strict'
+	  var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|nor|of|on|or|per|the|to|v.?|vs.?|via)$/i
+	  var alphanumericPattern = /([A-Za-z0-9\u00C0-\u00FF])/
+	  var wordSeparators = /([ /:–—-])/ //Added foward slash -Aro
+
+	  return this.split(wordSeparators)
+	    .map(function (current, index, array) {
+	      /* Check for abbreviation - Aro added this */
+	      if ((current.match(/\./g) || []).length > 1) {
+	      	current = current.toUpperCase();
+	      	/* Check for non-abbreviated ending (plural abbreviations, etc) */
+	      	let ending = current.search(/[^.]+$/g);
+	      	if(ending > -1){
+	      		current = current.substr(0,ending) + current.substr(ending).toLowerCase();
+	      	}
+	      	return current;
+	      }
+
+	      if (
+	        /* Check for small words */
+	        current.search(smallWords) > -1 &&
+	        /* Skip first and last word */
+	        index !== 0 &&
+	        index !== array.length - 1 &&
+	        /* Ignore title end and subtitle start */
+	        array[index - 3] !== ':' &&
+	        array[index + 1] !== ':' &&
+	        /* Ignore small words that start a hyphenated phrase */
+	        (array[index + 1] !== '-' ||
+	          (array[index - 1] === '-' && array[index + 1] === '-'))
+	      ) {
+	        return current.toLowerCase();
+	      }
+
+	      /* Ignore intentional capitalization */
+	      if (current.substr(1).search(/[A-Z]|\../) > -1) {
+	        return current;
+	      }
+
+	      /* Ignore URLs */
+	      if (array[index + 1] === ':' && array[index + 2] !== '') {
+	        return current;
+	      }
+
+	      /* Capitalize the first letter */
+	      return current.replace(alphanumericPattern, function (match) {
+	        return match.toUpperCase();
+	      })
+	    })
+	    .join('')
+	}
+	/////////////////////////////////////////////////////// End License
 
 	$.fn.timedDisable = function(time) {
 	    if (time == null) { time = 3000; }

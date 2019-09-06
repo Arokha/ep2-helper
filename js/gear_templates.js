@@ -1,13 +1,27 @@
-var gear_fallback = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_fallback = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       [No gear template for this subcategory!]
     </div>
   `}
 
-var gear_generic = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_generic = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   computed: {
     notesnotsummary: function() {
       //Just peek at the first one
@@ -25,7 +39,7 @@ var gear_generic = { props: { subcategory: Object, categoryname: String, subcate
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui sortable celled table inverted">
         <thead>
@@ -38,18 +52,25 @@ var gear_generic = { props: { subcategory: Object, categoryname: String, subcate
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td v-if="notesnotsummary">{{item.notes}}</td><td v-else>{{item.summary}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_drugs = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_drugs = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   methods: {
     modal_show: function(item) {
       $("#"+item.id).modal('show');
@@ -58,7 +79,7 @@ var gear_drugs = { props: { subcategory: Object, categoryname: String, subcatego
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui sortable celled table inverted">
         <thead>
@@ -75,7 +96,7 @@ var gear_drugs = { props: { subcategory: Object, categoryname: String, subcatego
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.type}}</td>
               <td>{{item.application}}</td>
@@ -83,14 +104,21 @@ var gear_drugs = { props: { subcategory: Object, categoryname: String, subcatego
               <td>{{item.addiction}}</td>
               <td>{{item.summary}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_ware = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_ware = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   methods: {
     modal_show: function(item) {
       $("#"+item.id).modal('show');
@@ -99,7 +127,7 @@ var gear_ware = { props: { subcategory: Object, categoryname: String, subcategor
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui sortable celled table inverted">
         <thead>
@@ -117,7 +145,7 @@ var gear_ware = { props: { subcategory: Object, categoryname: String, subcategor
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td><i v-if="item.bioware" class="large green checkmark icon"></i></td>
               <td><i v-if="item.cyberware" class="large green checkmark icon"></i></td>
@@ -126,14 +154,21 @@ var gear_ware = { props: { subcategory: Object, categoryname: String, subcategor
               <td><i v-if="item.nanoware" class="large green checkmark icon"></i></td>
               <td>{{item.summary}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_vehicles = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_vehicles = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   methods: {
     english_list: function (arr) {
         return arr.join(", ");
@@ -145,7 +180,7 @@ var gear_vehicles = { props: { subcategory: Object, categoryname: String, subcat
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
         <thead>
@@ -168,7 +203,7 @@ var gear_vehicles = { props: { subcategory: Object, categoryname: String, subcat
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.passengers}}</td>
               <td>{{item.vigor}}</td>
@@ -182,14 +217,21 @@ var gear_vehicles = { props: { subcategory: Object, categoryname: String, subcat
               <td>{{english_list(item.ware)}}</td>
               <td>{{item.notes}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_bots = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_bots = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   methods: {
     english_list: function (arr) {
         return arr.join(", ");
@@ -201,7 +243,7 @@ var gear_bots = { props: { subcategory: Object, categoryname: String, subcategor
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
         <thead>
@@ -221,7 +263,7 @@ var gear_bots = { props: { subcategory: Object, categoryname: String, subcategor
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)" rowspan="2"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)" rowspan="2"><a>{{item.name | titlecase}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.vigor}}<span v-if="item.vigor2">&nbsp;({{item.vigor2}})</span></td>
               <td>{{item.flex}}</td>
@@ -235,14 +277,21 @@ var gear_bots = { props: { subcategory: Object, categoryname: String, subcategor
             <tr>
               <td colspan="9"><b>Ware: </b>{{english_list(item.ware)}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_creatures = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_creatures = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   methods: {
     english_list: function (arr) {
         return arr.join(", ");
@@ -262,7 +311,7 @@ var gear_creatures = { props: { subcategory: Object, categoryname: String, subca
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui celled table inverted">
         <thead>
@@ -285,7 +334,7 @@ var gear_creatures = { props: { subcategory: Object, categoryname: String, subca
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)" :rowspan="namerowspan(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)" :rowspan="namerowspan(item)"><a>{{item.name | titlecase}}</a></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.attributes.cognition}}<sup>{{item.attributes.cognition_check}}</sup></td>
               <td>{{item.attributes.intuition}}<sup>{{item.attributes.intuition_check}}</sup></td>
@@ -314,14 +363,21 @@ var gear_creatures = { props: { subcategory: Object, categoryname: String, subca
             <tr>
               <td colspan="12"><movement-types :types="item.movement_rate"></movement-types></td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_melee = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_melee = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   computed: {
     warecategory: function (){
       //Just peek at the first one
@@ -339,7 +395,7 @@ var gear_melee = { props: { subcategory: Object, categoryname: String, subcatego
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui sortable celled table inverted">
         <thead>
@@ -354,20 +410,27 @@ var gear_melee = { props: { subcategory: Object, categoryname: String, subcatego
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td v-if="warecategory">{{item.waretype}}</td>
               <td>{{item.damage}} [{{item.damage_avg}}]</td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.notes}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_armor = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_armor = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   computed: {
     warecategory: function (){
       //Just peek at the first one
@@ -385,7 +448,7 @@ var gear_armor = { props: { subcategory: Object, categoryname: String, subcatego
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui sortable celled table inverted">
         <thead>
@@ -401,21 +464,28 @@ var gear_armor = { props: { subcategory: Object, categoryname: String, subcatego
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td v-if="warecategory">{{item.waretype}}</td>
               <td>{{item.energy}} / {{item.kinetic}}</td>
               <td><i v-if="item.stackable" class="large green checkmark icon"></i></td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.notes}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_ranged = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_ranged = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   computed: {
     warecategory: function (){
       //Just peek at the first one
@@ -440,7 +510,7 @@ var gear_ranged = { props: { subcategory: Object, categoryname: String, subcateg
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui sortable celled table inverted">
         <thead>
@@ -460,7 +530,7 @@ var gear_ranged = { props: { subcategory: Object, categoryname: String, subcateg
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td v-if="warecategory">{{item.waretype}}</td>
               <td v-if="aoecategory">{{item.area}}</td>
               <td v-if="item.damage">{{item.damage}} [{{item.damage_avg}}]</td><td v-else>See Ammo</td>
@@ -471,14 +541,21 @@ var gear_ranged = { props: { subcategory: Object, categoryname: String, subcateg
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.notes}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_ammo_kinetic = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_ammo_kinetic = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   methods: {
     modal_show: function(item) {
       $("#"+item.id).modal('show');
@@ -487,7 +564,7 @@ var gear_ammo_kinetic = { props: { subcategory: Object, categoryname: String, su
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui sortable celled table inverted">
         <thead>
@@ -501,19 +578,26 @@ var gear_ammo_kinetic = { props: { subcategory: Object, categoryname: String, su
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td>{{item.damage}}</td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.notes}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
     </div>
 `}
 
-var gear_ammo_seeker = { props: { subcategory: Object, categoryname: String, subcategoryname: String },
+var gear_ammo_seeker = {
+  props: { 
+    subcategory: Object, 
+    categoryname: String, 
+    subcategoryname: String,
+    charslot: String,
+    classhint: Function
+  },
   methods: {
     modal_show: function(item) {
       $("#"+item.id).modal('show');
@@ -522,7 +606,7 @@ var gear_ammo_seeker = { props: { subcategory: Object, categoryname: String, sub
   template: `
     <div>
       <div :id="subcategoryname | despace" class="ui divider"></div>
-      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname}}</h3>
+      <h3 class="ui header inverted" style="margin:0;">{{subcategoryname | titlecase}}</h3>
       <span v-html="subcategory.text"></span>
       <table class="ui sortable celled table inverted">
         <thead>
@@ -538,14 +622,14 @@ var gear_ammo_seeker = { props: { subcategory: Object, categoryname: String, sub
         <tbody>
           <template v-for="item in subcategory.items">
             <tr>
-              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name}}</a></td>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
               <td>{{item.areaeffect}}
               <td>{{item.damage}} [{{item.damage_avg}}]</td>
               <td>{{item.armor}}</td>
               <td>{{item['complexity/gp']}}</td>
               <td>{{item.notes}}</td>
             </tr>
-            <info-modal :id="item.id" :title="item.name" :content="item.description"></info-modal>
+            <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
         </tbody>
       </table>
@@ -555,94 +639,94 @@ var gear_ammo_seeker = { props: { subcategory: Object, categoryname: String, sub
 //Map subcategories to templates to use
 var gear_templates = {
   "Comms":{
-      "Communication Gear":gear_generic,
-      "Neutrino Comms Gear":gear_generic,
-      "Quantum Farcasters":gear_generic,
-      "QE Comms Gear":gear_generic,
-      "Mesh Hardware":gear_generic
+      "Communication Gear": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Neutrino Comms Gear": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Quantum Farcasters": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "QE Comms Gear": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Mesh Hardware": {template: gear_generic, charslot: "items", classhint: InvItem}
   },
   "Creatures":{
-      "GMOs":gear_creatures,
-      "Smart Animals":gear_creatures,
-      "Xenofauna":gear_creatures
+      "GMOs": {template: gear_creatures, charslot: "", classhint: null},
+      "Smart Animals": {template: gear_creatures, charslot: "", classhint: null},
+      "Xenofauna": {template: gear_creatures, charslot: "", classhint: null}
   },
   "Drugs":{
-      "Cognitive Drugs":gear_drugs,
-      "Combat Drugs":gear_drugs,
-      "Health Drugs":gear_drugs,
-      "Nanodrugs":gear_drugs,
-      "Narcoalgorithms":gear_drugs,
-      "Petals":gear_drugs,
-      "Psi Drugs":gear_drugs,
-      "Recreational":gear_drugs,
-      "Social Drugs":gear_drugs,
-      "Toxins":gear_drugs,
-      "Nanotoxins":gear_drugs
+      "Cognitive Drugs": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Combat Drugs": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Health Drugs": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Nanodrugs": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Narcoalgorithms": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Petals": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Psi Drugs": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Recreational": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Social Drugs": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Toxins": {template: gear_drugs, charslot: "items", classhint: InvItem},
+      "Nanotoxins": {template: gear_drugs, charslot: "items", classhint: InvItem}
   },
   "Services":{
-      "Mesh Services":gear_generic,
-      "Physical Services":gear_generic
+      "Mesh Services": {template: gear_generic, charslot: "", classhint: null},
+      "Physical Services": {template: gear_generic, charslot: "", classhint: null}
   },
   "Software":{
-      "Skillsoft":gear_generic,
-      "Apps":gear_generic,
-      "ALIs":gear_generic,
-      "Scorchers":gear_generic,
-      "TacNet":gear_generic
+      "Skillsoft": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Apps": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "ALIs": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Scorchers": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "TacNet": {template: gear_generic, charslot: "items", classhint: InvItem}
   },
   "Tech":{
-      "Bots":gear_bots,
-      "Everyday":gear_generic,
-      "Chemicals":gear_generic,
-      "Exploration Tools":gear_generic,
-      "Salvage Tools":gear_generic,
-      "Science Tools":gear_generic,
-      "Survival Tools":gear_generic,
-      "Vacsuits":gear_generic,
-      "Nanotech Gear":gear_generic,
-      "Hives":gear_generic,
-      "Nanofabricators":gear_generic,
-      "Specialized Fabbers":gear_generic,
-      "Espionage/Security":gear_generic,
-      "Swarms":gear_generic
+      "Bots": {template: gear_bots, charslot: "bots", classhint: InvBot},
+      "Everyday": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Chemicals": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Exploration Tools": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Salvage Tools": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Science Tools": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Survival Tools": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Vacsuits": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Nanotech Gear": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Hives": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Nanofabricators": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Specialized Fabbers": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Espionage/Security": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Swarms": {template: gear_generic, charslot: "items", classhint: InvItem}
   },
   "Vehicles":{
-      "Aircraft":gear_vehicles,
-      "Exoskeletons":gear_vehicles,
-      "Groundcraft":gear_vehicles,
-      "Hardsuits":gear_vehicles,
-      "Hybrids":gear_vehicles,
-      "Nautical Craft":gear_vehicles,
-      "Pers Transport":gear_vehicles,
-      "Spacecraft":gear_vehicles
+      "Aircraft": {template: gear_vehicles, charslot: "vehicles", classhint: InvVehicle},
+      "Exoskeletons": {template: gear_vehicles, charslot: "vehicles", classhint: InvVehicle},
+      "Groundcraft": {template: gear_vehicles, charslot: "vehicles", classhint: InvVehicle},
+      "Hardsuits": {template: gear_vehicles, charslot: "vehicles", classhint: InvVehicle},
+      "Hybrids": {template: gear_vehicles, charslot: "vehicles", classhint: InvVehicle},
+      "Nautical Craft": {template: gear_vehicles, charslot: "vehicles", classhint: InvVehicle},
+      "Pers Transport": {template: gear_vehicles, charslot: "vehicles", classhint: InvVehicle},
+      "Spacecraft": {template: gear_vehicles, charslot: "vehicles", classhint: InvVehicle}
   },
   "Ware":{
-      "Combat":gear_ware,
-      "Mental":gear_ware,
-      "Physical":gear_ware,
-      "Sensory":gear_ware,
-      "Social":gear_ware,
-      "Standard":gear_ware,
-      "Meshware":gear_ware
+      "Combat": {template: gear_ware, charslot: "ware", classhint: InvWare},
+      "Mental": {template: gear_ware, charslot: "ware", classhint: InvWare},
+      "Physical": {template: gear_ware, charslot: "ware", classhint: InvWare},
+      "Sensory": {template: gear_ware, charslot: "ware", classhint: InvWare},
+      "Social": {template: gear_ware, charslot: "ware", classhint: InvWare},
+      "Standard": {template: gear_ware, charslot: "ware", classhint: InvWare},
+      "Meshware": {template: gear_ware, charslot: "ware", classhint: InvWare}
   },
   "Melee Weapons":{
-      "Melee Ware":gear_melee,
-      "Melee Weapons":gear_melee,
-      "Improvised Melee":gear_melee
+      "Melee Ware": {template: gear_melee, charslot: "weapons_melee", classhint: InvWep},
+      "Melee Weapons": {template: gear_melee, charslot: "weapons_melee", classhint: InvWep},
+      "Improvised Melee": {template: gear_melee, charslot: "weapons_melee", classhint: InvWep}
   },
   "Ranged Weapons":{
-      "Ranged Ware":gear_ranged,
-      "Beam Weapons":gear_ranged,
-      "Spray Weapons":gear_ranged,
-      "Kinetic Weapons":gear_ranged,
-      "Seeker Weapons":gear_ranged,
-      "Weapon Mods":gear_generic,
-      "Kinetic Ammo":gear_ammo_kinetic,
-      "Seeker/Grenade Ammo":gear_ammo_seeker
+      "Ranged Ware": {template: gear_ranged, charslot: "weapons_ranged", classhint: InvRangedWep},
+      "Beam Weapons": {template: gear_ranged, charslot: "weapons_ranged", classhint: InvRangedWep},
+      "Spray Weapons": {template: gear_ranged, charslot: "weapons_ranged", classhint: InvRangedWep},
+      "Kinetic Weapons": {template: gear_ranged, charslot: "weapons_ranged", classhint: InvRangedWep},
+      "Seeker Weapons": {template: gear_ranged, charslot: "weapons_ranged", classhint: InvRangedWep},
+      "Weapon Mods": {template: gear_generic, charslot: "items", classhint: InvItem},
+      "Kinetic Ammo": {template: gear_ammo_kinetic, charslot: "items", classhint: InvItem},
+      "Seeker/Grenade Ammo": {template: gear_ammo_seeker, charslot: "items", classhint: InvItem}
   },
   "Armor":{
-    "Armor Ware":gear_armor,
-    "Armor Gear":gear_armor,
-    "Armor Mods":gear_generic
+    "Armor Ware": {template: gear_armor, charslot: "armor", classhint: InvArmor},
+    "Armor Gear": {template: gear_armor, charslot: "armor", classhint: InvArmor},
+    "Armor Mods": {template: gear_generic, charslot: "armor", classhint: InvArmor}
   }
 }
