@@ -22,21 +22,7 @@
       <vcomp-stepdesc v-if="chargen.length" :step="chargen[0]"></vcomp-stepdesc>
       
       <div class="ui three doubling cards inverted">
-        <template v-for="background in backgrounds">
-          <div class="ui centered card">
-            <div class="content">
-              <div class="header">{{background.name}}</div>
-              <div class="description"><p>{{background.description}}</p></div>
-              <br>
-              <div class="description">
-                <div class="header">Skills</div>
-                <ul>
-                  <li v-for="(value, name) in background.skills">{{name}}: {{value.rating}} <span v-if="value.options.length">({{or_list(value.options)}})</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </template>
+        <background-card v-for="background in backgrounds" :background="background" :key="background.name" />
       </div>
     </div>
 
@@ -44,21 +30,7 @@
       <vcomp-stepdesc v-if="chargen.length" :step="chargen[1]"></vcomp-stepdesc>
       
       <div class="ui three doubling cards inverted">
-        <template v-for="career in careers">
-          <div class="ui centered card">
-            <div class="content">
-              <div class="header">{{career.name}}</div>
-              <div class="description">{{career.description}}</div>
-              <br>
-              <div class="description">
-                <div class="header">Skills</div>
-                <ul>
-                  <li v-for="(value, name) in career.skills">{{name}}: {{value.rating}} <span v-if="value.options.length">({{or_list(value.options)}})</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </template>
+        <career-card v-for="career in careers" :career="career" :key="career.name" />
       </div>
     </div>
 
@@ -66,21 +38,7 @@
       <vcomp-stepdesc v-if="chargen.length" :step="chargen[2]"></vcomp-stepdesc>
 
       <div class="ui three doubling cards inverted">
-        <template v-for="interest in interests">
-          <div class="ui centered card">
-            <div class="content">
-              <div class="header">{{interest.name}}</div>
-              <div class="description">{{interest.description}}</div>
-              <br>
-              <div class="card-body">
-                <div class="header">Skills</div>
-                <ul>
-                  <li v-for="(value, name) in interest.skills">{{name}}: {{value.rating}} <span v-if="value.options.length">({{or_list(value.options)}})</span></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </template>
+        <interest-card v-for="interest in interests" :interest="interest" :key="interest.name" />
       </div>
     </div>
 
@@ -88,14 +46,7 @@
       <vcomp-stepdesc v-if="chargen.length" :step="chargen[3]"></vcomp-stepdesc>
 
       <div class="ui three doubling cards inverted">
-        <template v-for="faction in factions">
-          <div class="ui centered card">
-            <div class="content">
-              <div class="header">{{faction.name}}</div>
-              <div class="description">{{faction.description}}</div>
-            </div>
-          </div>
-        </template>
+        <faction-card v-for="faction in factions" :faction="faction" :key="faction.name" />
       </div>
     </div>
 

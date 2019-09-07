@@ -1,0 +1,1389 @@
+<div id="sheet-grid" class="ui grid">
+	<div class="sixteen wide column">
+		
+		<div class="ui segment inverted">
+			<div class="ui labeled icon inverted basic teal button" @click="save_character()">
+				<i class="save icon"></i>
+				Save Character
+			</div>
+			<div class="ui labeled icon inverted basic teal button" @click="export_character()">
+				<i class="download alternate icon"></i>
+				Export Character
+			</div>
+			<div class="ui labeled icon inverted basic teal button" @click="show_import_dialog()">
+				<i class="upload alternate icon"></i>
+				Import Character
+			</div>
+			<div class="ui labeled icon inverted basic red button" @click="show_wipe_dialog()">
+				<i class="undo red icon"></i>
+				Reset Sheet
+			</div>
+			<div class="ui labeled icon inverted basic green right floated button" @click="show_rolls()">
+				<i class="dice icon"></i>
+				Dice Rolls
+			</div>
+		</div>
+		
+		<sheet-infobox header="General Info">
+			<div class="ui form inverted">
+				<div class="three fields">
+					<div class="field"><label>Name</label>
+						<prop :obj="character" keyname="name" classes="ui text large" />
+					</div>
+					<div class="field"><label>Aliases</label>
+						<prop :obj="character" keyname="aliases" classes="ui text large" />
+					</div>
+					<div class="field"><label>Forks</label>
+						<prop :obj="character" keyname="active_forks" classes="ui text large" />
+					</div>
+				</div>
+				<div class="four fields">
+					<div class="field"><label>Background</label>
+						<prop :obj="character" keyname="background" classes="ui text large" />
+						<sheet-modal-link
+						v-if="character.background_obj"
+						title="Background Info"
+						compname="background-card"
+						compattr="background"
+						:compobj="character.background_obj"
+						>
+							<i class="info circle icon"></i>
+						</sheet-modal-link>
+
+					</div>
+					<div class="field"><label>Interest</label>
+						<prop :obj="character" keyname="interest" classes="ui text large" />
+						<sheet-modal-link
+						v-if="character.interest_obj"
+						title="Interest Info"
+						compname="interest-card"
+						compattr="interest"
+						:compobj="character.interest_obj"
+						>
+							<i class="info circle icon"></i>
+						</sheet-modal-link>
+
+					</div>
+					<div class="field"><label>Career</label>
+						<prop :obj="character" keyname="career" classes="ui text large" />
+						<sheet-modal-link
+						v-if="character.career_obj"
+						title="Career Info"
+						compname="career-card"
+						compattr="career"
+						:compobj="character.career_obj"
+						>
+							<i class="info circle icon"></i>
+						</sheet-modal-link>
+
+					</div>
+					<div class="field"><label>Faction</label>
+						<prop :obj="character" keyname="faction" classes="ui text large" />
+						<sheet-modal-link
+						v-if="character.faction_obj"
+						title="Faction Info"
+						compname="faction-card"
+						compattr="faction"
+						:compobj="character.faction_obj"
+						>
+							<i class="info circle icon"></i>
+						</sheet-modal-link>
+
+					</div>
+				</div>
+				<div class="two fields">
+					<div class="field"><label>Languages</label>
+						<prop :obj="character" keyname="languages" classes="ui text large" />
+					</div>
+					<div class="field"><label>Motivations</label>
+						<prop :obj="character" keyname="motivations" classes="ui text large" />
+					</div>
+				</div>
+			</div>
+		</sheet-infobox>
+
+	</div>
+
+	<div class="eight wide column">
+		
+		<sheet-infobox header="Morph">
+			<div class="ui horizontal inverted divider">Basic Info</div>
+			<div class="ui horizontal divided inverted centerflow very relaxed large selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Name</div>
+						<prop :obj="character" keyname="morph_name" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Cost</div>
+						<prop :obj="character" keyname="morph_mp_cost" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Avail</div>
+						<prop :obj="character" keyname="morph_avail" />
+					</div>
+				</div>
+				<div class="item" @click="cycle_morph_type()">
+					<div class="content">
+						<div class="header">Type</div>
+						<prop :obj="character" keyname="morph_type" readonly />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Size</div>
+						<prop :obj="character" keyname="morph_size" />
+					</div>
+				</div>
+			</div> <!-- End basic info -->
+
+			<div class="ui horizontal inverted divider">Pools</div>
+			<div class="ui horizontal divided inverted centerflow very relaxed large selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Vigor/Max</div>
+						<prop :obj="character" keyname="vigor_left" /> / <prop :obj="character" keyname="vigor" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Insight/Max</div>
+						<prop :obj="character" keyname="insight_left" /> / <prop :obj="character" keyname="insight" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Moxie/Max</div>
+						<prop :obj="character" keyname="moxie_left" /> / <prop :obj="character" keyname="moxie" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Flex/Max</div>
+						<prop :obj="character" keyname="flex_left" /> / <prop :obj="character" keyname="flex_ego" />E / <prop :obj="character" keyname="flex_morph" />M
+					</div>
+				</div>
+			</div>
+			<div class="ui horizontal divided inverted centerflow very relaxed large selection list">
+				<div class="item" @click="character.shortrest()">
+					<div class="content" data-tooltip="Will throw a d6 for you on click">
+						<div class="header">Short Rest</div>
+						<span v-if="!character.shortrests_left" class="ui text red">{{character.shortrests_left}}</span>
+						<span v-else>{{character.shortrests_left}}</span>
+						 / <prop :obj="character" keyname="shortrests" />
+					</div>
+				</div>
+				<div class="item" @click="character.longrest()">
+					<div class="content" data-tooltip="Will reset all pools to max when used">
+						<div class="header">Long Rest</div>
+						<span v-if="character.longrest_used" class="ui text red">Used!</span>
+						<span v-else>Available</span>
+					</div>
+				</div>
+			</div> <!-- End pools -->
+
+			<div class="ui horizontal inverted divider">Health</div>
+			<div class="ui horizontal divided inverted centerflow very large relaxed selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Durability</div>
+						<prop :obj="character" keyname="durability_base" /> (<span v-if="character.durability_mod > 0">+</span><prop :obj="character" keyname="durability_mod" />)
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Wound Thresh.</div>
+						<prop :obj="character" keyname="wound_threshold" readonly /> (<span v-if="character.wound_threshold_mod > 0">+</span><prop :obj="character" keyname="wound_threshold_mod" />)
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Death Rating</div>
+						<prop :obj="character" keyname="death_rating" readonly /> (<span v-if="character.death_rating_mod > 0">+</span><prop :obj="character" keyname="death_rating_mod" />)
+					</div>
+				</div>
+			</div>
+			<div class="ui horizontal divided inverted centerflow very relaxed large selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Damage</div>
+						<prop :obj="character" keyname="damage_taken" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Wounds</div>
+						<prop :obj="character" keyname="wounds_taken" />
+					</div>
+				</div>
+			</div>
+
+			<div class="ui horizontal inverted divider">Movement</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Type <a @click="character.movement_rate.push({movement_type: '<Input Name>',base:0,full:0})"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Base</th>
+						<th class="center aligned">Full</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(move,index) in character.movement_rate">
+						<td class="selectable"><prop :obj="move" keyname="movement_type" /></td>
+						<td class="center aligned selectable"><prop :obj="move" keyname="base" /></td>
+						<td class="center aligned selectable"><prop :obj="move" keyname="full" /></td>
+						<td class="selectable collapsing"><a @click="character.movement_rate.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Positive Traits</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Name <a @click="new_morph_trait('Positive')"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Level</th>
+						<th class="center aligned">Summary</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(trait,index) in character.morph_traits">
+						<tr v-if="trait.type == 'Positive'">
+							<td class="single line selectable"><prop :obj="trait" keyname="name" />
+								<sheet-modal-link
+									v-if="trait.source"
+									:title="trait.source.name"
+									:contenthtml="trait.source.description+'<br>Cost: '+trait.source.cost">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+							</td>
+							<td class="center aligned selectable"><prop :obj="trait" keyname="level" /></td>
+							<td class="center aligned selectable"><prop :obj="trait" keyname="summary" /></td>
+							<td class="selectable collapsing"><a @click="character.morph_traits.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Negative Traits</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Name <a @click="new_morph_trait('Negative')"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Level</th>
+						<th class="center aligned">Summary</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(trait,index) in character.morph_traits">
+						<tr v-if="trait.type == 'Negative'">
+							<td class="single line selectable"><prop :obj="trait" keyname="name" />
+								<sheet-modal-link
+									v-if="trait.source"
+									:title="trait.source.name"
+									:contenthtml="trait.source.description+'<br>Cost: '+trait.source.cost">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+							</td>
+							<td class="center aligned selectable"><prop :obj="trait" keyname="level" /></td>
+							<td class="center aligned selectable"><prop :obj="trait" keyname="summary" /></td>
+							<td class="selectable collapsing"><a @click="character.morph_traits.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Ware</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Name <a @click="new_morph_ware()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Type</th>
+						<th class="center aligned">Summary</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(ware,index) in character.ware">
+						<tr>
+							<td class="single line selectable"><prop :obj="ware" keyname="name" />
+								<sheet-modal-link
+									v-if="ware.source"
+									:title="ware.source.name"
+									:contenthtml="ware.source.description + '<p>Complexity/GP: ' + ware.source['complexity/gp'] + ware.typelist">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+							</td>
+							<td class="center aligned selectable"><prop :obj="ware" keyname="type" /></td>
+							<td class="center aligned selectable"><prop :obj="ware" keyname="summary" /></td>
+							<td class="selectable collapsing"><a @click="character.ware.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Notes</div>
+			<div class="ui secondary inverted segment clickedit"><prop :obj="character" keyname="morph_notes" multiline /></div>
+
+		</sheet-infobox> <!-- End morph -->
+		
+		<sheet-infobox header="Combat">
+			<div class="ui horizontal inverted divider">Ranged Weapons</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th data-tooltip="Ctrl-Click weapon names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_ranged_wep()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Damage</th>
+						<th class="center aligned">Firemodes</th>
+						<th class="center aligned">Range</th>
+						<th class="center aligned">Ammo</th>
+						<th>Notes</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(weapon,index) in character.weapons_ranged">
+						<tr>
+							<td class="single line selectable" @click.ctrl.stop.prevent="add_item_mod(weapon,$event)"><prop :obj="weapon" keyname="name" />
+								<sheet-modal-link
+									v-if="weapon.source"
+									:title="weapon.source.name"
+									:contenthtml="weapon.source.description + '<p>Complexity/GP: ' + weapon.source['complexity/gp']">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+								<div
+									v-for="mod in weapon.mods"
+									class="ui horizontal basic inverted transparent label"
+									@click.ctrl.stop.prevent="rem_item_mod(weapon,mod,$event)"
+								>
+									{{mod}}
+								</div>
+							</td>
+							<td class="center aligned selectable"><prop :obj="weapon" keyname="damage" /></td>
+							<td class="center aligned selectable"><prop :obj="weapon" keyname="firemodes" /></td>
+							<td class="center aligned selectable"><prop :obj="weapon" keyname="range" /></td>
+							<td class="center aligned selectable"><prop :obj="weapon" keyname="ammo" /></td>
+							<td class="selectable"><prop :obj="weapon" keyname="notes" /></td>
+							<td class="selectable collapsing"><a @click="character.weapons_ranged.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Melee Weapons</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th data-tooltip="Ctrl-Click weapon names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_melee_wep()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Damage</th>
+						<th>Notes</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(weapon,index) in character.weapons_melee">
+						<tr>
+							<td class="single line selectable" @click.ctrl.stop.prevent="add_item_mod(weapon,$event)"><prop :obj="weapon" keyname="name" />
+								<sheet-modal-link
+									v-if="weapon.source"
+									:title="weapon.source.name"
+									:contenthtml="weapon.source.description + '<p>Complexity/GP: ' + weapon.source['complexity/gp']">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+								<div
+									v-for="mod in weapon.mods"
+									class="ui horizontal basic inverted transparent label"
+									@click.ctrl.stop.prevent="rem_item_mod(weapon,mod,$event)"
+								>
+									{{mod}}
+								</div>
+							</td>
+							<td class="center aligned selectable"><prop :obj="weapon" keyname="damage" /></td>
+							<td class="selectable"><prop :obj="weapon" keyname="notes" /></td>
+							<td class="selectable collapsing"><a @click="character.weapons_melee.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Armor</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th data-tooltip="Ctrl-Click armor names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_armor()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Energy</th>
+						<th class="center aligned">Kinetic</th>
+						<th>Notes</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(armor,index) in character.armors">
+						<tr>
+							<td class="single line selectable" @click.ctrl.stop.prevent="add_item_mod(armor,$event)"><prop :obj="armor" keyname="name" />
+								<sheet-modal-link
+									v-if="armor.source"
+									:title="armor.source.name"
+									:contenthtml="armor.source.description + '<p>Complexity/GP: ' + armor.source['complexity/gp']">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+								<div
+									v-for="mod in armor.mods"
+									class="ui horizontal basic inverted transparent label"
+									@click.ctrl.stop.prevent="rem_item_mod(armor,mod,$event)"
+								>
+									{{mod}}
+								</div>
+							</td>
+							<td class="center aligned selectable"><prop :obj="armor" keyname="energy" /></td>
+							<td class="center aligned selectable"><prop :obj="armor" keyname="kinetic" /></td>
+							<td class="selectable"><prop :obj="armor" keyname="notes" /></td>
+							<td class="selectable collapsing"><a @click="character.armors.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+		</sheet-infobox>
+		
+		<sheet-infobox header="Reputation">
+			<div class="ui horizontal inverted divider">Real ID (<prop :obj="character" keyname="name" readonly />)</div>
+			<table class="ui table inverted">
+				<thead>
+					<tr>
+						<th class="center aligned">@-rep</th>
+						<th class="center aligned">c-rep</th>
+						<th class="center aligned">f-rep</th>
+						<th class="center aligned">g-rep</th>
+						<th class="center aligned">i-rep</th>
+						<th class="center aligned">r-rep</th>
+						<th class="center aligned">x-rep</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="center aligned selectable"><prop :obj="character.rep_real.a_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_real.c_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_real.f_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_real.g_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_real.i_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_real.r_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_real.x_rep" keyname="value" /></td>
+					</tr>
+					<tr>
+						<th class="center aligned" colspan="7">Favors (Triv/Min/Mod/Maj)</th>
+					</tr>
+					<tr>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_real.a_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_real.a_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_real.a_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_real.c_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_real.c_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_real.c_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_real.f_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_real.f_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_real.f_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_real.g_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_real.g_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_real.g_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_real.i_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_real.i_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_real.i_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_real.r_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_real.r_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_real.r_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_real.x_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_real.x_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_real.x_rep" keyname="maj_favors" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Fake ID (<prop :obj="character.rep_fake1" keyname="name" />)</div>
+			<table class="ui table inverted">
+				<thead>
+					<tr>
+						<th class="center aligned">@-rep</th>
+						<th class="center aligned">c-rep</th>
+						<th class="center aligned">f-rep</th>
+						<th class="center aligned">g-rep</th>
+						<th class="center aligned">i-rep</th>
+						<th class="center aligned">r-rep</th>
+						<th class="center aligned">x-rep</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake1.a_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake1.c_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake1.f_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake1.g_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake1.i_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake1.r_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake1.x_rep" keyname="value" /></td>
+					</tr>
+					<tr>
+						<th class="center aligned" colspan="7">Favors (Triv/Min/Mod/Maj)</th>
+					</tr>
+					<tr>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake1.a_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake1.a_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake1.a_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake1.c_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake1.c_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake1.c_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake1.f_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake1.f_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake1.f_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake1.g_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake1.g_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake1.g_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake1.i_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake1.i_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake1.i_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake1.r_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake1.r_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake1.r_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake1.x_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake1.x_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake1.x_rep" keyname="maj_favors" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Fake ID (<prop :obj="character.rep_fake2" keyname="name" />)</div>
+			<table class="ui table inverted">
+				<thead>
+					<tr>
+						<th class="center aligned">@-rep</th>
+						<th class="center aligned">c-rep</th>
+						<th class="center aligned">f-rep</th>
+						<th class="center aligned">g-rep</th>
+						<th class="center aligned">i-rep</th>
+						<th class="center aligned">r-rep</th>
+						<th class="center aligned">x-rep</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake2.a_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake2.c_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake2.f_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake2.g_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake2.i_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake2.r_rep" keyname="value" /></td>
+						<td class="center aligned selectable"><prop :obj="character.rep_fake2.x_rep" keyname="value" /></td>
+					</tr>
+					<tr>
+						<th class="center aligned" colspan="7">Favors (Triv/Min/Mod/Maj)</th>
+					</tr>
+					<tr>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake2.a_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake2.a_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake2.a_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake2.c_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake2.c_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake2.c_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake2.f_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake2.f_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake2.f_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake2.g_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake2.g_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake2.g_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake2.i_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake2.i_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake2.i_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake2.r_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake2.r_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake2.r_rep" keyname="maj_favors" />
+						</td>
+						<td class="center aligned">
+							<span class="ui text large">∞</span> / 
+							<prop :obj="character.rep_fake2.x_rep" keyname="min_favors" /> / 
+							<prop :obj="character.rep_fake2.x_rep" keyname="mod_favors" /> / 
+							<prop :obj="character.rep_fake2.x_rep" keyname="maj_favors" />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+		</sheet-infobox>
+		
+		<sheet-infobox header="Psi">
+			<div class="ui horizontal inverted divider">Psi Basics</div>
+				<div class="ui horizontal divided inverted centerflow large relaxed selection list">
+					<div class="item clickedit">
+						<div class="content">
+							<div class="header">Substrain</div>
+							<prop :obj="character" keyname="substrain" />
+						</div>
+					</div>
+					<div class="item clickedit">
+						<div class="content">
+							<div class="header">Infection Rating</div>
+							<prop :obj="character" keyname="infection_rating" />
+						</div>
+					</div>
+				</div>
+			<div class="ui horizontal inverted divider">Influence Events</div>
+			<table class="ui table inverted">
+				<thead>
+					<tr>
+						<th class="center aligned">Event <a @click="new_psi_event()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(event,index) in character.influence_events">
+						<td class="selectable"><prop :obj="event" keyname="event" /></td>
+						<td class="selectable collapsing"><a @click="character.influence_events.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+			<div class="ui horizontal inverted divider">Psi Sleights</div>
+			<table class="ui table inverted">
+				<thead>
+					<tr>
+						<th class="center aligned">Name <a @click="new_psi_sleight()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned collapsing">Level</th>
+						<th class="center aligned collapsing">Action</th>
+						<th class="center aligned collapsing">Duration</th>
+						<th class="center aligned">Summary</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(sleight,index) in character.sleights">
+						<tr>
+							<td class="single line selectable"><prop :obj="sleight" keyname="name" />
+								<sheet-modal-link
+									v-if="sleight.source"
+									:title="sleight.source.name"
+									:contenthtml="sleight.source.description">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+							</td>
+							<td class="center aligned selectable collapsing"><prop :obj="sleight" keyname="level" /></td>
+							<td class="center aligned selectable collapsing"><prop :obj="sleight" keyname="action" /></td>
+							<td class="center aligned selectable collapsing"><prop :obj="sleight" keyname="duration" /></td>
+							<td class="center aligned selectable collapsing"><prop :obj="sleight" keyname="summary" /></td>
+							<td class="selectable collapsing"><a @click="character.sleights.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</sheet-infobox>
+		
+		<sheet-infobox header="Bots/Vehicles">
+			<div class="ui horizontal inverted divider">Bots</div>
+			<table class="ui celled table inverted">
+				<thead>
+					<tr>
+						<th class="center aligned">Name <a @click="new_bot()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Vigor</th>
+						<th class="center aligned">Flex</th>
+						<th class="center aligned">Armor</th>
+						<th class="center aligned">WT</th>
+						<th class="center aligned">DUR</th>
+						<th class="center aligned">DR</th>
+						<th class="center aligned">Size</th>
+						<th class="center aligned" data-tooltip="Ctrl-Click movements to remove them">Movement</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(bot,index) in character.bots">
+						<tr>
+							<td class="center align selectable single line" rowspan="2"><prop :obj="bot" keyname="name" />
+								<sheet-modal-link
+									v-if="bot.source"
+									:title="bot.source.name"
+									:contenthtml="bot.source.description + '<p>Complexity/GP: ' + bot.source['complexity/gp']">
+									<i class="info circle icon"></i>
+								</sheet-modal-link></td>
+							<td class="center aligned selectable"><prop :obj="bot" keyname="vigor" /> / <prop :obj="bot" keyname="vigor_max" /></td>
+							<td class="center aligned selectable"><prop :obj="bot" keyname="flex" /> / <prop :obj="bot" keyname="flex_max" /></td>
+							<td class="center aligned selectable"><prop :obj="bot" keyname="armor_energy" /> / <prop :obj="bot" keyname="armor_kinetic" /></td>
+							<td class="center aligned selectable"><prop :obj="bot" keyname="wound_threshold" /></td>
+							<td class="center aligned selectable"><prop :obj="bot" keyname="durability" /></td>
+							<td class="center aligned selectable"><prop :obj="bot" keyname="death_rating" /></td>
+							<td class="center aligned selectable"><prop :obj="bot" keyname="size" /></td>
+							<td>
+								<ul>
+									<li v-for="(move,index) in bot.movement_rate" @click.ctrl.exact="bot.movement_rate.splice(index,1)">
+										<prop :obj="move" keyname="movement_type" /> - 
+										<prop :obj="move" keyname="base" /> / 
+										<prop :obj="move" keyname="full" />
+									</li>
+								</ul>
+								<a @click.stop="bot.movement_rate.push({movement_type:'Name',base:0,full:0})"><i class="plus square outline icon"></i></a>
+							</td>
+							<td class="selectable collapsing"><a @click="character.bots.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+						<tr>
+							<td colspan="10"><b data-tooltip="Ctrl-Click ware to delete them">Ware: </b>
+								<template v-for="(ware,index) in bot.ware">
+									<span @click.ctrl.exact="bot.ware.splice(index,1)"><prop :obj="ware" keyname="name" />
+										<sheet-modal-link
+											v-if="ware.source"
+											:title="ware.source.name"
+											:contenthtml="ware.source.description">
+												<i class="info circle icon"></i>
+										</sheet-modal-link>
+										<span v-if="index+1 != bot.ware.length">, </span> <!-- Oof! -->
+									</span>
+								</template>
+								<a @click="new_botware(bot)"><i class="plus square outline icon"></i></a>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Vehicles</div>
+			<table class="ui celled table inverted">
+				<thead>
+					<tr>
+						<th class="center aligned">Name <a @click="new_vehicle()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Vigor</th>
+						<th class="center aligned">Flex</th>
+						<th class="center aligned">Armor</th>
+						<th class="center aligned">WT</th>
+						<th class="center aligned">DUR</th>
+						<th class="center aligned">DR</th>
+						<th class="center aligned">Size</th>
+						<th class="center aligned">Passengers</th>
+						<th class="center aligned" data-tooltip="Ctrl-Click movements to remove them">Movement</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(vehicle,index) in character.vehicles">
+						<tr>
+							<td class="center align selectable single line" rowspan="2"><prop :obj="vehicle" keyname="name" />
+								<sheet-modal-link
+									v-if="vehicle.source"
+									:title="vehicle.source.name"
+									:contenthtml="vehicle.source.description + '<p>Complexity/GP: ' + vehicle.source['complexity/gp']">
+									<i class="info circle icon"></i>
+								</sheet-modal-link></td>
+							<td class="center aligned selectable"><prop :obj="vehicle" keyname="vigor" /> / <prop :obj="vehicle" keyname="vigor_max" /></td>
+							<td class="center aligned selectable"><prop :obj="vehicle" keyname="flex" /> / <prop :obj="vehicle" keyname="flex_max" /></td>
+							<td class="center aligned selectable"><prop :obj="vehicle" keyname="armor_energy" /> / <prop :obj="vehicle" keyname="armor_kinetic" /></td>
+							<td class="center aligned selectable"><prop :obj="vehicle" keyname="wound_threshold" /></td>
+							<td class="center aligned selectable"><prop :obj="vehicle" keyname="durability" /></td>
+							<td class="center aligned selectable"><prop :obj="vehicle" keyname="death_rating" /></td>
+							<td class="center aligned selectable"><prop :obj="vehicle" keyname="size" /></td>
+							<td class="center aligned selectable"><prop :obj="vehicle" keyname="passengers" /></td>
+							<td>
+								<ul>
+									<li v-for="(move,index) in vehicle.movement_rate" @click.ctrl.exact="vehicle.movement_rate.splice(index,1)">
+										<prop :obj="move" keyname="movement_type" /> - 
+										<prop :obj="move" keyname="base" /> / 
+										<prop :obj="move" keyname="full" />
+									</li>
+								</ul>
+								<a @click.stop="vehicle.movement_rate.push({movement_type:'Name',base:0,full:0})"><i class="plus square outline icon"></i></a>
+							</td>
+							<td class="selectable collapsing"><a @click="character.vehicles.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+						<tr>
+							<td colspan="11"><b data-tooltip="Ctrl-Click ware to delete them">Ware: </b>
+								<template v-for="(ware,index) in vehicle.ware">
+									<span @click.ctrl.exact="vehicle.ware.splice(index,1)"><prop :obj="ware" keyname="name" />
+										<sheet-modal-link
+											v-if="ware.source"
+											:title="ware.source.name"
+											:contenthtml="ware.source.description">
+												<i class="info circle icon"></i>
+										</sheet-modal-link>
+										<span v-if="index+1 != vehicle.ware.length">, </span> <!-- Oof! -->
+									</span>
+								</template>
+								<a @click="new_vehicleware(vehicle)"><i class="plus square outline icon"></i></a>
+							</td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</sheet-infobox>
+		
+	</div> <!-- End of left column -->
+	
+	<div class="eight wide column">
+		<sheet-infobox header="Ego">
+			<div class="ui horizontal inverted divider">Mental Health</div>
+			<div class="ui horizontal divided inverted centerflow large relaxed selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Lucidity</div>
+						<prop :obj="character" keyname="lucidity" readonly /> (<span v-if="character.lucidity_mod > 0">+</span><prop :obj="character" keyname="lucidity_mod" />)
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Trauma Thresh.</div>
+						<prop :obj="character" keyname="trauma_threshold" readonly /> (<span v-if="character.trauma_threshold_mod > 0">+</span><prop :obj="character" keyname="trauma_threshold_mod" />)
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Insanity Rating</div>
+						<prop :obj="character" keyname="insanity_rating" readonly /> (<span v-if="character.insanity_rating_mod > 0">+</span><prop :obj="character" keyname="insanity_rating_mod" />)
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Stress</div>
+						<prop :obj="character" keyname="stress_taken" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Traumas</div>
+						<prop :obj="character" keyname="traumas_taken" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Initiative</div>
+						<prop :obj="character" keyname="initiative" readonly /> (<span v-if="character.initiative_mod > 0">+</span><prop :obj="character" keyname="initiative_mod" />)
+					</div>
+				</div>
+			</div>
+
+			<div class="ui horizontal inverted divider">Aptitudes</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th class="center aligned">Base<br>Rank</th>
+						<th class="center aligned">Check<br>Mod</th>
+						<th class="center aligned">Apt<br>Check</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Cognition (COG)
+							<sheet-modal-link
+								title="Cognition (COG)"
+								:contenthtml="aptitudes[0].description">
+								<i class="info circle icon"></i>
+							</sheet-modal-link></td>
+						<td class="center aligned selectable"><prop :obj="character" keyname="cog" /></td>
+						<td class="center aligned selectable"><span v-if="character.cog_check_postmod > 0">+</span><prop :obj="character" keyname="cog_check_postmod" /></td>
+						<td class="center aligned selectable" @click="roll(character.cog_check,'COG Check')"><prop :obj="character" keyname="cog_check" readonly /></td>
+					</tr>
+					<tr>
+						<td>Intuition (INT)
+							<sheet-modal-link
+								title="Intuition (INT)"
+								:contenthtml="aptitudes[1].description">
+								<i class="info circle icon"></i>
+							</sheet-modal-link></td>
+						<td class="center aligned selectable"><prop :obj="character" keyname="int" /></td>
+						<td class="center aligned selectable"><span v-if="character.int_check_postmod > 0">+</span><prop :obj="character" keyname="int_check_postmod" /></td>
+						<td class="center aligned selectable" @click="roll(character.int_check,'INT Check')"><prop :obj="character" keyname="int_check" readonly /></td>
+					</tr>
+					<tr>
+						<td>Reflexes (REF)
+							<sheet-modal-link
+								title="Reflexes (REF)"
+								:contenthtml="aptitudes[2].description">
+								<i class="info circle icon"></i>
+							</sheet-modal-link></td>
+						<td class="center aligned selectable"><prop :obj="character" keyname="ref" /></td>
+						<td class="center aligned selectable"><span v-if="character.ref_check_postmod > 0">+</span><prop :obj="character" keyname="ref_check_postmod" /></td>
+						<td class="center aligned selectable" @click="roll(character.ref_check,'REF Check')"><prop :obj="character" keyname="ref_check" readonly /></td>
+					</tr>
+					<tr>
+						<td>Savvy (SAV)
+							<sheet-modal-link
+								title="Savvy (SAV)"
+								:contenthtml="aptitudes[3].description">
+								<i class="info circle icon"></i>
+							</sheet-modal-link></td>
+						<td class="center aligned selectable"><prop :obj="character" keyname="sav" /></td>
+						<td class="center aligned selectable"><span v-if="character.sav_check_postmod > 0">+</span><prop :obj="character" keyname="sav_check_postmod" /></td>
+						<td class="center aligned selectable" @click="roll(character.sav_check,'SAV Check')"><prop :obj="character" keyname="sav_check" readonly /></td>
+					</tr>
+					<tr>
+						<td>Somatics (SOM)
+							<sheet-modal-link
+								title="Somatics (SOM)"
+								:contenthtml="aptitudes[4].description">
+								<i class="info circle icon"></i>
+							</sheet-modal-link></td>
+						<td class="center aligned selectable"><prop :obj="character" keyname="som" /></td>
+						<td class="center aligned selectable"><span v-if="character.som_check_postmod > 0">+</span><prop :obj="character" keyname="som_check_postmod" /></td>
+						<td class="center aligned selectable" @click="roll(character.som_check,'SOM Check')"><prop :obj="character" keyname="som_check" readonly /></td>
+					</tr>
+					<tr>
+						<td>Willpower (WIL)
+							<sheet-modal-link
+								title="Willpower (WIL)"
+								:contenthtml="aptitudes[5].description">
+								<i class="info circle icon"></i>
+							</sheet-modal-link></td>
+						<td class="center aligned selectable"><prop :obj="character" keyname="wil" /></td>
+						<td class="center aligned selectable"><span v-if="character.wil_check_postmod > 0">+</span><prop :obj="character" keyname="wil_check_postmod" /></td>
+						<td class="center aligned selectable" @click="roll(character.wil_check,'WIL Check')"><prop :obj="character" keyname="wil_check" readonly /></td>
+					</tr>
+				</tbody>
+			</table>
+		</sheet-infobox>
+		
+		<sheet-infobox header="Skills">
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th data-tooltip="Ctrl-Click skillnames to add specializations. Ctrl-Click specs to delete." data-position="top left">Name <a @click="new_skill()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Rank</th>
+						<th class="center aligned">Aptitude</th>
+						<th class="center aligned">Mod</th>
+						<th class="center aligned">Total</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(skill,index) in character.skills">
+						<td :class="'single line' + (skill.mandatory ? '' : ' selectable')" @click.ctrl.stop.prevent="add_skill_spec(skill,$event)">
+							<prop :obj="skill" keyname="name" :readonly="skill.mandatory" />
+							<sheet-modal-link
+								v-if="skill.source"
+								:title="skill.source.name"
+								:contenthtml="skill.source.description + '<br>Specializations: ' + skill.source.specializations"
+							>
+								<i class="info circle icon"></i>
+							</sheet-modal-link>
+							<a
+								v-for="spec in skill.specializations"
+								class="ui horizontal basic inverted transparent label"
+								@click.ctrl.stop.prevent="rem_skill_spec(skill,spec,$event)"
+								@click.exact.stop="roll(skill.total(character[skill.aptitude])+10,skill.name + ' Check (+10)')"
+							>
+								{{spec}}
+							</a>
+						</td>
+						<td class="center aligned selectable"><prop :obj="skill" keyname="rank" /></td>
+						<td :class="'center aligned' + (skill.mandatory ? '' : ' selectable')"><prop :obj="skill" keyname="aptitude" :readonly="skill.mandatory" /></td>
+						<td class="center aligned selectable"><span v-if="skill.mod > 0">+</span><prop :obj="skill" keyname="mod" /></td>
+						<td class="center aligned selectable" @click="roll(skill.total(character[skill.aptitude]),skill.name + ' Check')">{{skill.total(character[skill.aptitude])}}</td>
+						<td class="selectable collapsing"><a v-if="!skill.mandatory" @click="character.skills.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</sheet-infobox>
+		
+		<sheet-infobox header="Gear">
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Name <a @click="new_item()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Summary</th>
+						<th class="center aligned collapsing">Qty</th>
+						<th class="center aligned collapsing">Restricted</th>
+						<th class="center aligned collapsing">Blueprint</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(item,index) in character.items">
+						<td><prop :obj="item" keyname="name" />
+							<sheet-modal-link
+								v-if="item.source"
+								:title="item.source.name"
+								:contenthtml="item.source.description + '<p>Complexity/GP: ' + item.source['complexity/gp']">
+								<i class="info circle icon"></i>
+							</sheet-modal-link>
+						</td>
+						<td class="center aligned selectable"><prop :obj="item" keyname="summary" /></td>
+						<td class="center aligned selectable"><prop :obj="item" keyname="quantity" />x</td>
+						<td class="center aligned selectable" @click.stop="item.restricted = !item.restricted">
+							<i v-if="item.restricted" class="red skull large icon"></i>
+							<i v-else class="green clipboard check large icon"></i>
+						</td>
+						<td class="center aligned selectable" @click.stop="item.blueprint = !item.blueprint">
+							<i v-if="item.blueprint" class="green tools large icon"></i>
+							<i v-else class="times large icon"></i>
+						</td>
+						<td class="selectable collapsing"><a @click="character.items.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</sheet-infobox>
+		
+		<sheet-infobox header="Ego Traits">
+			<div class="ui horizontal inverted divider">Positive Traits</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Name <a @click="new_ego_trait('Positive')"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Level</th>
+						<th class="center aligned">Summary</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(trait,index) in character.ego_traits">
+						<tr v-if="trait.type == 'Positive'">
+							<td class="single line selectable"><prop :obj="trait" keyname="name" />
+								<sheet-modal-link
+									v-if="trait.source"
+									:title="trait.source.name"
+									:contenthtml="trait.source.description+'<br>Cost: '+trait.source.cost">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+							</td>
+							<td class="center aligned selectable"><prop :obj="trait" keyname="level" /></td>
+							<td class="center aligned selectable"><prop :obj="trait" keyname="summary" /></td>
+							<td class="selectable collapsing"><a @click="character.ego_traits.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+
+			<div class="ui horizontal inverted divider">Negative Traits</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Name <a @click="new_ego_trait('Negative')"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Level</th>
+						<th class="center aligned">Summary</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<template v-for="(trait,index) in character.ego_traits">
+						<tr v-if="trait.type == 'Negative'">
+							<td class="single line selectable"><prop :obj="trait" keyname="name" />
+								<sheet-modal-link
+									v-if="trait.source"
+									:title="trait.source.name"
+									:contenthtml="trait.source.description+'<br>Cost: '+trait.source.cost">
+									<i class="info circle icon"></i>
+								</sheet-modal-link>
+							</td>
+							<td class="center aligned selectable"><prop :obj="trait" keyname="level" /></td>
+							<td class="center aligned selectable"><prop :obj="trait" keyname="summary" /></td>
+							<td class="selectable collapsing"><a @click="character.ego_traits.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+						</tr>
+					</template>
+				</tbody>
+			</table>
+		</sheet-infobox>
+		
+		<sheet-infobox header="Muse">
+			<div class="ui horizontal inverted divider">Muse Basics</div>
+			<div class="ui horizontal divided inverted centerflow large very relaxed selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Muse Name</div>
+						<prop :obj="character.muse" keyname="name" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Muse Looks</div>
+						<prop :obj="character.muse" keyname="looks" multiline />
+					</div>
+				</div>
+			</div>
+			<div class="ui horizontal inverted divider">Muse Ego Vitals</div>
+			<div class="ui horizontal divided inverted centerflow large selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Lucidity</div>
+						<prop :obj="character.muse" keyname="lucidity" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Trauma Thresh.</div>
+						<prop :obj="character.muse" keyname="trauma_threshold" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Insanity Rating</div>
+						<prop :obj="character.muse" keyname="insanity_rating" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Stress Taken</div>
+						<prop :obj="character.muse" keyname="stress_taken" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Traumas Taken</div>
+						<prop :obj="character.muse" keyname="traumas_taken" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="ui horizontal inverted divider">Muse Mesh Vitals</div>
+			<div class="ui horizontal divided inverted centerflow large selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Durability</div>
+						<prop :obj="character.muse" keyname="durability" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Wound Thresh.</div>
+						<prop :obj="character.muse" keyname="wound_threshold" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Death Rating</div>
+						<prop :obj="character.muse" keyname="death_rating" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Damage Taken</div>
+						<prop :obj="character.muse" keyname="damage_taken" />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Wounds Taken</div>
+						<prop :obj="character.muse" keyname="wounds_taken" />
+					</div>
+				</div>
+			</div>
+			
+			<div class="ui horizontal inverted divider">Muse Aptitudes</div>
+			<div class="ui horizontal divided inverted centerflow very relaxed large selection list">
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">COG</div>
+						<prop :obj="character.muse" keyname="cog" /> / <prop :obj="character.muse" keyname="cog_check" readonly />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">INT</div>
+						<prop :obj="character.muse" keyname="int" /> / <prop :obj="character.muse" keyname="int_check" readonly />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">REF</div>
+						<prop :obj="character.muse" keyname="ref" /> / <prop :obj="character.muse" keyname="ref_check" readonly />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">SAV</div>
+						<prop :obj="character.muse" keyname="sav" /> / <prop :obj="character.muse" keyname="sav_check" readonly />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">SOM</div>
+						<prop :obj="character.muse" keyname="som" /> / <prop :obj="character.muse" keyname="som_check" readonly />
+					</div>
+				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">WIL</div>
+						<prop :obj="character.muse" keyname="wil" /> / <prop :obj="character.muse" keyname="wil_check" readonly />
+					</div>
+				</div>
+			</div>
+			<div class="ui horizontal inverted divider">Muse Skills</div>
+			<table class="ui inverted table">
+				<thead>
+					<tr>
+						<th>Name <a @click="new_muse_skill()"><i class="plus square outline icon"></i></a></th>
+						<th class="center aligned">Rank</th>
+						<th class="center aligned">Aptitude</th>
+						<th class="center aligned">Mod</th>
+						<th class="center aligned">Total</th>
+						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr v-for="(skill,index) in character.muse.skills">
+						<td :class="'single line' + (skill.mandatory ? '' : ' selectable')">
+							<prop :obj="skill" keyname="name" :readonly="skill.mandatory" />
+							<sheet-modal-link
+								v-if="skill.source"
+								:title="skill.source.name"
+								:contenthtml="skill.source.description + '<br>Specializations: ' + skill.source.specializations"
+							>
+								<i class="info circle icon"></i>
+							</sheet-modal-link>
+						</td>
+						<td class="center aligned selectable"><prop :obj="skill" keyname="rank" /></td>
+						<td :class="'center aligned' + (skill.mandatory ? '' : ' selectable')"><prop :obj="skill" keyname="aptitude" :readonly="skill.mandatory" /></td>
+						<td class="center aligned selectable"><span v-if="skill.mod > 0">+</span><prop :obj="skill" keyname="mod" /></td>
+						<td class="center aligned selectable" @click="roll(skill.total(character.muse[skill.aptitude]),skill.name + ' Check')">{{skill.total(character.muse[skill.aptitude])}}</td>
+						<td class="selectable collapsing"><a v-if="!skill.mandatory" @click="character.muse.skills.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</sheet-infobox>
+
+		<sheet-infobox header="Notes">
+			<div class="ui secondary inverted segment"><prop :obj="character" keyname="notes" multiline /></div>
+		</sheet-infobox>
+
+	</div> <!-- end of right column -->
+
+	<div class="ui modal inverted" id="sheet-rolls">
+		<div class="header">Recent Rolls</div>
+		<div class="scrolling content">
+			<div class="ui inverted right floated center aligned segment">
+				<div class="ui animated fade basic fluid button inverted blue" @click="custom_roll()">
+					<div class="visible content">Custom Roll</div>
+					<div class="hidden content">
+						<i class="dice icon"></i>
+					</div>
+				</div><br>
+				<div class="ui labeled input">
+					<div class="ui label">Target</div>
+        			<input class="ui mini input" type="number" id="custom-target" name="custom-target" min="0" max="200" value="50">
+        		</div>
+        		<br>
+        		<br>
+        		<div class="ui input">
+        			<input type="text" id="custom-reason" placeholder="Reason...">
+        		</div>
+			</div>
+			<span v-if="reverse_rolls.length">Your {{reverse_rolls[0].reason}} roll was a:</span>
+			<ul>
+				<template v-for="(log,index) in reverse_rolls">
+					<li>
+						<span :class="index == 0 ? 'ui text large' : ''">
+							{{log.roll.text}}&nbsp;(Rolled: {{log.roll.result}} vs. {{log.modified_target}})<span v-if="index != 0"> for {{log.reason}}</span>
+						</span>
+					</li>
+					<ul v-if="log.notes.length">
+						<li>Original target: {{log.original_target}}</li>
+						<li v-for="note in log.notes">{{note}}</li>
+					</ul>
+					<div v-if="index == 0" class="ui horizontal inverted divider">Older Rolls</div>
+				</template>
+			</ul>
+		</div>
+	</div>
+
+	<div class="ui modal inverted" id="import-modal">
+		<div class="header">Base64 Character Import</div>
+		<div class="content">
+			<p>Paste your exported character below and use the button to import it over the current character.</p>
+			<p>Note: You will <b>OVERWRITE</b> your current character. Make sure you have a backup!</p>
+		
+			<div class="ui animated fade basic button inverted blue" @click="import_character()">
+				<div class="visible content">Import Character</div>
+				<div class="hidden content"><i class="upload alternate icon"></i></div>
+			</div>
+			
+			<div class="ui segment">
+				<textarea style="width:100%;height:25rem;" spellcheck="false" id="import-textarea"></textarea>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui modal inverted" id="export-modal">
+		<div class="header">Base64 Character Export</div>
+		<div class="content">
+			<p>You can import the below code later to re-load your character, or send it to someone else.</p>
+			
+			<div class="ui animated fade basic button inverted blue" @click="copy_export()">
+				<div class="visible content">Copy to Clipboard</div>
+				<div class="hidden content"><i class="clipboard icon"></i></div>
+			</div>
+			
+			<div class="ui segment">
+				<textarea style="width:100%;height:25rem;" spellcheck="false" id="export-textarea" :value="base64export"></textarea>
+			</div>
+		</div>
+	</div>
+	
+	<div class="ui modal inverted" id="character-wipe">
+		<div class="header">Confirm Character Deletion</div>
+		<div class="content">
+			<p>Are you sure about this? This can't be undone unless you exported your character data and saved it elsewhere.</p>
+			<p>We suggest you do that if this is a character you've spent any time working on!</p>
+			<p>Click ANYWHERE ELSE to close this window.</p>
+			<div class="ui animated fade button inverted red" @click="wipe()">
+					<div class="visible content">Yes, Clear All Data</div>
+			<div class="hidden content"><i class="trash black icon"></i></div>
+			</div>
+		</div>
+	</div>
+
+</div>

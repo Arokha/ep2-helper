@@ -6,77 +6,260 @@ const vr_quickrules = function() {
   });
 };
 
-const vr_roller = {
-  template: `
-    <div class="ui segment inverted">
-      <p><span class="ui big text">Results: <span id="result-zone"></span></span></p>
-      <div class="big ui right labeled button" tabindex="0">
-        <div id="roll-dice" class="ui button"><i class="redo icon"></i> Roll</div>
-        <div id="roll-result" class="ui basic left pointing label">00</div>
-      </div>
-      <br>
-      <br>
-      <div>
-        <p><label for="roll-target">Roll Target:&nbsp;&nbsp;</label>
-        <input type="number" id="roll-target" name="roll-target" min="0" max="200"></p>
-      </div>
-    </div>
-  `,
-  mounted: function() {
-    $("#roll-dice").click(() => {roll_dice();});
+const vr_sheet = function() {
+  return $.ajax("static/sheet.html").then(function(templateHtml) {
+    return {
+      data: function() {
+        return {
+          character: null,
+          aptitudes,
+          base64export: null,
+          rolls: []
+        };
+      },
+      methods: {
+        new_morph_trait(type){
+          this.character.morph_traits.push(new Trait(null,type));
+        },
+        new_ego_trait(type){
+          this.character.ego_traits.push(new Trait(null,type));
+        },
+        new_morph_ware(){
+          this.character.ware.push(new InvWare());
+        },
+        new_item(){
+          this.character.items.push(new InvItem());
+        },
+        new_ranged_wep(){
+          this.character.weapons_ranged.push(new InvRangedWep(null,"Ranged Weapons"));
+        },
+        new_melee_wep(){
+          this.character.weapons_melee.push(new InvWep(null,"Melee Weapons"));
+        },
+        new_armor(){
+          this.character.armors.push(new InvArmor());
+        },
+        new_bot(){
+          this.character.bots.push(new InvBot());
+        },
+        new_botware(bot){
+          bot.ware.push(new InvWare());
+        },
+        new_vehicle(){
+          this.character.vehicles.push(new InvVehicle());
+        },
+        new_vehicleware(vehicle){
+          vehicle.ware.push(new InvWare());
+        },
+        new_skill(){
+          this.character.skills.push(new Skill());
+        },
+        add_item_mod(item,event){
+          item.mods.push(prompt("Please enter the new mod:", ""));
+        },
+        rem_item_mod(item,mod,event){
+          var indexof = item.mods.indexOf(mod);
+          item.mods.splice(indexof, 1);
+        },
+        add_skill_spec(skill,event){
+          skill.specializations.push(prompt("Please enter the new specialization:", ""));
+        },
+        rem_skill_spec(skill,spec,event){
+          var indexof = skill.specializations.indexOf(spec);
+          skill.specializations.splice(indexof, 1);
+        },
+        new_psi_event(){
+          this.character.influence_events.push({event:"<Input Event Info>"});
+        },
+        new_psi_sleight(){
+          this.character.sleights.push(new Sleight());
+        },
+        cycle_morph_type(){
+          var index = -1;
+          morph_types.find( (el,eli) => {
+            if(el.name == this.character.morph_type){
+              index = eli;
+              return true; //We don't care about the object tbh
+            }
+          });
 
-    function roll_dice(){
-      var real_result = Math.floor(Math.random() * 100); //Just a normal d100 roll, from 00-99.
-      var result = real_result;
+          //Found
+          if(index >= 0 && index+1 < morph_types.length){
+            this.character.morph_type = morph_types[index+1].name;
+            this.character.morph_bio = morph_types[index+1].biological;
+          } else {
+            this.character.morph_type = morph_types[0].name;
+            this.character.morph_bio = morph_types[0].biological;
+          }
+        },
+        roll(target,reason){
+          var logged_roll = {
+            reason,
+            original_target: target,
+            modified_target: null,
+            roll: null,
+            notes: []
+          };
 
-      //Modifier shenanigans in here
+          if(this.character.traumas_taken){
+            let penalty = this.character.traumas_taken*-10;
+            target += penalty;
+            logged_roll.notes.push(`Penalty of ${penalty} due to ${this.character.traumas_taken} traumas!`);
+          }
 
-      $("#roll-result").text(result);
-      bonus_update(real_result);
-    }
+          if(this.character.wounds_taken){
+            let penalty = this.character.wounds_taken*-10;
+            target += penalty;
+            logged_roll.notes.push(`Penalty of ${penalty} due to ${this.character.wounds_taken} wounds!`);
+          }
+          
+          logged_roll.modified_target = target;
 
-    function bonus_update(roll){
-      var bonus = "";
-      var target_number = Number($("#roll-target").val());
-      $("#roll-dice").timedDisable(1000);
+          logged_roll.roll = roll_dice(target);
+          
+          this.rolls.push(logged_roll);
 
-      //"Superiors"
-      if(target_number){
-        //Success
-        if((roll >= 66) && (roll <= target_number)){bonus = "Two Superior Successes!";} else
-        if((roll >= 33) && (roll <= target_number)){bonus = "One Superior Success!";} else
-        //Failure
-        if((roll <= 33) && (roll > target_number)){bonus = "Two Superior Failures!";} else
-        if((roll <= 66) && (roll > target_number)){bonus = "One Superior Failure!";}
-      }
+          $('#sheet-rolls').modal('show');
 
-      //Criticals
-      if(roll == 0){bonus = "Critical Success!";} else
-      if(roll == 99){bonus = "Critical Failure!";} else
-      if((roll % 11) == 0){
-        if(target_number){
-          if(roll <= target_number){bonus = "Critical Success!";} else {bonus = "Critical Failure!";}
-        } else {
-          bonus = "Critical Result!";
+          console.log(logged_roll);
+
+        },
+        default_skills(){
+          this.character.skills = [
+          new Skill("Athletics","SOM",0,0,true),
+          new Skill("Deceive","SAV",0,0,true),
+          new Skill("Fray","REF",0,0,true),
+          new Skill("Free Fall","REF",0,0,true),
+          new Skill("Guns","REF",0,0,true),
+          new Skill("Infiltrate","REF",0,0,true),
+          new Skill("Infosec","COG",0,0,true),
+          new Skill("Interface","COG",0,0,true),
+          new Skill("Kinesics","SAV",0,0,true),
+          new Skill("Melee","SOM",0,0,true),
+          new Skill("Perceive","INT",0,0,true),
+          new Skill("Persuade","SAV",0,0,true),
+          new Skill("Program","COG",0,0,true),
+          new Skill("Provoke","SAV",0,0,true),
+          new Skill("Psi","WIL",0,0,true),
+          new Skill("Research","COG",0,0,true),
+          new Skill("Survival","INT",0,0,true),
+          new Skill("Hardware: ?","COG",0,0,false),
+          new Skill("Medicine: ?","COG",0,0,false),
+          new Skill("Pilot: ?","REF",0,0,false),
+          new Skill("Know: ?","?",0,0,false)
+          ];
+        },
+        default_muse(){
+          this.character.muse.skills = [
+          new Skill("Hardware: Electronics","COG",30,0,true),
+          new Skill("Infosec","COG",30,0,true),
+          new Skill("Interface","COG",60,0,true),
+          new Skill("Know: Accounting","COG",60,0,true),
+          new Skill("Know: Psychology","COG",60,0,true),
+          new Skill("Medicine: Psychosurgery","COG",30,0,true),
+          new Skill("Perceive","INT",30,0,true),
+          new Skill("Program","COG",30,0,true),
+          new Skill("Research","COG",30,0,true),
+          new Skill("Know: ?","?",40,0,false),
+          ]
+        },
+        defaults(){
+          this.character = new Character();
+          this.default_skills();
+          this.default_muse();
+          character_loaded = this.character; //Global reference so we can play with it.
+        },
+        show_wipe_dialog(){
+          $('#character-wipe').modal('show');
+        },
+        wipe(){
+          this.defaults();
+          $('#character-wipe').modal('hide');
+          var browserStore = window.localStorage;
+          browserStore.clear();
+        },
+        update_export(){
+          var preparing = $.extend(true,{},serial_character);
+          export_properties(this.character,preparing,serial_character);
+          var uncomp = JSON.stringify(preparing);
+          this.base64export = LZString.compressToBase64(uncomp);
+        },
+        export_character(){
+          this.update_export();
+          $('#export-modal').modal('show');
+        },
+        import_character(val){
+          let base64 = val || $("#import-textarea").val();
+          let decomp = JSON.parse(LZString.decompressFromBase64(base64));
+          import_properties(decomp,this.character,serial_character);
+          $("#import-modal").modal('hide');
+        },
+        show_import_dialog(){
+          $("#import-modal").modal('show');
+        },
+        copy_export(){
+          $("#export-textarea").focus().select();
+          try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log("Copying export was " + msg);
+          } catch (err) {
+            console.log("Couldn't copy export due to exception");
+          }
+        },
+        save_character(){
+          this.update_export();
+          var browserStore = window.localStorage;
+          browserStore.setItem('ep2character', this.base64export);
+          $('body')
+            .toast({
+              title: 'Saved Character',
+              message: "You should occasionally back up your data via 'Export' also.",
+              displayTime: 7000,
+              showProgress: "bottom"
+            });
+        },
+        load_from_localstorage(){
+          var browserStore = window.localStorage;
+          var save = browserStore.getItem('ep2character');
+          if(save){
+            this.import_character(save);
+            return true;
+          }
+          return false;
+        },
+        show_rolls(){
+          $("#sheet-rolls").modal('show');
+        },
+        custom_roll(){
+          let reasonval = $("#custom-reason").val();
+          if(reasonval){
+            reasonval += " (Custom)";
+          }
+          this.roll($("#custom-target").val(),reasonval||"Custom Roll");
         }
-      }
-    
-      if(bonus){
-        $("#result-zone").addClass("rainbow-text");
-        $("#result-zone").html(bonus);
-      } else {
-        $("#result-zone").removeClass("rainbow-text");
-        if(target_number && (roll <= target_number)){
-          $("#result-zone").html("Success!");
-        } else if(target_number){
-          $("#result-zone").html("Failure!");
-        } else {
-          $("#result-zone").html("");
+      },
+      computed: {
+        reverse_rolls(){
+          return this.rolls.slice().reverse();
         }
-      }
-    }
-  }
-}
+      },
+      created: function (){
+        if(!this.character){
+          this.defaults();
+        }
+        this.load_from_localstorage();
+      },
+      mounted: function (){
+        $(this.$el).on("click",".clickedit, .selectable",function(event){
+          $(event.currentTarget).find(".prop[contentEditable=true]").first().focus();
+        });
+      },
+      template: templateHtml
+    };
+  });
+};
+
 
 const vr_chargen = function() {
   return $.ajax("static/chargen.html").then(function(templateHtml) {
@@ -85,20 +268,15 @@ const vr_chargen = function() {
       data: function() {
         return {
           chargen: [],
-          backgrounds: [],
-          careers: [],
-          interests: [],
-          factions: [],
-          aptemps: [],
-          reputations: [],
-          gearpacks: [],
-          skills: []
+          backgrounds,
+          careers,
+          interests,
+          factions,
+          aptemps,
+          reputations,
+          gearpacks,
+          skills
         };
-      },
-      methods: {
-        or_list: function (arr) {
-        return arr.join(", ").replace(/, ((?:.(?!, ))+)$/, ', or $1');
-        }
       },
       watch: {
         '$route' (to, from) {
@@ -118,14 +296,6 @@ const vr_chargen = function() {
         // When all data is loaded, the active tab will be at proper height and we can refresh sticky.
         Promise.all([
           $.getJSON('data/chargen.json').then((json) => {this.chargen = json;}),
-          $.getJSON('data/backgrounds.json').then((json) => {this.backgrounds = json;}),
-          $.getJSON('data/careers.json').then((json) => {this.careers = json;}),
-          $.getJSON('data/interests.json').then((json) => {this.interests = json;}),
-          $.getJSON('data/factions.json').then((json) => {this.factions = json;}),
-          $.getJSON('data/aptitude_templates.json').then((json) => {this.aptemps = json;}),
-          $.getJSON('data/reputations.json').then((json) => {this.reputations = json;}),
-          $.getJSON('data/gear_packs.json').then((json) => {this.gearpacks = json;}),
-          $.getJSON('data/skills.json').then((json) => {this.skills = json;})
         ]).then(() => {
           Vue.nextTick(() => {
             $(".sticky", this.$el).sticky();
@@ -139,8 +309,8 @@ const vr_chargen = function() {
 const vr_morphs = {
   data: function () {
     return {
-      morphs: [],
-      morph_types: []
+      morphs,
+      morph_types
     };
   },
   props: {
@@ -165,14 +335,6 @@ const vr_morphs = {
     </div>
   </div>
   `,
-  created: function() {
-    $.getJSON('data/morphs.json').then( (json) => {
-      this.morphs = json;
-    });
-    $.getJSON('data/morph_types.json').then( (json) => {
-      this.morph_types = json;
-    });
-  },
   mounted: function() {
     $('.item', this.$el).tab({
         onVisible: function(){
@@ -241,7 +403,7 @@ const vr_morphs = {
 const vr_gear = {
   data: function() {
     return {
-      unsorted_gear: [],
+      unsorted_gear, //This is a global so we can use it other places too.
       gear_types: {}
     };
   },
@@ -272,33 +434,7 @@ const vr_gear = {
   </div>
   `,
   created: function() {
-    var gear_jsons = [
-      "gear_bots.json",
-      "gear_comms.json",
-      "gear_creatures.json",
-      "gear_drugs.json",
-      "gear_items.json",
-      "gear_mission.json",
-      "gear_nano.json",
-      "gear_security.json",
-      "gear_software.json",
-      "gear_swarms.json",
-      "gear_vehicles.json",
-      "gear_ware.json",
-      "services.json",
-      "weapons_melee.json",
-      "weapons_ranged.json",
-      "weapons_ammo.json",
-      "gear_armor.json"
-    ];
-
-    gear_jsons.forEach( (file) => {
-      $.getJSON('data/'+file).then( (json) => {
-        this.unsorted_gear.push.apply(this.unsorted_gear,json);
-      });
-    });
-
-    $.getJSON('data/gear_text.json').then( (json) => {
+    $.getJSON('data/gear_categories.json').then( (json) => {
       this.gear_types = json;
     });
   },
@@ -409,7 +545,7 @@ const vr_gear = {
 const vr_traits = {
   data: function() {
     return {
-      traits: []
+      traits
     };
   },
   props: {
@@ -432,11 +568,6 @@ const vr_traits = {
     </div>
   </div>
   `,
-  created: function() {
-    $.getJSON('data/traits.json').then( (json) => {
-      this.traits = json;
-    });
-  },
   mounted: function() {
     $('.item', this.$el).tab({
         onVisible: function(){
@@ -495,7 +626,7 @@ const vr_primer = function() {
 
 const vr_routes = [
   { path: '/quickrules', component: vr_quickrules },
-  { path: '/roller', component: vr_roller },
+  { path: '/sheet', component: vr_sheet },
   { path: '/chargen', redirect: '/chargen/1' },
   { path: '/chargen/:step', component: vr_chargen },
   { path: '/primer', redirect: '/primer/whatis' },
