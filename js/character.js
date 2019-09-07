@@ -960,6 +960,7 @@ class Character {
 		return (this.wil_base + this.wil_mod + this.wil_check_premod) * 3 + this.wil_check_postmod;
 	}
 
+	//Could be combined in theory?
 	increase_skill(skillname,amt,fieldhint){
 		let existing = this.skills.find( (skill) => {
 			return skill.name.toLowerCase() == skillname.toLowerCase();
@@ -977,6 +978,7 @@ class Character {
 			this.skills.push(newskill);
 		}
 	}
+
 	decrease_skill(skillname,amt){
 		let existing = this.skills.find( (skill) => {
 			return skill.name.toLowerCase() == skillname.toLowerCase();
@@ -986,6 +988,15 @@ class Character {
 		} else {
 			return; //Can't decrease imaginary skills!
 		}
+	}
+
+	adjust_apt(aptname,amt){
+		if(aptname.length > 3){
+			aptname = aptname.substr(0,3); //Just the first 3 please
+		}
+		aptname = aptname.toLowerCase();
+
+		this[aptname] += amt;
 	}
 
 	add_to(location,item,message){

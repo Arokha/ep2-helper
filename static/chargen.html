@@ -54,24 +54,7 @@
       <vcomp-stepdesc v-if="chargen.length" :step="chargen[4]"></vcomp-stepdesc>
       
       <div class="ui three doubling cards inverted">
-        <template v-for="aptemp in aptemps">
-          <div class="ui centered card">
-            <div class="content">
-              <div class="header">{{aptemp.name}}</div>
-              <div class="description">
-                {{aptemp.description}}
-                <ul>
-                  <li>COG: {{aptemp.aptitudes.cognition}}</li>
-                  <li>INT: {{aptemp.aptitudes.intuition}}</li>
-                  <li>REF: {{aptemp.aptitudes.reflexes}}</li>
-                  <li>SAV: {{aptemp.aptitudes.savvy}}</li>
-                  <li>SOM: {{aptemp.aptitudes.somatics}}</li>
-                  <li>WIL: {{aptemp.aptitudes.willpower}}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </template>
+        <aptemplate-card v-for="aptemp in aptemps" :aptemp="aptemp" :key="aptemp.name"></aptemplate-card>
       </div>
     </div>
 
