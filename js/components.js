@@ -594,6 +594,53 @@ Vue.component('faction-card', {
   `
 });
 
+Vue.component('aptemplate-card', {
+  props: { 
+    aptemp: Object
+  },
+  methods: {
+    apply(){
+      if(!character_loaded){
+        show_toast("Open your character sheet once first!","Just click the tab to load a charcter.","warning");
+        return;
+      }
+
+      if(character_loaded.cog || character_loaded.int || character_loaded.ref || character_loaded.sav || character_loaded.som || character_loaded.wil){
+        show_toast("Aptitudes already applied?","Some of your aptitudes aren't 0 on your sheet. Start from 0 first.","error");
+        return;
+      }
+      
+      let aptitudes = this.aptemp.aptitudes;
+      Object.keys(aptitudes).forEach(function(key,index) {
+        character_loaded.adjust_apt(key,aptitudes[key]);
+      });
+
+      show_toast("Applied aptitude template!","You should see it reflected on your sheet now.","success");
+    }
+  },
+  template: `
+    <div class="ui centered card">
+      <div class="content">
+        <div class="header">{{aptemp.name}}</div>
+        <div class="description">
+          {{aptemp.description}}
+          <ul>
+            <li>COG: {{aptemp.aptitudes.cognition}}</li>
+            <li>INT: {{aptemp.aptitudes.intuition}}</li>
+            <li>REF: {{aptemp.aptitudes.reflexes}}</li>
+            <li>SAV: {{aptemp.aptitudes.savvy}}</li>
+            <li>SOM: {{aptemp.aptitudes.somatics}}</li>
+            <li>WIL: {{aptemp.aptitudes.willpower}}</li>
+          </ul>
+        </div>
+      </div>
+      <div class="ui labeled icon inverted basic green bottom attached button" @click="apply()">
+        <i class="plus icon"></i>
+        Apply Template
+      </div>
+    </div>
+  `
+});
 /** Filter to replace spaces and other strange characters with underscores. */
 Vue.filter('despace', function (value) {
   if (!value) return '';
