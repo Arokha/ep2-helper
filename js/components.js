@@ -178,97 +178,90 @@ Vue.component('vcomp-morphcard', {
     },
     adopt_morph() {
       $("#resleeve-"+this.morph.id).modal('hide');
-      let failing = false;
-      let toastclass = "success";
-      let toastmessage = 'Resleeve complete!'
 
       if(!character_loaded){
-        toastmessage = "Unable to locate ego! (Open character sheet once first!)"
-        failing = true;
+        show_toast("Unable to locate ego!","(Open the character sheet once first.)","warning");
+        return;
       }
 
-      if(failing){
-        toastclass = "error";
-      } else {
-        //Here we go!
-        let from = this.morph;
-        let to = character_loaded;
+      //Here we go!
+      let from = this.morph;
+      let to = character_loaded;
 
-        //Safe to assume
-        to.damage_taken = 0;
-        to.wounds_taken = 0;
+      //Safe to assume
+      to.damage_taken = 0;
+      to.wounds_taken = 0;
 
-        //Basics
-        to.morph_name = from.name;
-        to.morph_mp_cost = from.cost;
-        to.morph_avail = from.availability;
+      //Basics
+      to.morph_name = from.name;
+      to.morph_mp_cost = from.cost;
+      to.morph_avail = from.availability;
 
-        //Pools
-        to.insight = from.pools.insight;
-        to.moxie = from.pools.moxie;
-        to.vigor = from.pools.vigor;
-        to.flex_morph = from.pools.flex; //NB: flex_morph
+      //Pools
+      to.insight = from.pools.insight;
+      to.moxie = from.pools.moxie;
+      to.vigor = from.pools.vigor;
+      to.flex_morph = from.pools.flex; //NB: flex_morph
 
-        //Dura, should set many other vars.
-        to.durability_base = from.durability;
+      //Dura, should set many other vars.
+      to.durability_base = from.durability;
 
-        //Ware
-        to.ware.lengh = 0;
-        from.ware.forEach(function(warename){
-          let inst = new InvWare(warename);
-          
-          if(inst.source){
-            //We make sure it's actually destined for 'ware'. Stupid melee/ranged ware.
-            try {
-              let definition = gear_templates[inst.source.category][inst.source.subcategory];
-              let toarray = definition.charslot;
-              if(toarray != "ware"){
-                //Oof, fine.
-                let better_inst = new definition.classhint(warename);
-                to[toarray].push(better_inst);
-              } else {
-                to.ware.push(inst); //Just go to ware
-              }
-              
-            } catch (e) { //Eh.
-              console.error(e);
-              to.ware.push(inst);
+      //Ware
+      to.ware.lengh = 0;
+      from.ware.forEach(function(warename){
+        let inst = new InvWare(warename);
+        
+        if(inst.source){
+          //We make sure it's actually destined for 'ware'. Stupid melee/ranged ware.
+          try {
+            let definition = gear_templates[inst.source.category][inst.source.subcategory];
+            let toarray = definition.charslot;
+            if(toarray != "ware"){
+              //Oof, fine.
+              let better_inst = new definition.classhint(warename);
+              to[toarray].push(better_inst);
+            } else {
+              to.ware.push(inst); //Just go to ware
             }
-          } else {
+            
+          } catch (e) { //Eh.
+            console.error(e);
             to.ware.push(inst);
           }
-        });
-
-        //Traits
-        to.morph_traits.lengh = 0;
-        from.morph_traits.forEach(function(traitobj){
-          to.morph_traits.push(new Trait(traitobj.name,null,traitobj.level));
-        });
-
-        //Movement
-        to.movement_rate.lengh = 0;
-        from.movement_rate.forEach(function(rate){
-          to.movement_rate.push($.extend(true,{},rate));
-        });
-
-        //Type
-        let mytype = morph_types.find(function(type){
-          if(type.name == from.type){return true;}
-        });
-
-        if(mytype){
-          to.morph_type = from.type;
-          to.morph_bio = mytype.biological;
+        } else {
+          to.ware.push(inst);
         }
+      });
 
-        //Notes
-        to.morph_notes = from.notes.join(", ");
-        if(from.common_extras.length){
-          to.morph_notes += ("\r\nCommon Extras: " + from.common_extras.join(", "));
-        }
+      //Traits
+      to.morph_traits.lengh = 0;
+      from.morph_traits.forEach(function(traitobj){
+        to.morph_traits.push(new Trait(traitobj.name,null,traitobj.level));
+      });
+
+      //Movement
+      to.movement_rate.lengh = 0;
+      from.movement_rate.forEach(function(rate){
+        to.movement_rate.push($.extend(true,{},rate));
+      });
+
+      //Type
+      let mytype = morph_types.find(function(type){
+        if(type.name == from.type){return true;}
+      });
+
+      if(mytype){
+        to.morph_type = from.type;
+        to.morph_bio = mytype.biological;
       }
 
-      show_toast(toastmessage,"",toastclass);
+      //Notes
+      to.morph_notes = from.notes.join(", ");
+      if(from.common_extras.length){
+        to.morph_notes += ("\r\nCommon Extras: " + from.common_extras.join(", "));
+      }
+
+      show_toast("Resleeve complete!","Enjoy your new body!","success");
     }
   },
   computed: {
@@ -281,9 +274,9 @@ Vue.component('vcomp-morphcard', {
     },
     resleevebuttonclass: function(){
       if(this.noauto){
-        return "ui labeled icon inverted basic green fluid button disabled"
+        return "ui labeled icon inverted basic green top attached button disabled"
       } else {
-        return "ui labeled icon inverted basic green fluid button"
+        return "ui labeled icon inverted basic green top attached button"
       }
     }
   },
@@ -303,12 +296,12 @@ Vue.component('vcomp-morphcard', {
           </div>
         </div>
       </div>    
-      <div class="content">
-        <div :class="resleevebuttonclass" @click="adopt_prompt()">
+      <div :class="resleevebuttonclass" @click="adopt_prompt()">
           <i class="random icon"></i>
           <span v-if="!noauto">Resleeve to Morph</span>
           <span v-else>Manual Resleeving Required</span>
-        </div>
+      </div>
+      <div class="content">
         <br>
         <div class="morph-pic">
           <img v-if="morph.image" :src="'images/morphs/'+morph.image">
@@ -470,11 +463,11 @@ Vue.component('background-card', {
           <ul>
             <li v-for="(skill,index) in background.skills">{{skill.name | titlecase}}: {{skill.rating}} <span v-if="skill.options.length">({{skill.options | orlist}})</span></li>
           </ul>
-          <div class="ui labeled icon inverted basic green fluid button" @click="apply()">
-            <i class="plus icon"></i>
-            Apply Background
         </div>
-        </div>
+      </div>
+      <div class="ui labeled icon inverted basic green bottom attached button" @click="apply()">
+        <i class="plus icon"></i>
+        Apply Background
       </div>
     </div>
   `
@@ -514,11 +507,11 @@ Vue.component('career-card', {
           <ul>
             <li v-for="(skill,index) in career.skills">{{skill.name | titlecase}}: {{skill.rating}} <span v-if="skill.options.length">({{skill.options | orlist}})</span></li>
           </ul>
-          <div class="ui labeled icon inverted basic green fluid button" @click="apply()">
-            <i class="plus icon"></i>
-            Apply Career
-          </div>
         </div>
+      </div>
+      <div class="ui labeled icon inverted basic green bottom attached button" @click="apply()">
+        <i class="plus icon"></i>
+        Apply Career
       </div>
     </div>
   `
@@ -556,12 +549,12 @@ Vue.component('interest-card', {
           <div class="header">Skills</div>
           <ul>
             <li v-for="(skill,index) in interest.skills">{{skill.name | titlecase}}: {{skill.rating}} <span v-if="skill.options.length">({{skill.options | orlist}})</span></li>
-          </ul>
-          <div class="ui labeled icon inverted basic green fluid button" @click="apply()">
-            <i class="plus icon"></i>
-            Apply Interest
-          </div>          
+          </ul>        
         </div>
+      </div>
+      <div class="ui labeled icon inverted basic green bottom attached button" @click="apply()">
+        <i class="plus icon"></i>
+        Apply Interest
       </div>
     </div>
   `
@@ -585,10 +578,10 @@ Vue.component('faction-card', {
       <div class="content">
         <div class="header">{{faction.name | titlecase}}</div>
         <div class="description">{{faction.description}}</div>
-        <div class="ui labeled icon inverted basic green fluid button" @click="apply()">
-          <i class="plus icon"></i>
-          Apply Faction
-        </div> 
+      </div>
+      <div class="ui labeled icon inverted basic green bottom attached button" @click="apply()">
+        <i class="plus icon"></i>
+        Apply Faction
       </div>
     </div>
   `
