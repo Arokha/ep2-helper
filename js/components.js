@@ -431,6 +431,74 @@ Vue.component('vcomp-trait-table', {
 `
 });
 
+Vue.component('sleight-modal', {
+  props: {
+    id: String,
+    title: String,
+    content: String,
+  },
+  methods: {
+    add_sleight() {
+      add_to_character("sleights",new Sleight(this.title),"Sleight: "+this.title);
+    }
+  },
+  template: `
+    <div :id="id" class="ui inverted modal">
+      <div class="header">
+        {{title}}
+        <div class="ui labeled icon inverted basic green right floated button" @click="add_sleight()">
+          <i class="plus icon"></i>
+          Add to Character
+        </div>
+      </div>
+      <div class="scrolling content" v-html="content"></div>
+      </div>
+    </div>
+  `
+});
+
+Vue.component('vcomp-sleight-table', {
+  props: { 
+    sleights: Array 
+  },
+  methods: {
+    modal_show: function(item) {
+      $("#"+item.id).modal('show');
+    }
+  },
+  mounted: function() {
+    $(this.$el).find('table.sortable').tablesort();
+  },
+  template: `
+    <div>
+      <b>[Click the sleight name for a full description.]</b>
+      <table class="ui celled sortable table inverted">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th class="center aligned collapsing">Level</th>
+            <th class="center aligned collapsing">Duration</th>
+            <th class="center aligned collapsing">Action</th>
+            <th class="no-sort">Summary</th>
+          </tr>
+        </thead>
+        <tbody>
+          <template v-for="item in sleights">
+            <tr>
+              <td class="selectable" style="cursor:help;" v-on:click="modal_show(item)"><a>{{item.name | titlecase}}</a></td>
+              <td class="single line">{{item.level}}</td>
+              <td class="single line">{{item.duration}}</td>
+              <td class="single line">{{item.action}}</td>
+              <td>{{item.summary}}</td>
+            </tr>
+            <sleight-modal :id="item.id" :title="item.name" :content="item.description"></sleight-modal>
+          </template>
+        </tbody>
+      </table>
+    </div>
+`
+});
+
 Vue.component('background-card', {
   props: { 
     background: Object

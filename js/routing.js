@@ -599,6 +599,22 @@ const vr_traits = {
   }
 }
 
+const vr_sleights = {
+  data: function() {
+    return {
+      sleights
+    };
+  },
+  props: {
+    tabid: String
+  },
+  template: `
+  <div class="ui segment inverted">  
+    <vcomp-sleight-table :sleights="sleights"></vcomp-sleight-table>
+  </div>
+  `
+}
+
 const vr_primer = function() {
   return $.ajax("static/primer.html").then(function(templateHtml) {
     return {
@@ -638,6 +654,7 @@ const vr_routes = [
   { path: '/gear', component: vr_gear },
   { path: '/traits/:tabid', component: vr_traits, props: true},
   { path: '/traits', redirect: "/traits/positive" },
+  { path: '/sleights', component: vr_sleights, props: true},
   { path: '*', redirect: '/quickrules' }
 ]
 
