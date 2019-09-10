@@ -916,6 +916,12 @@
 						<prop :obj="character" keyname="initiative" readonly /> (<span v-if="character.initiative_mod > 0">+</span><prop :obj="character" keyname="initiative_mod" />)
 					</div>
 				</div>
+				<div class="item clickedit">
+					<div class="content">
+						<div class="header">Rez Points</div>
+						<prop :obj="character" keyname="rez_unspent" />
+					</div>
+				</div>
 			</div>
 
 			<div class="ui horizontal inverted divider">Aptitudes</div>
