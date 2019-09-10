@@ -116,6 +116,11 @@ Vue.component('vcomp-subcategory', {
     categoryname: String,
     subcategoryname: String
   },
+  mounted: function() {
+    this.$nextTick(function(){
+      $(this.$el).find('table.sortable').tablesort();
+    });
+  },
   data: function() {
     let mytemplate = null;
     let mycharslot = null;
@@ -152,9 +157,6 @@ Vue.component('vcomp-gear-section', {
         });
       }
     });
-  },
-  updated: function () {
-    $(this.$el).find('table').tablesort();
   },
   template: `
     <div class="ui segment inverted">

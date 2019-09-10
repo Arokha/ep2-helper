@@ -46,7 +46,7 @@ var gear_generic = {
           <tr>
             <th>Name</th>
             <th>Cmp/GP</th>
-            <th v-if="notesnotsummary">Notes</th><th v-else>Summary</th>
+            <th v-if="notesnotsummary" class="no-sort">Notes</th><th v-else class="no-sort">Summary</th>
           </tr>
         </thead>
         <tbody>
@@ -90,7 +90,7 @@ var gear_drugs = {
             <th>Application</th>
             <th>Duration</th>
             <th>Addiction</th>
-            <th>Summary</th>
+            <th class="no-sort">Summary</th>
           </tr>
         </thead>
         <tbody>
@@ -102,7 +102,7 @@ var gear_drugs = {
               <td>{{item.application}}</td>
               <td>{{item.duration}}</td>
               <td>{{item.addiction}}</td>
-              <td>{{item.summary}}</td>
+              <td class="no-sort">{{item.summary}}</td>
             </tr>
             <gear-modal :id="item.id" :title="item.name" :content="item.description" :charslot="charslot" :inst="classhint"></gear-modal>
           </template>
@@ -139,7 +139,7 @@ var gear_ware = {
             <th>Hard</th>
             <th>Mesh</th>
             <th>Nano</th>
-            <th>Summary</th>
+            <th class="no-sort">Summary</th>
           </tr>
         </thead>
         <tbody>
@@ -404,7 +404,7 @@ var gear_melee = {
             <th v-if="warecategory">Ware Type</th>
             <th>Damage [Avg]</th>
             <th>Cmp/GP</th>
-            <th>Notes</th>
+            <th class="no-sort">Notes</th>
           </tr>
         </thead>
         <tbody>
@@ -458,7 +458,7 @@ var gear_armor = {
             <th>E/K Armor</th>
             <th>Stackable</th>
             <th>Cmp/GP</th>
-            <th>Notes</th>
+            <th class="no-sort">Notes</th>
           </tr>
         </thead>
         <tbody>
@@ -524,7 +524,7 @@ var gear_ranged = {
             <th>Range</th>
             <th v-if="aoecategory">Armor</th>
             <th>Cmp/GP</th>
-            <th>Notes</th>
+            <th class="no-sort">Notes</th>
           </tr>
         </thead>
         <tbody>
@@ -572,7 +572,7 @@ var gear_ammo_kinetic = {
             <th>Name</th>
             <th>Damage</th>
             <th>Cmp/GP<br>(per 100)</th>
-            <th>Notes</th>
+            <th class="no-sort">Notes</th>
           </tr>
         </thead>
         <tbody>
@@ -616,7 +616,7 @@ var gear_ammo_seeker = {
             <th>Damage [Avg]</th>
             <th>Armor</th>
             <th>Cmp/GP<br>(per 5)</th>
-            <th>Notes</th>
+            <th class="no-sort">Notes</th>
           </tr>
         </thead>
         <tbody>
