@@ -295,7 +295,7 @@ const vr_chargen = function() {
         
         // When all data is loaded, the active tab will be at proper height and we can refresh sticky.
         Promise.all([
-          $.getJSON('data/chargen.json').then((json) => {this.chargen = json;}),
+          $.getJSON('data/chargen_custom.json').then((json) => {this.chargen = json;}),
         ]).then(() => {
           Vue.nextTick(() => {
             $(".sticky", this.$el).sticky();
