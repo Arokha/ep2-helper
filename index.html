@@ -173,6 +173,7 @@
     var aptitudes = [];
     var morph_types = [];
     var sleights = [];
+    var gear_types = [];
 
     $.getJSON('data/backgrounds.json').then( (json) => {
     	backgrounds.push.apply(backgrounds,json);
@@ -212,6 +213,9 @@
     });
     $.getJSON('data/sleights.json').then( (json) => {
       sleights.push.apply(sleights,json);
+    });
+    $.getJSON('data/gear_categories.json').then( (json) => {
+      gear_types.push.apply(gear_types,json);
     });
 
     var gear_jsons = [

@@ -403,8 +403,8 @@ const vr_morphs = {
 const vr_gear = {
   data: function() {
     return {
-      unsorted_gear, //This is a global so we can use it other places too.
-      gear_types: {}
+      unsorted_gear,
+      gear_types
     };
   },
   props: {
@@ -470,8 +470,8 @@ const vr_gear = {
     categories: function() {
       let new_cats = {};
 
-      //Iterate over what should be a rapidly shrinking list
-      this.unsorted_gear.forEach(function(item_object){
+      //Iterate over the unsorted gear blob
+      this.unsorted_gear.forEach((item_object) => {
         //What category is our contender?
         let category = item_object.category;
         
@@ -485,19 +485,21 @@ const vr_gear = {
         };
 
         //Grab the text if it exists
-        if(category in this.gear_types){
-          if('text' in this.gear_types[category]){
-            new_category.text = this.gear_types[category]['text'];
-          }
+        let mycategorydef = this.gear_types.find((categorydef) => {
+          return categorydef.name == category;
+        });
+        
+        if(mycategorydef) {
+          new_category.text = mycategorydef.text;
         }
         
         //Get all my items
-        let this_category = this.unsorted_gear.filter(function(maybe_mine,index){
+        let this_category = this.unsorted_gear.filter((maybe_mine,index) => {
             return maybe_mine.category == category;
-        },this);
+        });
 
         //I wish I had subcategories
-        this_category.forEach(function(my_item){
+        this_category.forEach((my_item) => {
           let subcategory = my_item.subcategory;
           
           //Oh you already know I exist okay then
@@ -515,27 +517,14 @@ const vr_gear = {
           new_subcategory.items.push(my_item); //Hi I'm the first
           
           //Grab the text if it exists
-          if(category in this.gear_types){
-            if(subcategory in this.gear_types[category]['subcategories']){
-              if('text' in this.gear_types[category]['subcategories'][subcategory]){
-                new_subcategory.text = this.gear_types[category]['subcategories'][subcategory]['text'];
-              }
-            }
-          }
-
-          //Surely there's a better way...
-          if(category in this.gear_types){
-            if(subcategory in this.gear_types[category]['subcategories']){
-              if('columns' in this.gear_types[category]['subcategories'][subcategory]){
-                new_subcategory.columns = this.gear_types[category]['subcategories'][subcategory]['columns'];
-              }
-            }
+          if(mycategorydef && subcategory.toLowerCase() in mycategorydef.subcategories){
+            new_subcategory.text = mycategorydef.subcategories[subcategory.toLowerCase()]['text'];
           }
 
           new_category['subcategories'][subcategory] = new_subcategory;
-        },this);
+        });
         new_cats[category] = new_category;
-      },this);
+      });
       //Done!
       return new_cats;
     }
