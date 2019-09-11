@@ -4,7 +4,7 @@
     "guidance": [
       {
         "heading": "Background",
-        "text": "<p>What is your character’s origin? Were you born in a slum on Earth before the Fall or raised in a protected enclave? Were you an early space colonist or an indentured worker?</p><p>Each background provides you with a package of active and knowledge skills. Note these on your character sheet. Don’t dwell too long on your choice — you’ll have an opportunity to acquire other skills and switch some skills around in later steps. For field skills, a short selection of common fields is listed, but you can choose your own (<a href='/#/chargen/6'>Skills</a>). Alternatively, leave the field unassigned for now and decide on it during game play.</p>"
+        "text": "<p>What is your character’s origin? Were you born in a slum on Earth before the Fall or raised in a protected enclave? Were you an early space colonist or an indentured worker?</p><p>Each background provides you with a package of active and knowledge skills. Note these on your character sheet. Don’t dwell too long on your choice — you’ll have an opportunity to acquire other skills and switch some skills around in later steps. For field skills, a short selection of common fields is listed, but you can choose your own (<a href='#/chargen/6'>Skills</a>). Alternatively, leave the field unassigned for now and decide on it during game play.</p>"
       }
     ],
     "resource": "Eclipse Phase Second Edition",
@@ -16,7 +16,7 @@
     "guidance": [
       {
         "heading": "Career",
-        "text": "<p>What is your character’s primary field of expertise? Are you a scientist, a hacker, a gun-for-hire, or something else?</p><p>Like your background, your career package provides you with skills. You might look for a package that gives you more diversity or one that complements the skills you’ve already acquired. Don’t worry about doubling up on skills — you can adjust that in a later step. Your career also determines your starting <a href='/#/chargen/12'>gear packs</a>.</p>"
+        "text": "<p>What is your character’s primary field of expertise? Are you a scientist, a hacker, a gun-for-hire, or something else?</p><p>Like your background, your career package provides you with skills. You might look for a package that gives you more diversity or one that complements the skills you’ve already acquired. Don’t worry about doubling up on skills — you can adjust that in a later step. Your career also determines your starting <a href='#/chargen/12'>gear packs</a>.</p>"
       }
     ],
     "resource": "Eclipse Phase Second Edition",
@@ -40,7 +40,7 @@
     "guidance": [
       {
         "heading": "Faction",
-        "text": "<p>Now that you have a rough orientation for your character’s background and skill sets, it’s time to pick a faction to which they hold allegiance. Each choice provides a <a href='/#/chargen/13'>motivation</a> and a skill of Know: [Faction] 30. The Faction cards below provide a brief summary of each group; further details can be found on ▶152-174 EP2E.</p><p>If you are unsure of what faction to pick at this time, you may skip this section for now and determine your faction, motivation, and Know skill during gameplay. You also can choose not to have a faction — not everyone picks sides. If going factionless, simply choose your own motivation and take any Know skill you like at 30.</p><p>Faction allegiance does not necessarily mean you are a hardcore true believer. You may have been born or raised into a faction and reluctantly stuck with it, or you may be finding yourself questioning some of the faction’s tenets. You may be a dissident, trying to actively change the faction from within. For now, your faction allegiance indicates the transhuman grouping you are most familiar with and whose goals you at least nominally support. Perhaps you are even a defector or new recruit, with an Know skill in your old faction but a motivation tied to your new one.</p>"
+        "text": "<p>Now that you have a rough orientation for your character’s background and skill sets, it’s time to pick a faction to which they hold allegiance. Each choice provides a <a href='#/chargen/13'>motivation</a> and a skill of Know: [Faction] 30. The Faction cards below provide a brief summary of each group; further details can be found on ▶152-174 EP2E.</p><p>If you are unsure of what faction to pick at this time, you may skip this section for now and determine your faction, motivation, and Know skill during gameplay. You also can choose not to have a faction — not everyone picks sides. If going factionless, simply choose your own motivation and take any Know skill you like at 30.</p><p>Faction allegiance does not necessarily mean you are a hardcore true believer. You may have been born or raised into a faction and reluctantly stuck with it, or you may be finding yourself questioning some of the faction’s tenets. You may be a dissident, trying to actively change the faction from within. For now, your faction allegiance indicates the transhuman grouping you are most familiar with and whose goals you at least nominally support. Perhaps you are even a defector or new recruit, with an Know skill in your old faction but a motivation tied to your new one.</p>"
       }
     ],
     "resource": "Eclipse Phase Second Edition",
@@ -52,7 +52,7 @@
     "guidance": [
       {
         "heading": "Aptitude Templates",
-        "text": "<p>Pick one of the aptitude templates to determine your six starting <a href='/#/primer/stats'>aptitudes</a>. These templates are provided as guidelines, and you may raise or lower an aptitude score by taking or giving points from other aptitudes. For example, you can lower WIL by 5 to raise COG by 5. No aptitude score may be lower than 5 or higher than 30.</p><p>Though conceptually skills are built on the aptitude values, this step is placed after the skill choices so that you may tailor your aptitudes to your skill set. For example, if you have a lot of SAV-linked skills, choosing a template with a high SAV is a solid way to optimize your character. Alternatively, if you feel you are lacking skills linked to a certain aptitude, boosting that aptitude may help to round out your character.</p><p><b>Spending CP:</b> Extra aptitude points cost 1 CP each. If you’re going to bump an aptitude, we recommend doing it now, before you calculate your skills in Step 6.</p>"
+        "text": "<p>Pick one of the aptitude templates to determine your six starting <a href='#/primer/stats'>aptitudes</a>. These templates are provided as guidelines, and you may raise or lower an aptitude score by taking or giving points from other aptitudes. For example, you can lower WIL by 5 to raise COG by 5. No aptitude score may be lower than 5 or higher than 30.</p><p>Though conceptually skills are built on the aptitude values, this step is placed after the skill choices so that you may tailor your aptitudes to your skill set. For example, if you have a lot of SAV-linked skills, choosing a template with a high SAV is a solid way to optimize your character. Alternatively, if you feel you are lacking skills linked to a certain aptitude, boosting that aptitude may help to round out your character.</p><p><b>Spending CP:</b> Extra aptitude points cost 1 CP each. If you’re going to bump an aptitude, we recommend doing it now, before you calculate your skills in Step 6.</p>"
       }
     ],
     "resource": "Eclipse Phase Second Edition",
@@ -88,7 +88,7 @@
     "guidance": [
       {
         "heading": "Flex",
-        "text": "<p>Every ego starts with 1 permanent Flex point <a href='/#/primer/pools'>pool</a>.</p><p><b>Spending CP:</b> Extra Flex points cost 2 CP each. You may not start with more than 3 ego Flex points.</p>"
+        "text": "<p>Every ego starts with 1 permanent Flex point <a href='#/primer/pools'>pool</a>.</p><p><b>Spending CP:</b> Extra Flex points cost 2 CP each. You may not start with more than 3 ego Flex points.</p>"
       }
     ],
     "resource": "Eclipse Phase Second Edition",
@@ -120,7 +120,7 @@
       },
       {
         "heading": "Ego Traits",
-        "text": "<p>You may purchase any of the ego traits listed in the <a href='/#/traits/positive'>traits section</a>. Positive traits have a CP cost listed. Negative traits give you bonus CP. No more than 6 CP worth of negative traits may be purchased.</p><p>There are a lot of traits to choose from, so if you’re unfamiliar with them or don’t have the time to scan through them, skip this for now and save some CP to buy traits later.</p><p>If you took the Lost background in Step 1 or the Async interest in Step 3, you must purchase the Psi trait.</p>"
+        "text": "<p>You may purchase any of the ego traits listed in the <a href='#/traits/positive'>traits section</a>. Positive traits have a CP cost listed. Negative traits give you bonus CP. No more than 6 CP worth of negative traits may be purchased.</p><p>There are a lot of traits to choose from, so if you’re unfamiliar with them or don’t have the time to scan through them, skip this for now and save some CP to buy traits later.</p><p>If you took the Lost background in Step 1 or the Async interest in Step 3, you must purchase the Psi trait.</p>"
       },
       {
         "heading": "Increased Flex",
@@ -140,7 +140,7 @@
       },
       {
         "heading": "Psi Sleights",
-        "text": "<p>If you purchased the Psi trait, you will likely want to spend CP on sleights, or psi powers. See <a href='/#/sleights'>Sleights</a>. Note that you get one starting sleight for free, based on your sub-strain ▶273 EP2E.</p><p>Psi sleights cost 1 CP per sleight. You may only purchase psi-gamma sleights if you have the Psi trait at Level 2. The maximum number of sleights you may purchase during character creation is 10.</p>"
+        "text": "<p>If you purchased the Psi trait, you will likely want to spend CP on sleights, or psi powers. See <a href='#/sleights'>Sleights</a>. Note that you get one starting sleight for free, based on your sub-strain ▶273 EP2E.</p><p>Psi sleights cost 1 CP per sleight. You may only purchase psi-gamma sleights if you have the Psi trait at Level 2. The maximum number of sleights you may purchase during character creation is 10.</p>"
       },
       {
         "heading": "Specializations",
@@ -168,7 +168,7 @@
     "guidance": [
       {
         "heading": "Morph & Gear",
-        "text": "<p>Your character receives starting gear based on the career chosen in Step 2 and the type of campaign you are playing (Firewall, gatecrashing, or criminal). See Gear Packs ▶68.</p><p>You also choose your character’s starting morph. See the choices in <a href='#/morphs'>Morphs</a>. Each morph has a cost in Morph Points (MP). Your GM will tell how many points you have to work with. The suggested default value is 6 MP. If you also purchased the Resources trait, increase your available MP by that trait level.</p><p>You may also spend your Morph Points on <a href='/#/traits/positive'>morph traits</a> or extra gear. Whatever MP you don’t spend is converted into Flex points instead.</p>"
+        "text": "<p>Your character receives starting gear based on the career chosen in Step 2 and the type of campaign you are playing (Firewall, gatecrashing, or criminal). See Gear Packs ▶68.</p><p>You also choose your character’s starting morph. See the choices in <a href='#/morphs'>Morphs</a>. Each morph has a cost in Morph Points (MP). Your GM will tell how many points you have to work with. The suggested default value is 6 MP. If you also purchased the Resources trait, increase your available MP by that trait level.</p><p>You may also spend your Morph Points on <a href='#/traits/positive'>morph traits</a> or extra gear. Whatever MP you don’t spend is converted into Flex points instead.</p>"
       },
       {
         "heading": "Starting Morphs",
