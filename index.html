@@ -69,12 +69,21 @@
 			-webkit-transform: scaleX(1);
 			transform: scaleX(1);
 		}
+		.ui.dropdown {
+			color: #10A3A3 !important;
+		}
 		/* Hide sub-menus until parent menu item is active. */
 		.item .menu {
 			display: none;
 		}
 		.item.active .menu {
 			display: inherit;
+		}
+		#datadropdown.fakeactive {
+			border-bottom-color: #fff;
+			font-weight: 700;
+			color: #10A3A3 !important;
+			margin-bottom: -2px; !important;
 		}
 		/* Mostly for the roller */
 		.rainbow-text {
@@ -143,10 +152,16 @@
 		    <router-link class="item" to="/primer">EP2 Primer</router-link>
 		    <router-link class="item" to="/chargen">Chargen Guide</router-link>
 		    <router-link class="item" to="/sheet">Character Sheet</router-link>
-		    <router-link class="item" to="/morphs">Data - Morphs</router-link>
-		    <router-link class="item" to="/gear">Data - Gear</router-link>
-		    <router-link class="item" to="/traits">Data - Traits</router-link>
-		    <router-link class="item" to="/sleights">Data - Sleights</router-link>
+		    <div id="datadropdown" class="ui inverted dropdown item">
+    			Data Pages
+    			<i class="dropdown icon"></i>
+    			<div class="ui menu inverted">
+    				<router-link class="item" to="/morphs">Data - Morphs</router-link>
+		    		<router-link class="item" to="/gear">Data - Gear</router-link>
+		    		<router-link class="item" to="/traits">Data - Traits</router-link>
+		    		<router-link class="item" to="/sleights">Data - Sleights</router-link>
+			    </div>
+			</div>
 		</div>
 		<keep-alive>
 			<router-view></router-view>
@@ -465,4 +480,8 @@
 	        }, time);
 	    });
 	};
+
+	$(function() {
+    	$(".ui.dropdown").dropdown();
+	});
 </script>

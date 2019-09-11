@@ -335,6 +335,14 @@ const vr_morphs = {
     </div>
   </div>
   `,
+  beforeRouteEnter (to,from,next) {
+    $("#datadropdown").addClass("fakeactive");
+    next();
+  },
+  beforeRouteLeave (to,from,next) {
+    $("#datadropdown").removeClass("fakeactive");
+    next();
+  },
   mounted: function() {
     $('.item', this.$el).tab({
         onVisible: function(){
@@ -410,6 +418,14 @@ const vr_gear = {
   props: {
   	category: String,
   	subcategory: String
+  },
+  beforeRouteEnter (to,from,next) {
+    $("#datadropdown").addClass("fakeactive");
+    next();
+  },
+  beforeRouteLeave (to,from,next) {
+    $("#datadropdown").removeClass("fakeactive");
+    next();
   },
   template: `
   <div class="ui segment inverted">
@@ -540,6 +556,14 @@ const vr_traits = {
   props: {
     tabid: String
   },
+  beforeRouteEnter (to,from,next) {
+    $("#datadropdown").addClass("fakeactive");
+    next();
+  },
+  beforeRouteLeave (to,from,next) {
+    $("#datadropdown").removeClass("fakeactive");
+    next();
+  },
   template: `
   <div class="ui segment inverted">  
     <div id="traits-grid" class="ui grid">
@@ -596,6 +620,14 @@ const vr_sleights = {
   },
   props: {
     tabid: String
+  },
+  beforeRouteEnter (to,from,next) {
+    $("#datadropdown").addClass("fakeactive");
+    next();
+  },
+  beforeRouteLeave (to,from,next) {
+    $("#datadropdown").removeClass("fakeactive");
+    next();
   },
   template: `
   <div class="ui segment inverted">  
