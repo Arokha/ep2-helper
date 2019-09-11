@@ -237,6 +237,9 @@ const vr_sheet = function() {
             reasonval += " (Custom)";
           }
           this.roll($("#custom-target").val(),reasonval||"Custom Roll");
+        },
+        close_newchar_notice(){
+          $("#sheetnotice-modal").modal('hide');
         }
       },
       computed: {
@@ -254,6 +257,10 @@ const vr_sheet = function() {
         $(this.$el).on("click",".clickedit, .selectable",function(event){
           $(event.currentTarget).find(".prop[contentEditable=true]").first().focus();
         });
+        //Lazy test for 'anything' getting loaded.
+        if((this.character.name == "<Input Name>") && (this.character.background == "<Input Background>")) {
+          $("#sheetnotice-modal").modal('show');
+        }
       },
       template: templateHtml
     };
