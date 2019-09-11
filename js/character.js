@@ -59,14 +59,24 @@ class InvItem extends Resolvable {
 
 		
 		this.quantity = 1;
-		this.blueprint = false;
 		this.mods = [];
+
+		//0: None, 1: Limited-use, 2: Multi-use, 3: Open Source, 4: Cracked
+		this.blueprint = 0;
 		
 		this.name = name || "<Input Item Name>";
 
 		if(!this.source){
 			this.restricted = false;
 			this.summary = "<Input Item Summary>";
+		}
+	}
+
+	//For character sheet button
+	cycle_blueprint() {
+		this.blueprint++;
+		if(this.blueprint > 4){
+			this.blueprint = 0;
 		}
 	}
 

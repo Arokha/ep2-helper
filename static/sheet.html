@@ -1075,9 +1075,12 @@
 							<i v-if="item.restricted" class="red skull large icon"></i>
 							<i v-else class="green clipboard check large icon"></i>
 						</td>
-						<td class="center aligned selectable" @click.stop="item.blueprint = !item.blueprint">
-							<i v-if="item.blueprint" class="green tools large icon"></i>
-							<i v-else class="times large icon"></i>
+						<td class="center aligned selectable" @click.stop="item.cycle_blueprint()">
+							<span v-if="item.blueprint == 1" data-tooltip="Limited Use BP"><i class="orange tools large icon"></i><sup>(1)</sup></span>
+							<span v-else-if="item.blueprint == 2" data-tooltip="Multi-Use BP"><i class="orange tools large icon"></i><sup>(1+)</sup></span>
+							<span v-else-if="item.blueprint == 3" data-tooltip="Open Source BP"><i class="green tools large icon"></i><sup>(OS)</sup></span>
+							<span v-else-if="item.blueprint == 4" data-tooltip="Cracked BP"><i class="red tools large icon"></i><sup>(CRK)</sup></span>
+							<span v-else data-tooltip="No BP"><i class="times large icon"></i></span>
 						</td>
 						<td class="selectable collapsing"><a @click="character.items.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
 					</tr>
