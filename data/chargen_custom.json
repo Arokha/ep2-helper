@@ -140,7 +140,7 @@
       },
       {
         "heading": "Psi Sleights",
-        "text": "<p>If you purchased the Psi trait, you will likely want to spend CP on sleights, or psi powers ▶280 EP2E. Note that you get one starting sleight for free, based on your sub-strain ▶273 EP2E.</p><p>Psi sleights cost 1 CP per sleight. You may only purchase psi-gamma sleights if you have the Psi trait at Level 2. The maximum number of sleights you may purchase during character creation is 10.</p>"
+        "text": "<p>If you purchased the Psi trait, you will likely want to spend CP on sleights, or psi powers. See <a href='/#/sleights'>Sleights</a>. Note that you get one starting sleight for free, based on your sub-strain ▶273 EP2E.</p><p>Psi sleights cost 1 CP per sleight. You may only purchase psi-gamma sleights if you have the Psi trait at Level 2. The maximum number of sleights you may purchase during character creation is 10.</p>"
       },
       {
         "heading": "Specializations",
@@ -156,7 +156,7 @@
     "guidance": [
       {
         "heading": "Derived Stats",
-        "text": "<p>You’re almost done! Now a few of your stats need to be calculated and added to your character sheet:</p><p><ul><li>Initiative: (REF + INT) ÷ 5.</li><li>Aptitude Checks: Each aptitude has a check (Cognition Check, Intuition Check, etc.) equal to the aptitude × 3.</li><li>Lucidity: WIL × 2.</li><li>Trauma Threshold: LUC ÷ 5.</li><li>Insanity Rating: LUC × 2.</li><li>Infection Rating (Asyncs Only): Psi trait level × 10.</li></ul></p>"
+        "text": "<p>You’re almost done! Now a few of your stats need to be calculated and added to your character sheet. If you are using the character sheet on this website, this is already done for you and you can skip this step, aside from your infection rating (if you're an Async only).</p><p><ul><li>Initiative: (REF + INT) ÷ 5.</li><li>Aptitude Checks: Each aptitude has a check (Cognition Check, Intuition Check, etc.) equal to the aptitude × 3.</li><li>Lucidity: WIL × 2.</li><li>Trauma Threshold: LUC ÷ 5.</li><li>Insanity Rating: LUC × 2.</li><li>Infection Rating (Asyncs Only): Psi trait level × 10.</li></ul></p>"
       }
     ],
     "resource": "Eclipse Phase Second Edition",
@@ -168,11 +168,11 @@
     "guidance": [
       {
         "heading": "Morph & Gear",
-        "text": "<p>Your character receives starting gear based on the career chosen in Step 2 and the type of campaign you are playing (Firewall, gatecrashing, or criminal). See Gear Packs ▶68.</p><p>You also choose your character’s starting morph ▶54. Each morph has a cost in Morph Points (MP). Your GM will tell how many points you have to work with. The suggested default value is 6 MP. If you also purchased the Resources trait, increase your available MP by that trait level.</p><p>You may also spend your Morph Points on <a href='/#/traits/positive'>morph traits</a> or extra gear. Whatever MP you don’t spend is converted into Flex points instead.</p>"
+        "text": "<p>Your character receives starting gear based on the career chosen in Step 2 and the type of campaign you are playing (Firewall, gatecrashing, or criminal). See Gear Packs ▶68.</p><p>You also choose your character’s starting morph. See the choices in <a href='#/morphs'>Morphs</a>. Each morph has a cost in Morph Points (MP). Your GM will tell how many points you have to work with. The suggested default value is 6 MP. If you also purchased the Resources trait, increase your available MP by that trait level.</p><p>You may also spend your Morph Points on <a href='/#/traits/positive'>morph traits</a> or extra gear. Whatever MP you don’t spend is converted into Flex points instead.</p>"
       },
       {
         "heading": "Starting Morphs",
-        "text": "<p>While it may be tempting to spend all of your MP to get the best morph available, we strongly suggest picking the morph that best fits your character. You will likely have opportunities to switch morphs during game. Morph Availability stats do not apply to morphs bought during character creation.</p><p>You may buy more than one morph, in case you want a fallback on hand or plan to do a lot of forking. In this case, you cannot purchase negative traits for any of your morphs. Additionally, the first morph you buy must have an MP cost of 1 or more (not counting traits) and any morphs bought after the first with a listed 0 MP cost 1 MP instead.</p><p>Your morph will provide several stats: pools, Wound Threshold, Durability, and Death Rating. Note these on your character sheet. Also take note of any implants or traits it might have.</p>"
+        "text": "<p>While it may be tempting to spend all of your MP to get the best morph available, we strongly suggest picking the morph that best fits your character. You will likely have opportunities to switch morphs during game. Morph Availability stats do not apply to morphs bought during character creation.</p><p>You may buy more than one morph, in case you want a fallback on hand or plan to do a lot of forking. In this case, you cannot purchase negative traits for any of your morphs. Additionally, the first morph you buy must have an MP cost of 1 or more (not counting traits) and any morphs bought after the first with a listed 0 MP cost 1 MP instead.</p><p>Your morph will provide several stats: pools, Wound Threshold, Durability, and Death Rating. Note these on your character sheet. Also take note of any implants or traits it might have. See the morphs in <a href='#/morphs'>Morphs</a>.</p>"
       },
       {
         "heading": "Morph Traits",
@@ -180,7 +180,7 @@
       },
       {
         "heading": "Extra Gear",
-        "text": "<p>You may use your MP for extra gear. Minor complexity gear costs 1 MP, Moderate 2 MP, and Major 3 MP.</p>"
+        "text": "<p>You may use your MP for extra gear. Minor complexity gear costs 1 MP, Moderate 2 MP, and Major 3 MP. See the gear in <a href='#/gear'>Gear</a>.</p>"
       },
       {
         "heading": "Flex Points",
@@ -188,7 +188,7 @@
       },
       {
         "heading": "Gear Packs",
-        "text": "<p>Gear packs may feature 'Default' and 'Synthmorph' varieties. Use whichever is appropriate to your morph.</p>"
+        "text": "<p>Gear packs may feature 'Default' and 'Synthmorph' varieties. Use whichever is appropriate to your morph. We suggest you use the <a href='#/gear'>Gear</a> page to add your items, so you can be sure they link up with their stats and full descriptions.</p>"
       }
     ],
     "resource": "Eclipse Phase Second Edition",
