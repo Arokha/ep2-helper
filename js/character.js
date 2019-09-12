@@ -777,13 +777,7 @@ class Character {
 
 			let roll = Math.floor((Math.random() * 6)+1);
 
-			$('body')
-	          .toast({
-	            title: 'I rolled a d6 for your short rest:',
-	            message: "It landed on " + String(roll),
-	            displayTime: 7000,
-	            showProgress: "bottom"
-	        });
+			show_toast("I rolled a d6 for your short rest:", "It landed on " + String(roll), "info", 7000);
 		}
 	}
 
