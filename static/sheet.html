@@ -879,7 +879,7 @@
 	<div class="eight wide column">
 		<sheet-infobox header="Ego">
 			<div class="ui horizontal inverted divider"><a href="#/primer/stats">Mental Health</a></div>
-			<div class="ui horizontal divided inverted centerflow large relaxed selection list">
+			<div class="ui horizontal divided inverted centerflow large very relaxed selection list">
 				<div class="item clickedit">
 					<div class="content">
 						<div class="header">Lucidity</div>
@@ -898,6 +898,8 @@
 						<prop :obj="character" keyname="insanity_rating" readonly /> (<span v-if="character.insanity_rating_mod > 0">+</span><prop :obj="character" keyname="insanity_rating_mod" />)
 					</div>
 				</div>
+			</div>
+			<div class="ui horizontal divided inverted centerflow large very relaxed selection list">
 				<div class="item clickedit">
 					<div class="content">
 						<div class="header">Stress</div>
