@@ -791,6 +791,14 @@ class Character {
 		}
 	}
 
+	roll_initiative() {
+		let roll = Math.floor((Math.random() * 6)+1);
+
+		let modified = roll + this.initiative + this.initiative_mod;
+
+		show_toast("I rolled a d6 for your initiative:", "It landed on " + String(roll) +",<br>Modified, that's: " + String(modified), "info", 7000);
+	}
+
 	get durability() {
 		return this.durability_base + this.durability_mod;
 	}
