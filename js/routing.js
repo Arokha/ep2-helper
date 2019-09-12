@@ -690,11 +690,17 @@ const vr_router = new VueRouter({
   routes: vr_routes,
   linkActiveClass: "active",
   scrollBehavior (to, from, savedPosition) {
-  	let scrollables = ["subcategory"];
-  	if(savedPosition) {
+
+    //This actually makes things worse, and it seems browsers handle this some other way
+    //  natively during popstate navigation.
+    /*
+    if(savedPosition) {
   		return savedPosition;
   	}
+    */
 
+    //Maybe we have a param we know how to scroll to
+    let scrollables = ["subcategory"];
   	for(key in to.params){
   		if(scrollables.indexOf(key) > -1){
   			let rawid = to.params[key];
@@ -703,5 +709,7 @@ const vr_router = new VueRouter({
   		}
   	}
 
+    //Guess we didn't return, just go to the top
+    return { x: 0, y: 0 };
   }
-})
+});
