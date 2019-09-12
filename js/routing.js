@@ -259,7 +259,7 @@ const vr_sheet = function() {
         });
         //Lazy test for 'anything' getting loaded.
         if((this.character.name == "<Input Name>") && (this.character.background == "<Input Background>")) {
-          $("#sheetnotice-modal").modal('show');
+          $("#sheetnotice-modal").modal({blurring: true}).modal('show');
         }
       },
       template: templateHtml

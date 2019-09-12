@@ -1368,18 +1368,6 @@
 		</div>
 	</div>
 
-	<div class="ui modal inverted" id="sheetnotice-modal">
-		<div class="header">Creating New Characters</div>
-		<div class="content">
-			<p>If you're creating a new character, we highly suggest you use the <a href="#/chargen" @click="close_newchar_notice()">Chargen Guide</a> to add your basic starting stats to the sheet.</p>
-			<p>This way, you will save yourself a lot of typing as it can add the skills from your Background, Faction, etc.</p>
-		
-			<div class="ui basic inverted green button" @click="close_newchar_notice()">
-				Ok, thanks.
-			</div>
-		</div>
-	</div>
-
 	<div class="ui modal inverted" id="export-modal">
 		<div class="header">Base64 Character Export</div>
 		<div class="content">
@@ -1392,6 +1380,19 @@
 			
 			<div class="ui segment">
 				<textarea style="width:100%;height:25rem;" spellcheck="false" id="export-textarea" :value="base64export"></textarea>
+			</div>
+		</div>
+	</div>
+
+	<div class="ui tiny basic modal" id="sheetnotice-modal">
+		<div class="header">Creating New Characters</div>
+		<div class="content">
+			<p>If you're creating a new character, we highly suggest you use the <a href="#/chargen" @click="close_newchar_notice()">Chargen Guide</a>, because it has various 'Add to Character' buttons to add things directly to your character sheet.</p>
+			<p>This way, you will save yourself a lot of typing as it can add the skills from your Background, Faction, etc.</p>
+		</div>
+		<div class="actions">
+			<div class="ui basic inverted green button" @click="close_newchar_notice()">
+				Ok, thanks.
 			</div>
 		</div>
 	</div>
