@@ -819,7 +819,8 @@ class Character {
 		return Math.round((this.lucidity * 2) + this.insanity_rating_mod);
 	}
 	get initiative() {
-		return Math.round((this.ref + this.int) / 5);
+		let injuries = this.wounds_taken + this.traumas_taken;
+		return Math.round(((this.ref + this.int) / 5) - injuries);
 	}
 
 	get flex() {
