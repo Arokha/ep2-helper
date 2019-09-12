@@ -38,7 +38,7 @@
 					</div>
 				</div>
 				<div class="four fields">
-					<div class="field"><label>Background</label>
+					<div class="field"><label><a href="#/chargen/1">Background</a></label>
 						<prop :obj="character" keyname="background" classes="ui text large" />
 						<sheet-modal-link
 						v-if="character.background_obj"
@@ -51,7 +51,20 @@
 						</sheet-modal-link>
 
 					</div>
-					<div class="field"><label>Interest</label>
+					<div class="field"><label><a href="#/chargen/2">Career</a></label>
+						<prop :obj="character" keyname="career" classes="ui text large" />
+						<sheet-modal-link
+						v-if="character.career_obj"
+						title="Career Info"
+						compname="career-card"
+						compattr="career"
+						:compobj="character.career_obj"
+						>
+							<i class="info circle icon"></i>
+						</sheet-modal-link>
+
+					</div>					
+					<div class="field"><label><a href="#/chargen/3">Interest</a></label>
 						<prop :obj="character" keyname="interest" classes="ui text large" />
 						<sheet-modal-link
 						v-if="character.interest_obj"
@@ -64,20 +77,7 @@
 						</sheet-modal-link>
 
 					</div>
-					<div class="field"><label>Career</label>
-						<prop :obj="character" keyname="career" classes="ui text large" />
-						<sheet-modal-link
-						v-if="character.career_obj"
-						title="Career Info"
-						compname="career-card"
-						compattr="career"
-						:compobj="character.career_obj"
-						>
-							<i class="info circle icon"></i>
-						</sheet-modal-link>
-
-					</div>
-					<div class="field"><label>Faction</label>
+					<div class="field"><label><a href="#/chargen/4">Faction</a></label>
 						<prop :obj="character" keyname="faction" classes="ui text large" />
 						<sheet-modal-link
 						v-if="character.faction_obj"
@@ -92,10 +92,10 @@
 					</div>
 				</div>
 				<div class="two fields">
-					<div class="field"><label>Languages</label>
+					<div class="field"><label><a href="#/chargen/7">Languages</a></label>
 						<prop :obj="character" keyname="languages" classes="ui text large" />
 					</div>
-					<div class="field"><label>Motivations</label>
+					<div class="field"><label><a href="#/chargen/13">Motivations</a></label>
 						<prop :obj="character" keyname="motivations" classes="ui text large" />
 					</div>
 				</div>
