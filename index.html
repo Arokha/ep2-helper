@@ -276,38 +276,86 @@
 		return !isNaN(value);
 	}
 
-    function roll_dice(target){
-      var result = Math.floor(Math.random() * 100); //Just a normal d100 roll, from 00-99.
+	function parse_dice(dicestr){
+		let reg = /(?<=^|[ :\(-])(\d+)d(\d+)([+-]\d+)?/;
+		let parse = reg.exec(dicestr);
+		if(parse && parse.length >= 3) {
+			//parse[0] is the full text of the resulting area
+			return {
+				diecount: parseInt(parse[1]),
+				dietype: parseInt(parse[2]),
+				modifier: (typeof parse[3] == 'undefined') ? 0 : parseInt(parse[3]),
+				dicestr: parse[0]
+			};
+		}
+	}
 
-      var success = (result <= target);
+	function parse_and_roll(dicestr){
+		let parsed = parse_dice(dicestr);
+		if(!parsed){
+			show_toast("No valid dice notation found.","Something like '3d6+2' please.","warning");
+			return;
+		}
 
-      var text = success ? "Success!" : "Failure!";
-      //"Superiors"
-      if(target){
-        //Success
-        if((result >= 66) && (result <= target)){text = "Two Superior Successes!";} else
-        if((result >= 33) && (result <= target)){text = "One Superior Success!";} else
-        //Failure
-        if((result <= 33) && (result > target)){text = "Two Superior Failures!";} else
-        if((result <= 66) && (result > target)){text = "One Superior Failure!";}
-      }
+		let roll = roll_dice(0,parsed.dietype,parsed.diecount,parsed.modifier);
+		roll['dicestr'] = parsed.dicestr;
+		return roll;
+	}
 
-      //Criticals
-      if(result === 0){text = "Critical Success!";} else
-      if(result === 99){text = "Critical Failure!";} else
-      if((result % 11) === 0) {
-      	if(result <= target) {
-      		text = "Critical Success!";
-      	} else {
-      		text = "Critical Failure!";
+    function roll_dice(target, dietype = 100, diecount = 1, modifier = 0){
+      var result = 0;
+      var dice = [];
+      
+      for(let i = 1; i <= diecount; i++) {
+      	let rand = Math.random() * dietype;
+      	if(dietype != 100) {
+      		rand++; //So, EP treats d100s as 00-99, but most die are 1-6 etc and need +1 to the random number
       	}
+      	rand = Math.floor(rand);
+      	result += rand;
+      	dice.push(rand);
       }
+
+      var success = null;
+      var text = null;
+
+      if(dietype == 100) { //Only on %ile rolls
+          var success = (result <= target);
+          var text = success ? "Success!" : "Failure!";
+
+	      //"Superiors"
+	      if(target){
+	        //Success
+	        if((result >= 66) && (success)){text = "Two Superior Successes!";} else
+	        if((result >= 33) && (success)){text = "One Superior Success!";} else
+	        //Failure
+	        if((result <= 33) && (!success)){text = "Two Superior Failures!";} else
+	        if((result <= 66) && (!success)){text = "One Superior Failure!";}
+	      }
+
+	      //Criticals
+	      if(result === 0){text = "Critical Success!";} else
+	      if(result === 99){text = "Critical Failure!";} else
+	      if((result % 11) === 0) {
+	      	if(success) {
+	      		text = "Critical Success!";
+	      	} else {
+	      		text = "Critical Failure!";
+	      	}
+	      }
+	  }
+
+	  if(modifier){
+	  	result += modifier;
+	  }
 
       //Return our results
       return {
       	result,
       	success,
-      	text
+      	text,
+      	dice,
+      	modifier
       };
 
     }

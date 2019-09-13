@@ -46,6 +46,20 @@ Vue.component('prop', {
 			if(!this.readonly){
 				event.stopPropagation();
 			}
+		},
+		roll(event) {
+			if(vue_sheet){
+				let parsed = parse_dice(this.myprop);
+				if(!parsed){
+					return;
+				}
+
+				event.preventDefault();
+				event.stopPropagation();
+				$("#custom-reason").val("Clicked '"+this.myprop+"'");
+				$("#custom-dice").val(String(this.myprop));
+				vue_sheet.custom_roll();
+			}
 		}
 	},
 	watch: {
@@ -54,7 +68,7 @@ Vue.component('prop', {
 		}
 	},
 	template: `
-	<span spellcheck="false" :data-number="amnumber" :class="trueclasses" :contentEditable="!readonly" @click.exact="clicked" @blur="update_content" @keyup.enter="enterkey">{{myprop}}</span>
+	<span spellcheck="false" :data-number="amnumber" :class="trueclasses" :contentEditable="!readonly" @click.exact="clicked" @click.ctrl.exact="roll" @blur="update_content" @keyup.enter="enterkey">{{myprop}}</span>
 	`
 });
 

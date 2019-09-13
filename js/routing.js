@@ -92,37 +92,44 @@ const vr_sheet = function() {
             this.character.morph_bio = morph_types[0].biological;
           }
         },
-        roll(target,reason){
+        roll(target,reason,dicestr){
           var logged_roll = {
             reason,
             original_target: target,
             modified_target: null,
             roll: null,
-            notes: []
+            notes: [],
+            dicestr
           };
 
-          if(this.character.traumas_taken){
-            let penalty = this.character.traumas_taken*-10;
-            target += penalty;
-            logged_roll.notes.push(`Penalty of ${penalty} due to ${this.character.traumas_taken} traumas!`);
+
+          let rolled = null;
+          if(!dicestr || dicestr == "1d100"){
+            if(this.character.traumas_taken){
+              let penalty = this.character.traumas_taken*-10;
+              target += penalty;
+              logged_roll.notes.push(`Penalty of ${penalty} due to ${this.character.traumas_taken} traumas!`);
+            }
+
+            if(this.character.wounds_taken){
+              let penalty = this.character.wounds_taken*-10;
+              target += penalty;
+              logged_roll.notes.push(`Penalty of ${penalty} due to ${this.character.wounds_taken} wounds!`);
+            }
+            
+            logged_roll.modified_target = target; //We modified our target
+            rolled = roll_dice(target,dicestr); //Roll the dice
+          } else {
+            rolled = parse_and_roll(dicestr);
+          }          
+
+          if(!rolled) {
+            return;
           }
 
-          if(this.character.wounds_taken){
-            let penalty = this.character.wounds_taken*-10;
-            target += penalty;
-            logged_roll.notes.push(`Penalty of ${penalty} due to ${this.character.wounds_taken} wounds!`);
-          }
-          
-          logged_roll.modified_target = target;
-
-          logged_roll.roll = roll_dice(target);
-          
-          this.rolls.push(logged_roll);
-
-          $('#sheet-rolls').modal('show');
-
-          console.log(logged_roll);
-
+          logged_roll.roll = rolled; //Attach it to our log object
+          this.rolls.push(logged_roll); //Log it
+          $('#sheet-rolls').modal('show'); //Pop the modal
         },
         default_skills(){
           this.character.skills = [
@@ -233,10 +240,11 @@ const vr_sheet = function() {
         },
         custom_roll(){
           let reasonval = $("#custom-reason").val();
+          let dicestr = $("#custom-dice").val();
           if(reasonval){
             reasonval += " (Custom)";
           }
-          this.roll($("#custom-target").val(),reasonval||"Custom Roll");
+          this.roll($("#custom-target").val(),reasonval||"Custom Roll",dicestr);
         },
         show_tips(){
           $("#tips-modal").modal('show');
@@ -254,6 +262,7 @@ const vr_sheet = function() {
         }
       },
       created: function (){
+        vue_sheet = this;
         if(!this.character){
           this.defaults();
         }

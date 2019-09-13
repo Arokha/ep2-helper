@@ -1329,13 +1329,19 @@
 						<i class="dice icon"></i>
 					</div>
 				</div><br>
-				<div class="ui labeled input">
-					<div class="ui label">Target</div>
-        			<input class="ui mini input" type="number" id="custom-target" name="custom-target" min="0" max="200" value="50">
+				<div class="ui labeled mini input">
+					<div class="ui label">Target #</div>
+        			<input class="ui mini input" type="number" id="custom-target" name="custom-target" size="3" min="0" max="200" value="50">
         		</div>
         		<br>
         		<br>
-        		<div class="ui input">
+				<div class="ui labeled mini input">
+					<div class="ui label">Custom Dice</div>
+        			<input class="ui mini input" type="text" id="custom-dice" name="custom-dice" maxlength="6" size="6" placeholder="1d100">
+        		</div>
+        		<br>
+        		<br>
+        		<div class="ui mini input">
         			<input type="text" id="custom-reason" placeholder="Reason...">
         		</div>
 			</div>
@@ -1344,7 +1350,8 @@
 				<template v-for="(log,index) in reverse_rolls">
 					<li>
 						<span :class="index == 0 ? 'ui text large' : ''">
-							{{log.roll.text}}&nbsp;(Rolled: {{log.roll.result}} vs. {{log.modified_target}})<span v-if="index != 0"> for {{log.reason}}</span>
+							<span v-if="log.dicestr">[{{log.dicestr}}]&nbsp;(Rolled: {{log.roll.result}} {{log.roll.dice}})<span v-if="index != 0"> for {{log.reason}}</span></span>
+							<span v-else>{{log.roll.text}}&nbsp;(Rolled: {{log.roll.result}} vs. {{log.modified_target}})<span v-if="index != 0"> for {{log.reason}}</span></span>
 						</span>
 					</li>
 					<ul v-if="log.notes.length">

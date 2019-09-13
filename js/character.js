@@ -388,6 +388,7 @@ InvVehicle.serial_values = [
 // // // // // // // // // // // // // // // // // // // // // // // // // 
 
 var character_loaded = null;
+var vue_sheet = null;
 
 class Character {
 	constructor() {
