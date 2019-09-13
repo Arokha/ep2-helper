@@ -54,10 +54,9 @@ class InvItem extends Resolvable {
 			if(filtercategory && (filtercategory != item.category)){
 				return false;
 			}
-			return item.name == this.name_text;
+			return item.name.toLowerCase() == this.name_text.toLowerCase();
 		});
 
-		
 		this.quantity = 1;
 		this.mods = [];
 
@@ -84,6 +83,7 @@ class InvItem extends Resolvable {
 		super.resolve(val);
 		
 		if(this.source) {
+			this.name_text = this.source.name; //Will fix case if they were lazy
 			this.id = this.source.id;
 			this.summary = this.source.summary;
 			if('complexity/gp' in this.source) {
@@ -194,7 +194,7 @@ class Skill extends Resolvable {
 			if(colonated >= 0){
 				return skill.name.substring(0,colonated) == this.name_text;
 			}
-			return skill.name == this.name_text;
+			return skill.name.toLowerCase() == this.name_text.toLowerCase();
 		});
 		
 		this.aptitude = aptitude || "<Aptitude>";
@@ -213,7 +213,9 @@ class Skill extends Resolvable {
 
 	resolve(val) {
 		super.resolve(val);
+
 		if(this.source){
+			this.name_text = this.source.name; //Will fix case if they were lazy
 			this.id = this.source.id;
 			let found_apt = aptitudes.find((apt) => {
 				return apt.name == this.source.aptitude.toLowerCase();
@@ -230,7 +232,7 @@ Skill.serial_values = ["name","aptitude","rank","mod","mandatory","specializatio
 class Trait extends Resolvable {
 	constructor(name,type,level,summary){
 		super(traits,function(trait){
-			return trait.name == this.name_text;
+			return trait.name.toLowerCase() == this.name_text.toLowerCase();
 		});
 
 		this.level = level || 0;
@@ -243,6 +245,7 @@ class Trait extends Resolvable {
 		super.resolve(val);
 			
 		if(this.source) {
+			this.name_text = this.source.name; //Will fix case if they were lazy
 			this.id = this.source.id;
 			this.summary = this.source.summary;
 			this.type = this.source.type;
@@ -256,7 +259,7 @@ Trait.serial_values = ["name","level","type","summary"];
 class Sleight extends Resolvable {
 	constructor(name,level,action,duration,summary) {
 		super(sleights,function(sleight){
-			return sleight.name == this.name_text;
+			return sleight.name.toLowerCase() == this.name_text.toLowerCase();
 		});
 
 		this.name = name || "<Sleight Name>";
@@ -270,7 +273,9 @@ class Sleight extends Resolvable {
 
 	resolve(val) {
 		super.resolve(val);
+
 		if(this.source) {
+			this.name_text = this.source.name; //Will fix case if they were lazy
 			this.id = this.source.id;
 			this.level = this.source.level;
 			this.action = this.source.action;
