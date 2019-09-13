@@ -22,6 +22,10 @@
 				<i class="dice icon"></i>
 				Dice Rolls
 			</div>
+			<div class="ui labeled icon inverted basic teal right floated button" @click="show_tips()">
+				<i class="info circle icon"></i>
+				Sheet Help
+			</div>
 		</div>
 		
 		<sheet-infobox header="General Info">
@@ -1394,6 +1398,38 @@
 		</div>
 		<div class="actions">
 			<div class="ui basic inverted green button" @click="close_newchar_notice()">
+				Ok, thanks.
+			</div>
+		</div>
+	</div>
+
+	<div class="ui small basic modal" id="tips-modal">
+		<div class="header">Tips & Tricks</div>
+		<div class="content">
+			<h3>Saving the Sheet</h3>
+			<p>Saving your character sheet regularly is a good idea, but keep in mind it only saves your sheet on this computer, in this browser.</p>
+			<p>If you clear out your browser settings (LocalStorage in particular), or are using 'Incognito Mode', you will lose your saved character. For this reason, you should also save the 'exported' character in a text file somewhere safe.</p>
+
+			<h3>Adding from Other Pages</h3>
+			<p>You can add gear, backgrounds, and various other things to the sheet from other pages on this website. If you're interested in making sure all the names are 'resolved' (see below), this is a very easy way to do so.</p>
+			<p>Keep in mind that if you add a Background, Career, or Interest and then remove it by hand, the skills that it added will remain and you will need to 'clean' them up.</p>
+			
+			<h3>Resolvable Names</h3>
+			<p>Inputting the exact name of things like character backgrounds, items, wares, bots, and skills will place a small icon next to the name, should the name match an item in the database. This will allow you to click the small icon for the full details on the object.</p>
+			<p>Additionally, anything after a colon in the name is ignored in terms of resolving the name. So "Breather: John's blueprint" is valid and will attach to the 'Breather' defintion.</p>
+
+			<h3>Click-to-Roll</h3>
+			<p>Skill totals and aptitude check values simply need to be clicked and they will roll the dice for you, taking into account wounds and traumas.</p>
+			<p>Several other things will also roll a die and notify you, such as initiative, and short rests.</p>
+			<p>If you have custom penalties you need to consider, you can use a custom roll (see below).</p>
+
+			<h3>Custom Rolls</h3>
+			<p>You may have noticed that you can roll arbitrary targets and dice combos on the Roll Log page, but did you know you can Ctrl-Click any text on the character sheet to try and roll it?</p>
+			<p>A good use would be Ctrl-Clickng to roll weapon damage. The entire text of whatever you click will be searched for dice notation (e.g. '3d6+4') so don't worry about making it the only text in the field.</p>
+			<p>Remember: If you want the name of something to be resolved but still want dice notation in the name, add it after a colon. You should probably add it to notes/summary instead though!</p>
+		</div>
+		<div class="actions">
+			<div class="ui basic inverted green button" @click="close_tips()">
 				Ok, thanks.
 			</div>
 		</div>

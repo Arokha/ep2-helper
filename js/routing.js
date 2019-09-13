@@ -238,6 +238,12 @@ const vr_sheet = function() {
           }
           this.roll($("#custom-target").val(),reasonval||"Custom Roll");
         },
+        show_tips(){
+          $("#tips-modal").modal('show');
+        },
+        close_tips(){
+          $("#tips-modal").modal('hide');
+        },
         close_newchar_notice(){
           $("#sheetnotice-modal").modal('hide');
         }
