@@ -277,7 +277,7 @@
 	}
 
 	function parse_dice(dicestr){
-		let reg = /(?<=^|[ :\(-])(\d+)d(\d+)([+-]\d+)?/;
+		let reg = /(?:^|[ :\(-])(\d+)d(\d+)([+-]\d+)?/;
 		let parse = reg.exec(dicestr);
 		if(parse && parse.length >= 3) {
 			//parse[0] is the full text of the resulting area
