@@ -74,9 +74,9 @@
           </thead>
           <tbody>
             <tr v-if="skills.length" v-for="skill in skills">
-              <td class="ui single line">{{skill.name}}<span v-if="skill.field">: [Field]</span></td>
-              <td class="ui single line">{{skill.aptitude}}</td>
-              <td class="ui single line">{{skill_types(skill)}}</td>
+              <td>{{skill.name}}<span v-if="skill.field">: [Field]</span></td>
+              <td>{{skill.aptitude}}</td>
+              <td>{{skill_types(skill)}}</td>
               <td v-html="skill.description"></td>
               <td>{{skill.specializations | commalist}}</td>
             </tr>
