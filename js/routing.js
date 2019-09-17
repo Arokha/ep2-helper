@@ -195,11 +195,37 @@ const vr_sheet = function() {
           this.update_export();
           $('#export-modal').modal('show');
         },
+        import_file_change(element){
+          let files = element.target.files || element.dataTransfer.files;
+          if(!files.length)
+            return;
+          let reader = new FileReader();
+          reader.onload = (evt) => {
+            let result = evt.target.result;
+            $("#import-textarea").val(result);
+            this.import_character(result);
+          };
+          var firstfile = files[0];
+          if(firstfile.type != "text/plain"){
+            show_toast("Import Error!","This doesn't appear to be plaintext.","error");
+            return;
+          }
+          if(firstfile.size > 512000){ //I doubt you could make a 500k character legitimately
+            show_toast("Import Error!","File unreasonably large.","error");
+            return;
+          }
+          reader.readAsText(firstfile);
+        },
         import_character(val){
-          let base64 = val || $("#import-textarea").val();
-          let decomp = JSON.parse(LZString.decompressFromBase64(base64));
-          import_properties(decomp,this.character,serial_character);
-          $("#import-modal").modal('hide');
+          try {
+            let base64 = val || $("#import-textarea").val();
+            let decomp = JSON.parse(LZString.decompressFromBase64(base64));
+            import_properties(decomp,this.character,serial_character);
+            $("#import-modal").modal('hide');
+          } catch (e) {
+            console.error(e);
+            show_toast("Import Error!","This appears to be malformed data.","error");
+          }
         },
         show_import_dialog(){
           $("#import-modal").modal('show');
@@ -213,6 +239,16 @@ const vr_sheet = function() {
           } catch (err) {
             console.log("Couldn't copy export due to exception");
           }
+        },
+        download_export(){
+          var hiddenElement = document.createElement('a');
+
+          hiddenElement.href = 'data:attachment/text,' + encodeURI(this.base64export);
+          hiddenElement.target = '_blank';
+          hiddenElement.download = 'ep2_export.txt';
+          hiddenElement.click();
+
+          hiddenElement.remove();
         },
         save_character(){
           this.update_export();
