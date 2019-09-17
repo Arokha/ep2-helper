@@ -308,6 +308,22 @@ const vr_chargen = function() {
           $(".sticky", this.$el).sticky('refresh');
         }
       },
+      methods: {
+        skill_types(skill){
+          let types = [];
+          if(skill.active){types.push("Active")}
+          if(skill.combat){types.push("Combat")}
+          if(skill.physical){types.push("Physical")}
+          if(skill.technical){types.push("Technical")}
+          if(skill.social){types.push("Social")}
+          if(skill.know){types.push("Know")}
+          if(skill.field){types.push("Field")}
+          if(skill.mental){types.push("Mental")}
+          if(skill.psi){types.push("Psi")}
+          if(skill.vehicle){types.push("Vehicle")}
+          return types.join(", ");
+        }
+      },
       updated: function () {
         $(this.$el).find('table').tablesort();
       },
