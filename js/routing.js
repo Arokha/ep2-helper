@@ -14,6 +14,7 @@ const vr_sheet = function() {
           character: null,
           aptitudes,
           base64export: null,
+          exportfilename: "ep2_export.txt",
           rolls: []
         };
       },
@@ -195,6 +196,27 @@ const vr_sheet = function() {
           this.update_export();
           $('#export-modal').modal('show');
         },
+        copy_export(){
+          $("#export-textarea").focus().select();
+          try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log("Copying export was " + msg);
+          } catch (err) {
+            console.log("Couldn't copy export due to exception");
+          }
+        },
+        download_export(){
+          this.update_export(); //Just to be sure
+          var hiddenElement = document.createElement('a');
+
+          hiddenElement.href = 'data:attachment/text,' + encodeURI(this.base64export);
+          hiddenElement.target = '_blank';
+          hiddenElement.download = this.exportfilename;
+          hiddenElement.click();
+
+          hiddenElement.remove();
+        },
         import_file_change(element){
           let files = element.target.files || element.dataTransfer.files;
           if(!files.length)
@@ -214,6 +236,7 @@ const vr_sheet = function() {
             show_toast("Import Error!","File unreasonably large.","error");
             return;
           }
+          this.exportfilename = firstfile.name;
           reader.readAsText(firstfile);
         },
         import_character(val){
@@ -229,26 +252,6 @@ const vr_sheet = function() {
         },
         show_import_dialog(){
           $("#import-modal").modal('show');
-        },
-        copy_export(){
-          $("#export-textarea").focus().select();
-          try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'successful' : 'unsuccessful';
-            console.log("Copying export was " + msg);
-          } catch (err) {
-            console.log("Couldn't copy export due to exception");
-          }
-        },
-        download_export(){
-          var hiddenElement = document.createElement('a');
-
-          hiddenElement.href = 'data:attachment/text,' + encodeURI(this.base64export);
-          hiddenElement.target = '_blank';
-          hiddenElement.download = 'ep2_export.txt';
-          hiddenElement.click();
-
-          hiddenElement.remove();
         },
         save_character(){
           this.update_export();
