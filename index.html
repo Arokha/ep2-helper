@@ -321,7 +321,7 @@
       var success = null;
       var text = null;
 
-      if(dietype == 100) { //Only on %ile rolls
+      if((diecount == 1) && (dietype == 100)) { //Only on %ile rolls
           var success = (result <= target);
           var text = success ? "Success!" : "Failure!";
 

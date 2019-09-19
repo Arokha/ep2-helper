@@ -119,7 +119,7 @@ const vr_sheet = function() {
             }
             
             logged_roll.modified_target = target; //We modified our target
-            rolled = roll_dice(target,dicestr); //Roll the dice
+            rolled = roll_dice(target); //Roll the dice
           } else {
             rolled = parse_and_roll(dicestr);
           }          
