@@ -196,6 +196,7 @@ const vr_sheet = function() {
 // https://arokha.com/eclipsehelper
 // Data is compressed with lz-string compressToBase64()
 // Character Name: ${this.character.name}
+// Character Data: v${this.character.version}
 ` + comp;
           this.base64export = final;
         },

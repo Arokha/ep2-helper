@@ -399,7 +399,8 @@ class Character {
 	constructor() {
 		//2: Corrected missing class hints
 		//3: Added muse name/looks
-		this.version = 3;
+		//4: Fixed muse default ranks
+		this.version = 4;
 		//Basic vitals
 		this.name = "<Input Name>";
 		this.aliases = "<Input Aliases>";
