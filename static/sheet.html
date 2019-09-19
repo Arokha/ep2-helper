@@ -227,7 +227,7 @@
 			</div>
 
 			<div class="ui horizontal inverted divider"><router-link to="/primer/actions">Movement</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Type <a @click="character.movement_rate.push({movement_type: '<Input Name>',base:0,full:0})"><i class="plus square outline icon"></i></a></th>
@@ -247,7 +247,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider"><router-link to="/traits/positive">Positive Traits</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Name <a @click="new_morph_trait('Positive')"><i class="plus square outline icon"></i></a></th>
@@ -276,7 +276,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider"><router-link to="/traits/negative">Negative Traits</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Name <a @click="new_morph_trait('Negative')"><i class="plus square outline icon"></i></a></th>
@@ -305,7 +305,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider"><router-link to="/gear/Ware">Ware</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Name <a @click="new_morph_ware()"><i class="plus square outline icon"></i></a></th>
@@ -340,7 +340,7 @@
 		
 		<sheet-infobox header="Combat">
 			<div class="ui horizontal inverted divider"><router-link to="/gear/Ranged Weapons">Ranged Weapons</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th data-tooltip="Ctrl-Click weapon names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_ranged_wep()"><i class="plus square outline icon"></i></a></th>
@@ -382,7 +382,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider"><router-link to="/gear/Melee Weapons">Melee Weapons</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th data-tooltip="Ctrl-Click weapon names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_melee_wep()"><i class="plus square outline icon"></i></a></th>
@@ -418,7 +418,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider"><router-link to="/gear/Armor">Armor</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th data-tooltip="Ctrl-Click armor names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_armor()"><i class="plus square outline icon"></i></a></th>
@@ -459,7 +459,7 @@
 		
 		<sheet-infobox header="Reputation">
 			<div class="ui horizontal inverted divider">Real ID (<prop :obj="character" keyname="name" readonly />)</div>
-			<table class="ui table inverted">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th class="center aligned">@-rep</th>
@@ -532,7 +532,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider">Fake ID (<prop :obj="character.rep_fake1" keyname="name" />)</div>
-			<table class="ui table inverted">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th class="center aligned">@-rep</th>
@@ -605,7 +605,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider">Fake ID (<prop :obj="character.rep_fake2" keyname="name" />)</div>
-			<table class="ui table inverted">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th class="center aligned">@-rep</th>
@@ -696,7 +696,7 @@
 					</div>
 				</div>
 			<div class="ui horizontal inverted divider">Influence Events</div>
-			<table class="ui table inverted">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th class="center aligned">Event <a @click="new_psi_event()"><i class="plus square outline icon"></i></a></th>
@@ -711,7 +711,7 @@
 				</tbody>
 			</table>
 			<div class="ui horizontal inverted divider"><router-link to="/sleights">Psi Sleights</router-link></div>
-			<table class="ui table inverted">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th class="center aligned">Name <a @click="new_psi_sleight()"><i class="plus square outline icon"></i></a></th>
@@ -746,7 +746,7 @@
 		
 		<sheet-infobox header="Bots/Vehicles">
 			<div class="ui horizontal inverted divider"><router-link to="/gear/Tech/Bots">Bots</router-link></div>
-			<table class="ui celled table inverted">
+			<table class="ui celled inverted unstackable table">
 				<thead>
 					<tr>
 						<th class="center aligned">Name <a @click="new_bot()"><i class="plus square outline icon"></i></a></th>
@@ -811,7 +811,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider"><router-link to="/gear/Tech/Vehicles">Vehicles</router-link></div>
-			<table class="ui celled table inverted">
+			<table class="ui celled inverted unstackable table">
 				<thead>
 					<tr>
 						<th class="center aligned">Name <a @click="new_vehicle()"><i class="plus square outline icon"></i></a></th>
@@ -931,7 +931,7 @@
 			</div>
 
 			<div class="ui horizontal inverted divider"><router-link to="/primer/stats">Aptitudes</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Name</th>
@@ -1013,7 +1013,7 @@
 		
 		<sheet-infobox header="Skills">
 			<div class="ui horizontal inverted divider"><router-link to="/chargen/6">Character Skills</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th data-tooltip="Ctrl-Click skillnames to add specializations. Ctrl-Click specs to delete." data-position="top left">Name <a @click="new_skill()"><i class="plus square outline icon"></i></a></th>
@@ -1056,7 +1056,7 @@
 		
 		<sheet-infobox header="Gear">
 			<div class="ui horizontal inverted divider"><router-link to="/gear">Character Inventory</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Name <a @click="new_item()"><i class="plus square outline icon"></i></a></th>
@@ -1098,7 +1098,7 @@
 		
 		<sheet-infobox header="Ego Traits">
 			<div class="ui horizontal inverted divider"><router-link to="/traits/positive">Positive Traits</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Name <a @click="new_ego_trait('Positive')"><i class="plus square outline icon"></i></a></th>
@@ -1127,7 +1127,7 @@
 			</table>
 
 			<div class="ui horizontal inverted divider"><router-link to="/traits/negative">Negative Traits</router-link></div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Name <a @click="new_ego_trait('Negative')"><i class="plus square outline icon"></i></a></th>
@@ -1280,7 +1280,7 @@
 				</div>
 			</div>
 			<div class="ui horizontal inverted divider">Muse Skills</div>
-			<table class="ui inverted table">
+			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
 						<th>Name <a @click="new_muse_skill()"><i class="plus square outline icon"></i></a></th>
