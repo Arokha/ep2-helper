@@ -165,7 +165,7 @@ const vr_sheet = function() {
           new Skill("Know: Accounting","COG",50,0,true),
           new Skill("Know: Psychology","COG",50,0,true),
           new Skill("Medicine: Psychosurgery","COG",20,0,true),
-          new Skill("Perceive","INT",15,0,true),
+          new Skill("Perceive","INT",10,0,true),
           new Skill("Program","COG",20,0,true),
           new Skill("Research","COG",20,0,true),
           new Skill("Know: ?","?",30,0,false),
