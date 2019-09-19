@@ -1,30 +1,30 @@
-<div id="sheet-grid" class="ui grid">
+<div id="sheet-grid" class="ui stackable grid">
 	<div class="sixteen wide column">
 		
 		<div class="ui segment inverted">
 			<div class="ui labeled icon inverted basic teal button" @click="save_character()">
 				<i class="save icon"></i>
-				Save Character
+				Save
 			</div>
 			<div class="ui labeled icon inverted basic teal button" @click="export_character()">
 				<i class="download alternate icon"></i>
-				Export Character
+				Export
 			</div>
 			<div class="ui labeled icon inverted basic teal button" @click="show_import_dialog()">
 				<i class="upload alternate icon"></i>
-				Import Character
+				Import
 			</div>
 			<div class="ui labeled icon inverted basic red button" @click="show_wipe_dialog()">
 				<i class="undo red icon"></i>
-				Reset Sheet
+				Reset
 			</div>
 			<div class="ui labeled icon inverted basic green right floated button" @click="show_rolls()">
 				<i class="dice icon"></i>
-				Dice Rolls
+				Rolling
 			</div>
 			<div class="ui labeled icon inverted basic teal right floated button" @click="show_tips()">
 				<i class="info circle icon"></i>
-				Sheet Help
+				Help
 			</div>
 		</div>
 		
@@ -1371,16 +1371,16 @@
 			<p>Note: You will <b>OVERWRITE</b> your current character. Make sure you have a backup!</p>
 			
 			<label for="fileimport">
-				<div class="ui animated fade basic button inverted blue">
-					<div class="visible content">Upload File</div>
-					<div class="hidden content"><i class="upload alternate icon"></i></div>
+				<div class="ui labeled icon inverted basic teal button">
+					<i class="upload alternate icon"></i>
+					Upload File
 				</div>
 			</label>
 			<input type="file" id="fileimport" name="fileimport" accept=".txt" style="display: none;" @input="import_file_change">
 
-			<div class="ui animated fade basic button inverted blue" @click="import_character()">
-				<div class="visible content">Import Text Below</div>
-				<div class="hidden content"><i class="upload alternate icon"></i></div>
+			<div class="ui labeled icon inverted basic teal button" @click="import_character()">
+				<i class="arrow down icon"></i>
+				Import Text
 			</div>
 
 			<div class="ui segment">
@@ -1394,14 +1394,14 @@
 		<div class="content">
 			<p>You can import the below code later to re-load your character, or send it to someone else.</p>
 			
-			<div class="ui animated fade basic button inverted blue" @click="download_export()">
-				<div class="visible content">Save to File</div>
-				<div class="hidden content"><i class="download icon"></i></div>
+			<div class="ui labeled icon inverted basic teal button" @click="download_export()">
+				<i class="download icon"></i>
+				Download
 			</div>
 
-			<div class="ui animated fade basic button inverted blue" @click="copy_export()">
-				<div class="visible content">Copy to Clipboard</div>
-				<div class="hidden content"><i class="clipboard icon"></i></div>
+			<div class="ui labeled icon inverted basic teal button" @click="copy_export()">
+				<i class="clipboard icon"></i>
+				Copy
 			</div>
 
 			<div class="ui segment">
