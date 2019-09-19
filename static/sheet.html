@@ -42,7 +42,7 @@
 					</div>
 				</div>
 				<div class="four fields">
-					<div class="field"><label><a href="#/chargen/1">Background</a></label>
+					<div class="field"><label><router-link to="/chargen/1">Background</router-link></label>
 						<prop :obj="character" keyname="background" classes="ui text large" />
 						<sheet-modal-link
 						v-if="character.background_obj"
@@ -55,7 +55,7 @@
 						</sheet-modal-link>
 
 					</div>
-					<div class="field"><label><a href="#/chargen/2">Career</a></label>
+					<div class="field"><label><router-link to="/chargen/2">Career</router-link></label>
 						<prop :obj="character" keyname="career" classes="ui text large" />
 						<sheet-modal-link
 						v-if="character.career_obj"
@@ -68,7 +68,7 @@
 						</sheet-modal-link>
 
 					</div>					
-					<div class="field"><label><a href="#/chargen/3">Interest</a></label>
+					<div class="field"><label><router-link to="/chargen/3">Interest</router-link></label>
 						<prop :obj="character" keyname="interest" classes="ui text large" />
 						<sheet-modal-link
 						v-if="character.interest_obj"
@@ -81,7 +81,7 @@
 						</sheet-modal-link>
 
 					</div>
-					<div class="field"><label><a href="#/chargen/4">Faction</a></label>
+					<div class="field"><label><router-link to="/chargen/4">Faction</router-link></label>
 						<prop :obj="character" keyname="faction" classes="ui text large" />
 						<sheet-modal-link
 						v-if="character.faction_obj"
@@ -96,10 +96,10 @@
 					</div>
 				</div>
 				<div class="two fields">
-					<div class="field"><label><a href="#/chargen/7">Languages</a></label>
+					<div class="field"><label><router-link to="/chargen/7">Languages</router-link></label>
 						<prop :obj="character" keyname="languages" classes="ui text large" />
 					</div>
-					<div class="field"><label><a href="#/chargen/13">Motivations</a></label>
+					<div class="field"><label><router-link to="/chargen/13">Motivations</router-link></label>
 						<prop :obj="character" keyname="motivations" classes="ui text large" />
 					</div>
 				</div>
@@ -111,7 +111,7 @@
 	<div class="eight wide column">
 		
 		<sheet-infobox header="Morph">
-			<div class="ui horizontal inverted divider"><a href="#/primer/stats">Basic Info</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/primer/stats">Basic Info</router-link></div>
 			<div class="ui horizontal divided inverted centerflow very relaxed large selection list">
 				<div class="item clickedit">
 					<div class="content">
@@ -145,7 +145,7 @@
 				</div>
 			</div> <!-- End basic info -->
 
-			<div class="ui horizontal inverted divider"><a href="#/primer/pools">Pools</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/primer/pools">Pools</router-link></div>
 			<div class="ui horizontal divided inverted centerflow very relaxed large selection list">
 				<div class="item clickedit">
 					<div class="content">
@@ -190,7 +190,7 @@
 				</div>
 			</div> <!-- End pools -->
 
-			<div class="ui horizontal inverted divider"><a href="#/primer/stats">Health</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/primer/stats">Health</router-link></div>
 			<div class="ui horizontal divided inverted centerflow very large relaxed selection list">
 				<div class="item clickedit">
 					<div class="content">
@@ -226,7 +226,7 @@
 				</div>
 			</div>
 
-			<div class="ui horizontal inverted divider"><a href="#/primer/actions">Movement</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/primer/actions">Movement</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -246,7 +246,7 @@
 				</tbody>
 			</table>
 
-			<div class="ui horizontal inverted divider"><a href="#/traits/positive">Positive Traits</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/traits/positive">Positive Traits</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -275,7 +275,7 @@
 				</tbody>
 			</table>
 
-			<div class="ui horizontal inverted divider"><a href="#/traits/negative">Negative Traits</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/traits/negative">Negative Traits</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -304,7 +304,7 @@
 				</tbody>
 			</table>
 
-			<div class="ui horizontal inverted divider"><a href="#/gear/Ware">Ware</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/gear/Ware">Ware</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -339,7 +339,7 @@
 		</sheet-infobox> <!-- End morph -->
 		
 		<sheet-infobox header="Combat">
-			<div class="ui horizontal inverted divider"><a href="#/gear/Ranged Weapons">Ranged Weapons</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/gear/Ranged Weapons">Ranged Weapons</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -381,7 +381,7 @@
 				</tbody>
 			</table>
 
-			<div class="ui horizontal inverted divider"><a href="#/gear/Melee Weapons">Melee Weapons</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/gear/Melee Weapons">Melee Weapons</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -417,7 +417,7 @@
 				</tbody>
 			</table>
 
-			<div class="ui horizontal inverted divider"><a href="#/gear/Armor">Armor</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/gear/Armor">Armor</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -710,7 +710,7 @@
 					</tr>
 				</tbody>
 			</table>
-			<div class="ui horizontal inverted divider"><a href="#/sleights">Psi Sleights</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/sleights">Psi Sleights</router-link></div>
 			<table class="ui table inverted">
 				<thead>
 					<tr>
@@ -745,7 +745,7 @@
 		</sheet-infobox>
 		
 		<sheet-infobox header="Bots/Vehicles">
-			<div class="ui horizontal inverted divider"><a href="#/gear/Tech/Bots">Bots</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/gear/Tech/Bots">Bots</router-link></div>
 			<table class="ui celled table inverted">
 				<thead>
 					<tr>
@@ -810,7 +810,7 @@
 				</tbody>
 			</table>
 
-			<div class="ui horizontal inverted divider"><a href="#/gear/Tech/Vehicles">Vehicles</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/gear/Tech/Vehicles">Vehicles</router-link></div>
 			<table class="ui celled table inverted">
 				<thead>
 					<tr>
@@ -882,7 +882,7 @@
 	
 	<div class="eight wide column">
 		<sheet-infobox header="Ego">
-			<div class="ui horizontal inverted divider"><a href="#/primer/stats">Mental Health</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/primer/stats">Mental Health</router-link></div>
 			<div class="ui horizontal divided inverted centerflow large very relaxed selection list">
 				<div class="item clickedit">
 					<div class="content">
@@ -930,7 +930,7 @@
 				</div>
 			</div>
 
-			<div class="ui horizontal inverted divider"><a href="#/primer/stats">Aptitudes</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/primer/stats">Aptitudes</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -1012,7 +1012,7 @@
 		</sheet-infobox>
 		
 		<sheet-infobox header="Skills">
-			<div class="ui horizontal inverted divider"><a href="#/chargen/6">Character Skills</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/chargen/6">Character Skills</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -1055,7 +1055,7 @@
 		</sheet-infobox>
 		
 		<sheet-infobox header="Gear">
-			<div class="ui horizontal inverted divider"><a href="#/gear">Character Inventory</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/gear">Character Inventory</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -1097,7 +1097,7 @@
 		</sheet-infobox>
 		
 		<sheet-infobox header="Ego Traits">
-			<div class="ui horizontal inverted divider"><a href="#/traits/positive">Positive Traits</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/traits/positive">Positive Traits</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -1126,7 +1126,7 @@
 				</tbody>
 			</table>
 
-			<div class="ui horizontal inverted divider"><a href="#/traits/negative">Negative Traits</a></div>
+			<div class="ui horizontal inverted divider"><router-link to="/traits/negative">Negative Traits</router-link></div>
 			<table class="ui inverted table">
 				<thead>
 					<tr>
@@ -1413,7 +1413,7 @@
 	<div class="ui tiny basic modal" id="sheetnotice-modal">
 		<div class="header">Creating New Characters</div>
 		<div class="content">
-			<p>If you're creating a new character, we highly suggest you use the <a href="#/chargen" @click="close_newchar_notice()">Chargen Guide</a>, because it has various 'Add to Character' buttons to add things directly to your character sheet.</p>
+			<p>If you're creating a new character, we highly suggest you use the <router-link to="/chargen" @click="close_newchar_notice()">Chargen Guide</router-link>, because it has various 'Add to Character' buttons to add things directly to your character sheet.</p>
 			<p>This way, you will save yourself a lot of typing as it can add the skills from your Background, Faction, etc.</p>
 		</div>
 		<div class="actions">

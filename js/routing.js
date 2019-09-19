@@ -321,7 +321,6 @@ const vr_sheet = function() {
   });
 };
 
-
 const vr_chargen = function() {
   return $.ajax("static/chargen.html").then(function(templateHtml) {
     return {
@@ -369,14 +368,8 @@ const vr_chargen = function() {
       mounted: function(){
         // Tabs are already hard coded in the template, we'e good to initialize tabs
         $(this.$el).find("#chargen-" + this.$route.params.step).addClass("active");
-        
-        // When all data is loaded, the active tab will be at proper height and we can refresh sticky.
-        Promise.all([
-          $.getJSON('data/chargen_custom.json').then((json) => {this.chargen = json;}),
-        ]).then(() => {
-          Vue.nextTick(() => {
+        Vue.nextTick(() => {
             $(".sticky", this.$el).sticky();
-          });
         });
       }
     };
@@ -750,13 +743,15 @@ const vr_routes = [
   { path: '/gear/:category/:subcategory', component: vr_gear, props: true },
   { path: '/gear/:category', component: vr_gear, props: true },
   { path: '/gear', component: vr_gear },
-  { path: '/traits/:tabid', component: vr_traits, props: true},
+  { path: '/traits/:tabid', component: vr_traits, props: true },
   { path: '/traits', redirect: "/traits/positive" },
-  { path: '/sleights', component: vr_sleights, props: true},
-  { path: '*', redirect: '/quickrules' }
+  { path: '/sleights', component: vr_sleights, props: true },
+  { path: '*', redirect: "/quickrules" }
 ]
 
 const vr_router = new VueRouter({
+  base: "/eclipsehelper/",
+  mode: "history",
   routes: vr_routes,
   linkActiveClass: "active",
   scrollBehavior (to, from, savedPosition) {
