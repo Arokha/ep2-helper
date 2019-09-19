@@ -159,16 +159,16 @@ const vr_sheet = function() {
         },
         default_muse(){
           this.character.muse.skills = [
-          new Skill("Hardware: Electronics","COG",30,0,true),
-          new Skill("Infosec","COG",30,0,true),
-          new Skill("Interface","COG",60,0,true),
-          new Skill("Know: Accounting","COG",60,0,true),
-          new Skill("Know: Psychology","COG",60,0,true),
-          new Skill("Medicine: Psychosurgery","COG",30,0,true),
-          new Skill("Perceive","INT",30,0,true),
-          new Skill("Program","COG",30,0,true),
-          new Skill("Research","COG",30,0,true),
-          new Skill("Know: ?","?",40,0,false),
+          new Skill("Hardware: Electronics","COG",20,0,true),
+          new Skill("Infosec","COG",20,0,true),
+          new Skill("Interface","COG",50,0,true),
+          new Skill("Know: Accounting","COG",50,0,true),
+          new Skill("Know: Psychology","COG",50,0,true),
+          new Skill("Medicine: Psychosurgery","COG",20,0,true),
+          new Skill("Perceive","INT",15,0,true),
+          new Skill("Program","COG",20,0,true),
+          new Skill("Research","COG",20,0,true),
+          new Skill("Know: ?","?",30,0,false),
           ]
         },
         defaults(){
