@@ -1392,7 +1392,7 @@
 	<div class="ui modal inverted" id="export-modal">
 		<div class="header">Base64 Character Export</div>
 		<div class="content">
-			<p>You can import the below code later to re-load your character, or send it to someone else.</p>
+			<p>You can save the below code later to re-load your character, or send it to someone else via something like <a href="https://hastebin.com" target="_blank">Hastebin</a>.</p>
 			
 			<div class="ui labeled icon inverted basic teal button" @click="download_export()">
 				<i class="download icon"></i>
@@ -1405,7 +1405,7 @@
 			</div>
 
 			<div class="ui segment">
-				<textarea style="width:100%;height:25rem;" spellcheck="false" id="export-textarea" :value="base64export"></textarea>
+				<textarea style="width:100%;height:25rem;overflow:hidden;" spellcheck="false" id="export-textarea" :value="base64export" readonly></textarea>
 			</div>
 		</div>
 	</div>

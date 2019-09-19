@@ -187,14 +187,24 @@ const vr_sheet = function() {
           browserStore.clear();
         },
         update_export(){
-          var preparing = $.extend(true,{},serial_character);
+          let preparing = $.extend(true,{},serial_character);
           export_properties(this.character,preparing,serial_character);
-          var uncomp = JSON.stringify(preparing);
-          this.base64export = LZString.compressToBase64(uncomp);
+          let uncomp = JSON.stringify(preparing);
+          let comp = LZString.compressToBase64(uncomp);
+          let final =
+`// Eclipse Phase Second Edition Character Export
+// https://arokha.com/eclipsehelper
+// Data is compressed with lz-string compressToBase64()
+// Character Name: ${this.character.name}
+` + comp;
+          this.base64export = final;
         },
         export_character(){
           this.update_export();
           $('#export-modal').modal('show');
+          this.$nextTick(function(){
+            $("#export-textarea").scrollTop(0);
+          });
         },
         copy_export(){
           $("#export-textarea").focus().select();
@@ -242,9 +252,19 @@ const vr_sheet = function() {
         import_character(val){
           try {
             let base64 = val || $("#import-textarea").val();
+
+            //Scrape comments
+            base64 = base64.replace(/\/\/.*[\r\n]+/gm,"");
+            
+            //Decompress
             let decomp = JSON.parse(LZString.decompressFromBase64(base64));
+            
+            //Try to import properties
             import_properties(decomp,this.character,serial_character);
+            
+            //Drop modal if it worked
             $("#import-modal").modal('hide');
+            show_toast("Imported Character","Name: "+this.character.name,"success");
           } catch (e) {
             console.error(e);
             show_toast("Import Error!","This appears to be malformed data.","error");
@@ -315,6 +335,9 @@ const vr_sheet = function() {
         if((this.character.name == "<Input Name>") && (this.character.background == "<Input Background>")) {
           $("#sheetnotice-modal").modal({blurring: true}).modal('show');
         }
+        //Prep these modals
+        $('#export-modal').modal({autofocus: false});
+        $('#import-modal').modal();
       },
       template: templateHtml
     };
