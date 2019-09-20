@@ -219,14 +219,7 @@ const vr_sheet = function() {
         },
         download_export(){
           this.update_export(); //Just to be sure
-          var hiddenElement = document.createElement('a');
-
-          hiddenElement.href = 'data:attachment/text,' + encodeURI(this.base64export);
-          hiddenElement.target = '_blank';
-          hiddenElement.download = this.exportfilename;
-          hiddenElement.click();
-
-          hiddenElement.remove();
+          download(this.exportfilename, this.base64export);
         },
         import_file_change(element){
           let files = element.target.files || element.dataTransfer.files;

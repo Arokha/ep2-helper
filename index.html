@@ -520,16 +520,18 @@
 	}
 	/////////////////////////////////////////////////////// End License
 
-	$.fn.timedDisable = function(time) {
-	    if (time == null) { time = 3000; }
-	    return $(this).each(function() {
-	        $(this).addClass('disabled');
-	        var disabledElem = $(this);
-	        setTimeout(function() {
-	            disabledElem.removeClass('disabled');
-	        }, time);
-	    });
-	};
+	function download(filename, text) {
+	  var element = document.createElement('a');
+	  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+	  element.setAttribute('download', filename);
+
+	  element.style.display = 'none';
+	  document.body.appendChild(element);
+
+	  element.click();
+
+	  document.body.removeChild(element);
+	}
 
 	$(function() {
     	$(".ui.dropdown").dropdown({on: "hover"});
