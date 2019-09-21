@@ -85,6 +85,12 @@ Vue.component('sheet-infobox', {
 			});
 		}
 	},
+	mounted() {
+    	this.$nextTick(function(){
+      		$(this.$el).find('table.sortable').tablesort();
+      		$(this.$el).find('[data-content]').popup();
+    	});
+  	},
 	template: `
 	  	<div class="ui segment inverted">
 			<!-- <a class="ui top left attached large secondary inverted label"><i style="margin:0px;" class="large pencil icon"></i></a> -->

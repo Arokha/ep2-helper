@@ -174,7 +174,7 @@
 			</div>
 			<div class="ui horizontal divided inverted centerflow very relaxed large selection list">
 				<div class="item" @click="character.shortrest()">
-					<div class="content" data-tooltip="Will throw a d6 for you on click">
+					<div class="content" data-content="Will throw a d6 for you on click">
 						<div class="header">Short Rest</div>
 						<span v-if="!character.shortrests_left" class="ui text red">{{character.shortrests_left}}</span>
 						<span v-else>{{character.shortrests_left}}</span>
@@ -182,7 +182,7 @@
 					</div>
 				</div>
 				<div class="item" @click="character.longrest()">
-					<div class="content" data-tooltip="Will reset all pools to max when used">
+					<div class="content" data-content="Will reset all pools to max when used">
 						<div class="header">Long Rest</div>
 						<span v-if="character.longrest_used" class="ui text red">Used!</span>
 						<span v-else>Available</span>
@@ -343,7 +343,7 @@
 			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
-						<th data-tooltip="Ctrl-Click weapon names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_ranged_wep()"><i class="plus square outline icon"></i></a></th>
+						<th data-content="Ctrl-Click weapon names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_ranged_wep()"><i class="plus square outline icon"></i></a></th>
 						<th class="center aligned">Damage</th>
 						<th class="center aligned">Firemodes</th>
 						<th class="center aligned">Range</th>
@@ -385,7 +385,7 @@
 			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
-						<th data-tooltip="Ctrl-Click weapon names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_melee_wep()"><i class="plus square outline icon"></i></a></th>
+						<th data-content="Ctrl-Click weapon names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_melee_wep()"><i class="plus square outline icon"></i></a></th>
 						<th class="center aligned">Damage</th>
 						<th>Notes</th>
 						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
@@ -421,7 +421,7 @@
 			<table class="ui inverted unstackable table">
 				<thead>
 					<tr>
-						<th data-tooltip="Ctrl-Click armor names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_armor()"><i class="plus square outline icon"></i></a></th>
+						<th data-content="Ctrl-Click armor names to add mods. Ctrl-Click mods to delete." data-position="top left">Name <a @click="new_armor()"><i class="plus square outline icon"></i></a></th>
 						<th class="center aligned">Energy</th>
 						<th class="center aligned">Kinetic</th>
 						<th>Notes</th>
@@ -757,7 +757,7 @@
 						<th class="center aligned">DUR</th>
 						<th class="center aligned">DR</th>
 						<th class="center aligned">Size</th>
-						<th class="center aligned" data-tooltip="Ctrl-Click movements to remove them">Movement</th>
+						<th class="center aligned" data-content="Ctrl-Click movements to remove them">Movement</th>
 						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
 					</tr>
 				</thead>
@@ -791,7 +791,7 @@
 							<td class="selectable collapsing"><a @click="character.bots.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
 						</tr>
 						<tr>
-							<td colspan="10"><b data-tooltip="Ctrl-Click ware to delete them">Ware: </b>
+							<td colspan="10"><b data-content="Ctrl-Click ware to delete them">Ware: </b>
 								<template v-for="(ware,index) in bot.ware">
 									<span @click.ctrl.exact="bot.ware.splice(index,1)"><prop :obj="ware" keyname="name" />
 										<sheet-modal-link
@@ -823,7 +823,7 @@
 						<th class="center aligned">DR</th>
 						<th class="center aligned">Size</th>
 						<th class="center aligned">Passengers</th>
-						<th class="center aligned" data-tooltip="Ctrl-Click movements to remove them">Movement</th>
+						<th class="center aligned" data-content="Ctrl-Click movements to remove them">Movement</th>
 						<th class="center aligned collapsing"><i class="ui trash icon"></i></th>
 					</tr>
 				</thead>
@@ -858,7 +858,7 @@
 							<td class="selectable collapsing"><a @click="character.vehicles.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
 						</tr>
 						<tr>
-							<td colspan="11"><b data-tooltip="Ctrl-Click ware to delete them">Ware: </b>
+							<td colspan="11"><b data-content="Ctrl-Click ware to delete them">Ware: </b>
 								<template v-for="(ware,index) in vehicle.ware">
 									<span @click.ctrl.exact="vehicle.ware.splice(index,1)"><prop :obj="ware" keyname="name" />
 										<sheet-modal-link
@@ -917,7 +917,7 @@
 					</div>
 				</div>
 				<div class="item clickedit" @click.stop="character.roll_initiative()">
-					<div class="content" data-tooltip="Will roll your initiative on click">
+					<div class="content" data-content="Will roll your initiative on click">
 						<div class="header">Initiative</div>
 						<prop :obj="character" keyname="initiative" readonly /> (<span v-if="character.initiative_mod > 0">+</span><prop :obj="character" keyname="initiative_mod" />)
 					</div>
@@ -1013,10 +1013,10 @@
 		
 		<sheet-infobox header="Skills">
 			<div class="ui horizontal inverted divider"><router-link to="/chargen/6">Character Skills</router-link></div>
-			<table class="ui inverted unstackable table">
+			<table class="ui inverted unstackable sortable table">
 				<thead>
 					<tr>
-						<th data-tooltip="Ctrl-Click skillnames to add specializations. Ctrl-Click specs to delete." data-position="top left">Name <a @click="new_skill()"><i class="plus square outline icon"></i></a></th>
+						<th data-content="Ctrl-Click skillnames to add specializations. Ctrl-Click specs to delete." data-position="top left">Name <a @click="new_skill()"><i class="plus square outline icon"></i></a></th>
 						<th class="center aligned">Rank</th>
 						<th class="center aligned">Aptitude</th>
 						<th class="center aligned">Mod</th>
@@ -1084,11 +1084,11 @@
 							<i v-else class="green clipboard check large icon"></i>
 						</td>
 						<td class="center aligned selectable" @click.stop="item.cycle_blueprint()">
-							<span v-if="item.blueprint == 1" data-tooltip="Limited Use BP"><i class="orange tools large icon"></i><sup>(1)</sup></span>
-							<span v-else-if="item.blueprint == 2" data-tooltip="Multi-Use BP"><i class="orange tools large icon"></i><sup>(1+)</sup></span>
-							<span v-else-if="item.blueprint == 3" data-tooltip="Open Source BP"><i class="green tools large icon"></i><sup>(OS)</sup></span>
-							<span v-else-if="item.blueprint == 4" data-tooltip="Cracked BP"><i class="red tools large icon"></i><sup>(CRK)</sup></span>
-							<span v-else data-tooltip="No BP"><i class="times large icon"></i></span>
+							<span v-if="item.blueprint == 1" data-content="Limited Use BP"><i class="orange tools large icon"></i><sup>(1)</sup></span>
+							<span v-else-if="item.blueprint == 2" data-content="Multi-Use BP"><i class="orange tools large icon"></i><sup>(1+)</sup></span>
+							<span v-else-if="item.blueprint == 3" data-content="Open Source BP"><i class="green tools large icon"></i><sup>(OS)</sup></span>
+							<span v-else-if="item.blueprint == 4" data-content="Cracked BP"><i class="red tools large icon"></i><sup>(CRK)</sup></span>
+							<span v-else data-content="No BP"><i class="times large icon"></i></span>
 						</td>
 						<td class="selectable collapsing"><a @click="character.items.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
 					</tr>
@@ -1280,7 +1280,7 @@
 				</div>
 			</div>
 			<div class="ui horizontal inverted divider">Muse Skills</div>
-			<table class="ui inverted unstackable table">
+			<table class="ui inverted unstackable sortable table">
 				<thead>
 					<tr>
 						<th>Name <a @click="new_muse_skill()"><i class="plus square outline icon"></i></a></th>
