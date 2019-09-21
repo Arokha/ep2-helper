@@ -148,7 +148,7 @@ const vr_sheet = function() {
           new Skill("Persuade","SAV",0,0,true),
           new Skill("Program","COG",0,0,true),
           new Skill("Provoke","SAV",0,0,true),
-          new Skill("Psi","WIL",0,0,true),
+          new Skill("Psi","WIL",0,0,false),
           new Skill("Research","INT",0,0,true),
           new Skill("Survival","INT",0,0,true),
           new Skill("Hardware: ?","COG",0,0,false),
