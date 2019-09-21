@@ -640,7 +640,8 @@ Vue.component('faction-card', {
         return;
       }
 
-      add_to_character("faction",this.faction.name,"You'll need to add the fields/specializations yourself though.");
+      character_loaded.increase_skill("Know",30,this.faction.name);
+      add_to_character("faction",this.faction.name,"Also added the faction 'Know' skill.");
     }
   },
   template: `
