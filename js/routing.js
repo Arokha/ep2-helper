@@ -93,7 +93,78 @@ const vr_sheet = function() {
             this.character.morph_bio = morph_types[0].biological;
           }
         },
-        roll(target,reason,dicestr){
+
+        //Just roll and log, no frills
+        roll_and_log(target,reason,dicestr){
+          let result = this.perform_roll(target,reason,dicestr);
+          if(result)
+            this.log_roll(result);
+        },
+
+        //Just open the modal
+        show_rolls(){
+          $("#sheet-rolls").modal('show');
+        },
+
+        //Roll a custom dice string from the box
+        custom_roll(){
+          let reasonval = $("#custom-reason").val();
+          let dicestr = $("#custom-dice").val();
+          if(reasonval){
+            reasonval += " (Custom)";
+          }
+          this.roll_and_log($("#custom-target").val(),reasonval||"Custom Roll",dicestr);
+        },
+
+        //Roll a skill with frills (specialization, default considerations, etc)
+        skill_roll_and_log(skill,spec = false){
+          //Get the value of the aptitude
+          let apt = this.character[skill.aptitude];
+          if(!apt){
+            show_toast("No Aptitude?","I can't tell what aptitude that skill uses.","error");
+            return;
+          }
+          
+          //Pass the apt in, get the total back from the skill
+          let target = skill.total(apt);
+          
+          if(spec){
+            target += 10;
+          }
+          
+          //Roll our thing and grab the resulting log
+          let log_entry = this.perform_roll(target,skill.name + " Check");
+          if(!log_entry){
+            show_toast("Dice roll failed?","I didn't get an answer back from the roller!","error");
+            return;
+          }
+
+          //Can't get crit success when defaulting on skills
+          if((skill.rank === 0) && log_entry.roll.text == "Critical Success!"){
+              if((log_entry.roll.result >= 66) && (success)){
+                log_entry.roll.text = "Two Superior Successes!";
+              } else if((log_entry.roll.result >= 33) && (success)){
+                log_entry.roll.text = "One Superior Success!";
+              } else {
+                log_entry.roll.text = "Success!";
+              }
+              log_entry.notes.push("Critical success ignored due to skill defaulting.");
+          }
+
+          //Note if we had a spec so they can see it in the log
+          if(spec){
+            log_entry.notes.push("+10 from specialization: "+spec);
+          }
+
+          //Log it
+          this.log_roll(log_entry);
+
+        },
+        log_roll(results_obj){
+          this.rolls.push(results_obj);
+          $('#sheet-rolls').modal('show');
+        },
+        perform_roll(target,reason,dicestr){
           var logged_roll = {
             reason,
             original_target: target,
@@ -103,9 +174,8 @@ const vr_sheet = function() {
             dicestr
           };
 
-
           let rolled = null;
-          if(!dicestr || dicestr == "1d100"){
+          if(!dicestr || dicestr == "1d100" || dicestr == "d100"){
             if(this.character.traumas_taken){
               let penalty = this.character.traumas_taken*-10;
               target += penalty;
@@ -129,8 +199,7 @@ const vr_sheet = function() {
           }
 
           logged_roll.roll = rolled; //Attach it to our log object
-          this.rolls.push(logged_roll); //Log it
-          $('#sheet-rolls').modal('show'); //Pop the modal
+          return logged_roll;
         },
         default_skills(){
           this.character.skills = [
@@ -288,17 +357,6 @@ const vr_sheet = function() {
             return true;
           }
           return false;
-        },
-        show_rolls(){
-          $("#sheet-rolls").modal('show');
-        },
-        custom_roll(){
-          let reasonval = $("#custom-reason").val();
-          let dicestr = $("#custom-dice").val();
-          if(reasonval){
-            reasonval += " (Custom)";
-          }
-          this.roll($("#custom-target").val(),reasonval||"Custom Roll",dicestr);
         },
         show_tips(){
           $("#tips-modal").modal('show');

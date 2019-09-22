@@ -950,7 +950,7 @@
 							</sheet-modal-link></td>
 						<td class="center aligned selectable"><prop :obj="character" keyname="cog" /></td>
 						<td class="center aligned selectable"><span v-if="character.cog_check_postmod > 0">+</span><prop :obj="character" keyname="cog_check_postmod" /></td>
-						<td class="center aligned selectable" @click="roll(character.cog_check,'COG Check')"><prop :obj="character" keyname="cog_check" readonly /></td>
+						<td class="center aligned selectable" @click="roll_and_log(character.cog_check,'COG Check')"><prop :obj="character" keyname="cog_check" readonly /></td>
 					</tr>
 					<tr>
 						<td>Intuition (INT)
@@ -961,7 +961,7 @@
 							</sheet-modal-link></td>
 						<td class="center aligned selectable"><prop :obj="character" keyname="int" /></td>
 						<td class="center aligned selectable"><span v-if="character.int_check_postmod > 0">+</span><prop :obj="character" keyname="int_check_postmod" /></td>
-						<td class="center aligned selectable" @click="roll(character.int_check,'INT Check')"><prop :obj="character" keyname="int_check" readonly /></td>
+						<td class="center aligned selectable" @click="roll_and_log(character.int_check,'INT Check')"><prop :obj="character" keyname="int_check" readonly /></td>
 					</tr>
 					<tr>
 						<td>Reflexes (REF)
@@ -972,7 +972,7 @@
 							</sheet-modal-link></td>
 						<td class="center aligned selectable"><prop :obj="character" keyname="ref" /></td>
 						<td class="center aligned selectable"><span v-if="character.ref_check_postmod > 0">+</span><prop :obj="character" keyname="ref_check_postmod" /></td>
-						<td class="center aligned selectable" @click="roll(character.ref_check,'REF Check')"><prop :obj="character" keyname="ref_check" readonly /></td>
+						<td class="center aligned selectable" @click="roll_and_log(character.ref_check,'REF Check')"><prop :obj="character" keyname="ref_check" readonly /></td>
 					</tr>
 					<tr>
 						<td>Savvy (SAV)
@@ -983,7 +983,7 @@
 							</sheet-modal-link></td>
 						<td class="center aligned selectable"><prop :obj="character" keyname="sav" /></td>
 						<td class="center aligned selectable"><span v-if="character.sav_check_postmod > 0">+</span><prop :obj="character" keyname="sav_check_postmod" /></td>
-						<td class="center aligned selectable" @click="roll(character.sav_check,'SAV Check')"><prop :obj="character" keyname="sav_check" readonly /></td>
+						<td class="center aligned selectable" @click="roll_and_log(character.sav_check,'SAV Check')"><prop :obj="character" keyname="sav_check" readonly /></td>
 					</tr>
 					<tr>
 						<td>Somatics (SOM)
@@ -994,7 +994,7 @@
 							</sheet-modal-link></td>
 						<td class="center aligned selectable"><prop :obj="character" keyname="som" /></td>
 						<td class="center aligned selectable"><span v-if="character.som_check_postmod > 0">+</span><prop :obj="character" keyname="som_check_postmod" /></td>
-						<td class="center aligned selectable" @click="roll(character.som_check,'SOM Check')"><prop :obj="character" keyname="som_check" readonly /></td>
+						<td class="center aligned selectable" @click="roll_and_log(character.som_check,'SOM Check')"><prop :obj="character" keyname="som_check" readonly /></td>
 					</tr>
 					<tr>
 						<td>Willpower (WIL)
@@ -1005,7 +1005,7 @@
 							</sheet-modal-link></td>
 						<td class="center aligned selectable"><prop :obj="character" keyname="wil" /></td>
 						<td class="center aligned selectable"><span v-if="character.wil_check_postmod > 0">+</span><prop :obj="character" keyname="wil_check_postmod" /></td>
-						<td class="center aligned selectable" @click="roll(character.wil_check,'WIL Check')"><prop :obj="character" keyname="wil_check" readonly /></td>
+						<td class="center aligned selectable" @click="roll_and_log(character.wil_check,'WIL Check')"><prop :obj="character" keyname="wil_check" readonly /></td>
 					</tr>
 				</tbody>
 			</table>
@@ -1039,7 +1039,7 @@
 								v-for="spec in skill.specializations"
 								class="ui horizontal basic inverted transparent label"
 								@click.ctrl.stop.prevent="rem_skill_spec(skill,spec,$event)"
-								@click.exact.stop="roll(skill.total(character[skill.aptitude])+10,skill.name + ' Check (+10)')"
+								@click.exact.stop="skill_roll_and_log(skill,spec)"
 							>
 								{{spec}}
 							</a>
@@ -1047,7 +1047,7 @@
 						<td class="center aligned selectable"><prop :obj="skill" keyname="rank" /></td>
 						<td :class="'center aligned' + (skill.mandatory ? '' : ' selectable')"><prop :obj="skill" keyname="aptitude" :readonly="skill.mandatory" /></td>
 						<td class="center aligned selectable"><span v-if="skill.mod > 0">+</span><prop :obj="skill" keyname="mod" /></td>
-						<td class="center aligned selectable" @click="roll(skill.total(character[skill.aptitude]),skill.name + ' Check')">{{skill.total(character[skill.aptitude])}}</td>
+						<td class="center aligned selectable" @click="skill_roll_and_log(skill)">{{skill.total(character[skill.aptitude])}}</td>
 						<td class="selectable collapsing"><a v-if="!skill.mandatory" @click="character.skills.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
 					</tr>
 				</tbody>
@@ -1306,7 +1306,7 @@
 						<td class="center aligned selectable"><prop :obj="skill" keyname="rank" /></td>
 						<td :class="'center aligned' + (skill.mandatory ? '' : ' selectable')"><prop :obj="skill" keyname="aptitude" :readonly="skill.mandatory" /></td>
 						<td class="center aligned selectable"><span v-if="skill.mod > 0">+</span><prop :obj="skill" keyname="mod" /></td>
-						<td class="center aligned selectable" @click="roll(skill.total(character.muse[skill.aptitude]),skill.name + ' Check')">{{skill.total(character.muse[skill.aptitude])}}</td>
+						<td class="center aligned selectable" @click="skill_roll_and_log(skill)">{{skill.total(character.muse[skill.aptitude])}}</td>
 						<td class="selectable collapsing"><a v-if="!skill.mandatory" @click="character.muse.skills.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
 					</tr>
 				</tbody>
@@ -1354,9 +1354,9 @@
 							<span v-else>{{log.roll.text}}&nbsp;(Rolled: {{log.roll.result}} vs. {{log.modified_target}})<span v-if="index != 0"> for {{log.reason}}</span></span>
 						</span>
 					</li>
-					<ul v-if="log.notes.length">
-						<li>Original target: {{log.original_target}}</li>
+					<ul v-if="!log.dicestr && (log.notes.length || log.modified_target != log.original_target)">
 						<li v-for="note in log.notes">{{note}}</li>
+						<li v-if="log.modified_target != log.original_target">Original target: {{log.original_target}}</li>
 					</ul>
 					<div v-if="index == 0" class="ui horizontal inverted divider">Older Rolls</div>
 				</template>

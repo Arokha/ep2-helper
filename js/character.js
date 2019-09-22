@@ -207,7 +207,7 @@ class Skill extends Resolvable {
 	}
 
 	total(apt) {
-		if(this.name == "Fray" || this.name == "Perceive"){apt *= 2;} //So silly
+		if(this.name.toLowerCase() == "fray" || this.name.toLowerCase() == "perceive"){apt *= 2;} //So silly
 		return this.rank + this.mod + apt;
 	}
 
