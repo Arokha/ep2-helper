@@ -822,7 +822,7 @@ const vr_routes = [
   { path: '/traits/:tabid', component: vr_traits, props: true },
   { path: '/traits', redirect: "/traits/positive" },
   { path: '/sleights', component: vr_sleights, props: true },
-  { path: '*', redirect: "/quickrules" }
+  { path: '*', redirect: "/primer/whatis" }
 ]
 
 const vr_router = new VueRouter({
