@@ -102,9 +102,11 @@ class InvArmor extends InvItem {
 	constructor(name,filtercategory){
 		super(name,filtercategory);
 
-		this.kinetic = 0;
-		this.energy = 0;
-		this.notes = "";
+		if(!this.source){
+			this.kinetic = 0;
+			this.energy = 0;
+			this.notes = "";
+		}
 	}
 
 	resolve(val) {
@@ -120,11 +122,11 @@ InvArmor.serial_values = ["name","kinetic","energy","notes","mods"];
 
 class InvWep extends InvItem {
 	constructor(name,filtercategory) {
-		super(name,filtercategory);
-		
-		if(!this.source) {
+		super(name,filtercategory);	
+
+		if(!this.source){
 			this.damage = "0d10";
-			this.notes = null;
+			this.notes = "";
 		}
 	}
 	resolve(val) {
@@ -141,9 +143,11 @@ class InvRangedWep extends InvWep {
 	constructor(name,filtercategory) {
 		super(name,filtercategory);
 
-		this.firemodes = "";
-		this.ammo = 0;
-		this.range = 0;
+		if(!this.source){
+			this.firemodes = "";
+			this.ammo = 0;
+			this.range = 0;
+		}
 	}
 
 	resolve(val) {
