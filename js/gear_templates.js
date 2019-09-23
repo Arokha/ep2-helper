@@ -725,8 +725,8 @@ var gear_templates = {
       "Seeker/Grenade Ammo": {template: gear_ammo_seeker, charslot: "items", classhint: InvItem}
   },
   "Armor":{
-    "Armor Ware": {template: gear_armor, charslot: "armor", classhint: InvArmor},
-    "Armor Gear": {template: gear_armor, charslot: "armor", classhint: InvArmor},
-    "Armor Mods": {template: gear_generic, charslot: "armor", classhint: InvArmor}
+    "Armor Ware": {template: gear_armor, charslot: "armors", classhint: InvArmor},
+    "Armor Gear": {template: gear_armor, charslot: "armors", classhint: InvArmor},
+    "Armor Mods": {template: gear_generic, charslot: "armors", classhint: InvArmor}
   }
 }
