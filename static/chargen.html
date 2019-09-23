@@ -209,24 +209,7 @@
       </div>
 
       <div class="ui three doubling cards inverted">
-        <template v-for="gearpack in gearpacks">
-          <div class="ui centered card">
-            <div class="content">
-              <div class="header">{{gearpack.name}} - {{gearpack.type}}</div>
-              <div class="description">
-                <ul>
-                  <li v-for="item in gearpack.gear">{{item}}</li>
-                </ul>
-                <template v-for="option in gearpack.options">
-                  {{option.name}} extras:
-                  <ul>
-                    <li v-for="item in option.gear">{{item}}</li>
-                  </ul>
-                </template>
-              </div>
-            </div>
-          </div>
-        </template>
+        <gearpack-card v-for="gearpack in gearpacks" :gearpack="gearpack" :key="gearpack.name" />
       </div>
     </div>
 

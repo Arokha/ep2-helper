@@ -705,6 +705,109 @@ Vue.component('aptemplate-card', {
     </div>
   `
 });
+
+Vue.component('gearpack-card', {
+  props: { 
+    gearpack: Object
+  },
+  computed: {
+    items(){
+      let items = [];
+      this.gearpack.gear.forEach(function(item){
+        
+        let proto = find_by_name(unsorted_gear,item);
+        
+        if(proto){
+          items.push(proto);
+        } else {
+          console.log("Couldn't find gearpack item: ",item);
+        }
+
+      });
+      return items;
+    },
+    options(){
+      let options = [];
+      this.gearpack.options.forEach(function(option){
+        let running = {name:option.name,items:[]};
+        option.gear.forEach(function(item){
+          let proto = find_by_name(unsorted_gear,item);
+        
+          if(proto){
+            running.items.push(proto);
+          } else {
+            console.log("Couldn't find gearpack item: ",item);
+          }
+        });
+        options.push(running);
+      });
+      return options;
+    }
+  },
+  methods: {
+    apply(option){
+      //Build a list of everything to add
+      let chosengear = [];
+      chosengear.push.apply(chosengear,this.items);
+      if(option){
+        chosengear.push.apply(chosengear,option.items);
+      }
+
+      //Try to map the gear to slots and add it
+      chosengear.forEach(function(item){
+        let options = gear_templates[item.category][item.subcategory];
+        //Backup
+        if(!options || !options.classhint || !options.charslot){
+          options = {template: gear_generic, charslot: "items", classhint: InvItem};
+        }
+
+        let inst = new options.classhint(item.name);
+        inst.blueprint = 2; //You get a multi-use blueprint when you start with items
+        if(item.category == "Drugs"){
+          inst.quantity = 5; //You start with 5 doses of drugs
+        }
+
+        add_to_character(options.charslot,inst,"Item: "+item.name);
+
+      });
+    }
+  },
+  template: `
+    <div class="ui centered card">
+      <div class="content">
+        <div class="header">{{gearpack.name}} - {{gearpack.type}}</div>
+        <div class="description">
+          <ul>
+            <li v-for="item in items" :data-tooltip="item.subcategory" data-position="top left">{{item.name}}</li>
+          </ul>
+          <template v-for="option in options">
+            {{option.name}} extras:
+            <ul>
+              <li v-for="item in option.items" :data-tooltip="item.subcategory" data-position="top left">{{item.name}}</li>
+            </ul>
+          </template>
+        </div>
+      </div>
+      <div class="extra content">
+        <div class="ui two buttons">
+          <template v-if="!options.length">
+            <div class="ui labeled icon inverted basic green button" @click="apply()">
+              <i class="plus icon"></i>
+              Add Gear
+            </div>
+          </template>
+          <template v-else>
+            <div v-for="option in options" class="ui labeled icon inverted basic green button" @click="apply(option)">
+              <i class="plus icon"></i>
+              Add {{option.name}}
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+  `
+});
+
 /** Filter to replace spaces and other strange characters with underscores. */
 Vue.filter('despace', function (value) {
   if (!value) return '';

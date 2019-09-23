@@ -12,6 +12,7 @@
 
     <!-- Libs -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/3.4.5/fuse.min.js" integrity="sha256-Yrh3VGzE4d9b4KANknPJAhfcKt9SgHTL0v/FrJFoPzw=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.js" integrity="sha256-ufGElb3TnOtzl5E4c/qQnZFGP+FYEZj5kbSEdJNrw0A=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.1.2/vue-router.js" integrity="sha256-J8FoD0Yt1A0YS9yENPIEWQBbjAi+w9eE2wH/KqGTb2g=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
@@ -75,6 +76,9 @@
 		}
 		.ui.dropdown {
 			color: #10A3A3 !important;
+		}
+		.ui.labeled.icon.button, .ui.labeled.icon.buttons .button {
+			padding-left:2.5em !important;
 		}
 		/* Hide sub-menus until parent menu item is active. */
 		.item .menu {
@@ -212,9 +216,6 @@
     $.getJSON('data/reputations.json').then( (json) => {
     	reputations.push.apply(reputations,json);
     });
-    $.getJSON('data/gear_packs.json').then( (json) => {
-    	gearpacks.push.apply(gearpacks,json);
-    });
     $.getJSON('data/skills.json').then( (json) => {
     	skills.push.apply(skills,json);
     });
@@ -257,10 +258,41 @@
       "gear_armor.json"
     ];
 
+    let gear_promises = [];
     gear_jsons.forEach( (file) => {
-      $.getJSON('data/'+file).then( (json) => {
+      gear_promises.push($.getJSON('data/'+file));
+    });
+
+    //When done loading gear...
+    Promise.all(gear_promises).then(function(results){
+      results.forEach(function(json){
         unsorted_gear.push.apply(this.unsorted_gear,json);
       });
+      //Depends on gear, so only do it after.
+      $.getJSON('data/gear_packs_custom.json').then( (json) => {
+    	gearpacks.push.apply(gearpacks,json);
+      });
+    });
+    
+    var gear_fuse = new Fuse(unsorted_gear,{
+    	keys: [
+    		{
+    			name: 'name',
+    			weight: 0.7
+    		},
+    		{
+    			name: 'summary',
+    			weight: 0.3
+    		},
+    		{
+    			name: 'notes',
+    			weight: 0.3
+    		},
+    	],
+    	threshold: 0.5,
+    	shouldSort: true,
+    	includeScore: true,
+    	includeMatches: true
     });
 
 	function global_despace(value){
