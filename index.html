@@ -17,6 +17,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue-router/3.1.2/vue-router.js" integrity="sha256-J8FoD0Yt1A0YS9yENPIEWQBbjAi+w9eE2wH/KqGTb2g=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js" integrity="sha256-nRoO8HoupfqozUr7YKBRgHXmdx40Hl/04OSBzv7e7L8=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js" integrity="sha256-VeNaFBVDhoX3H+gJ37DpT/nTuZTdjYro9yBruHjVmoQ=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.min.css" integrity="sha256-R5nBNKPoJrsn3nPBR6SnXHR0612Bd8Siru2igAua8JU=" crossorigin="anonymous" />
 	<script src="js/character.js"></script>
 	<script src="js/gear_templates.js"></script>
@@ -199,43 +200,43 @@
     var gear_types = [];
 
     $.getJSON('data/backgrounds.json').then( (json) => {
-    	backgrounds.push.apply(backgrounds,json);
+      backgrounds = _.concat(backgrounds,json);
     });
     $.getJSON('data/careers.json').then( (json) => {
-    	careers.push.apply(careers,json);
+      careers = _.concat(careers,json);
     });
     $.getJSON('data/interests.json').then( (json) => {
-    	interests.push.apply(interests,json);
+      interests = _.concat(interests,json);
     });
     $.getJSON('data/factions.json').then( (json) => {
-    	factions.push.apply(factions,json);
+      factions = _.concat(factions,json);
     });
     $.getJSON('data/aptitude_templates.json').then( (json) => {
-    	aptemps.push.apply(aptemps,json);
+      aptemps = _.concat(aptemps,json);
     });
     $.getJSON('data/reputations.json').then( (json) => {
-    	reputations.push.apply(reputations,json);
+      reputations = _.concat(reputations,json);
     });
     $.getJSON('data/skills.json').then( (json) => {
-    	skills.push.apply(skills,json);
+      skills = _.concat(skills,json);
     });
 	$.getJSON('data/morphs.json').then( (json) => {
-      morphs.push.apply(morphs,json);
+      morphs = _.concat(morphs,json);
     });
     $.getJSON('data/traits.json').then( (json) => {
-      traits.push.apply(traits,json);
+      traits = _.concat(traits,json);
     });
     $.getJSON('data/aptitudes.json').then( (json) => {
-      aptitudes.push.apply(aptitudes,json);
+      aptitudes = _.concat(aptitudes,json);
     });
     $.getJSON('data/morph_types.json').then( (json) => {
-      morph_types.push.apply(morph_types,json);
+      morph_types = _.concat(morph_types,json);
     });
     $.getJSON('data/sleights.json').then( (json) => {
-      sleights.push.apply(sleights,json);
+      sleights = _.concat(sleights,json);
     });
     $.getJSON('data/gear_categories.json').then( (json) => {
-      gear_types.push.apply(gear_types,json);
+      gear_types = _.concat(gear_types,json);
     });
 
     var gear_jsons = [
@@ -281,6 +282,10 @@
     			weight: 0.7
     		},
     		{
+    			name: 'description',
+    			weight: 0.3
+    		},
+    		{
     			name: 'summary',
     			weight: 0.3
     		},
@@ -289,7 +294,7 @@
     			weight: 0.3
     		},
     	],
-    	threshold: 0.5,
+    	threshold: 0.35,
     	shouldSort: true,
     	includeScore: true,
     	includeMatches: true
@@ -474,14 +479,11 @@
 
 	function find_by_name(array,name){
 		//Clean name
-		name = colon_truncate(name);
-		name = name.toLowerCase();
+		name = colon_truncate(name.toLowerCase());
 
 		//Look
 		return array.find((element) => {
-			let elname = colon_truncate(element.name);
-			elname = elname.toLowerCase();
-			return elname == name;
+			return name == colon_truncate(element.name.toLowerCase());
 		});
 	}
 

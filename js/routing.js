@@ -555,11 +555,13 @@ const vr_morphs = {
 }
 
 const vr_gear = {
-  data: function() {
+  data() {
     return {
       unsorted_gear,
-      gear_types
-    };
+      gear_types,
+      search_text: null,
+      search_results: [],
+    }
   },
   props: {
   	category: String,
@@ -576,6 +578,28 @@ const vr_gear = {
   template: `
   <div class="ui segment inverted">
     <div id="gear-grid" class="ui grid">
+      <div class="sixteen wide column">
+        <div class="ui segment inverted">
+          <div id="gearsearch" class="ui inverted transparent left icon input">
+            <input v-model="search_text" type="text" placeholder="Search...">
+            <i class="search icon"></i>
+          </div>
+          <div v-show="search_results.length">
+            <div class="ui divider"></div>
+            <h3>Search Results:</h3>
+            <ul>
+              <li v-for="result in search_results">
+              <router-link :to="'/gear/'+result.item.category+'/'+despace(result.item.subcategory)">{{result.item.name}}</router-link>
+               - 
+              (Relevancy: {{100-Math.floor(result.score*100)}}%)
+               - 
+              {{result.item.category}} / {{result.item.subcategory}}</li>
+            </ul>
+            <div class="ui divider"></div>
+            <a @click.prevent.stop="clearSearch" style="cursor: pointer;">[Clear Results]</a>
+          </div>
+        </div>
+      </div>
       <div class="two wide column">
         <div id="gear-tabs" class="ui vertical sticky fluid tabular menu inverted">
           <template v-for="(catobj,catname) in categories">
@@ -599,6 +623,7 @@ const vr_gear = {
     $.getJSON('data/gear_categories.json').then( (json) => {
       this.gear_types = json;
     });
+    this.debouncedGetSearch = _.debounce(this.getSearch, 500)
   },
   mounted: function() {
       this.$nextTick(function (){
@@ -610,12 +635,29 @@ const vr_gear = {
       this.$nextTick(function (){
         $(".sticky", this.$el).sticky('refresh');
       });
+    },
+    search_text(oldSearch,newSearch){
+      $("#gearsearch").addClass('loading');
+      this.debouncedGetSearch()
     }
   },
   methods: {
-  	despace: function(value) {
+  	despace(value) {
   		return global_despace(value);
-  	}
+  	},
+    getSearch(){
+      $("#gearsearch").removeClass('loading');
+      if(!this.search_text){
+        this.search_results = [];
+        return;
+      }
+      this.search_results = gear_fuse.search(this.search_text);
+      this.$nextTick(()=>{$(".sticky", this.$el).sticky('refresh');});
+    },
+    clearSearch(){
+      this.search_results = [];
+      this.search_text = "";
+    }
   },
   computed: {
   	current_category: function() {
