@@ -809,11 +809,6 @@ Vue.component('gearpack-card', {
 });
 
 /** Filter to replace spaces and other strange characters with underscores. */
-Vue.directive('$model', {
-    bind: function (el, binding, vnode) {
-        el.oninput = () => (vnode.context[binding.expression] = el.value)
-    }
-})
 Vue.filter('despace', function (value) {
   if (!value) return '';
   return global_despace(value);
