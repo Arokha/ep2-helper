@@ -582,7 +582,9 @@ const vr_gear = {
         <div class="ui segment inverted">
           <div id="gearsearch" class="ui inverted transparent left icon input">
             <input v-model="search_text" type="text" placeholder="Search...">
-            <i class="search icon"></i>
+            <i v-if="!search_results.length" class="search icon"></i>
+            <i v-else @click.stop.prevent="clearSearch" class="times link icon"></i>
+
           </div>
           <div v-show="search_results.length">
             <div class="ui divider"></div>
