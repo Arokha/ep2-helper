@@ -14,6 +14,10 @@
 				<i class="upload alternate icon"></i>
 				Import
 			</div>
+			<div class="ui labeled icon inverted basic teal button" @click="send_to_tracker()">
+				<i class="share icon"></i>
+				Tracker
+			</div>
 			<div class="ui labeled icon inverted basic red button" @click="show_wipe_dialog()">
 				<i class="undo red icon"></i>
 				Reset
@@ -1447,6 +1451,10 @@
 			<p>You may have noticed that you can roll arbitrary targets and dice combos on the Roll Log page, but did you know you can Ctrl-Click any text on the character sheet to try and roll it?</p>
 			<p>A good use would be Ctrl-Clickng to roll weapon damage. The entire text of whatever you click will be searched for dice notation (e.g. '3d6+4') so don't worry about making it the only text in the field.</p>
 			<p>Remember: If you want the name of something to be resolved but still want dice notation in the name, add it after a colon. You should probably add it to notes/summary instead though!</p>
+
+			<h3>Character Tracker</h3>
+			<p>Want to work on several characters at once and swap between them? You can use the <router-link to="tracker">Character Tracker</router-link> to do that. If you want to export several characters at once, too, you can do that as well using the tracker.</p>
+			<p>Send your current character to the tracker using the 'Tracker' button at the top of the sheet.</p>
 		</div>
 		<div class="actions">
 			<div class="ui basic inverted green button" @click="close_tips()">

@@ -400,7 +400,7 @@ var character_loaded = null;
 var vue_sheet = null;
 
 class Character {
-	constructor() {
+	constructor(passedin) {
 		//2: Corrected missing class hints
 		//3: Added muse name/looks
 		//4: Fixed muse default ranks
@@ -778,6 +778,10 @@ class Character {
 		this.bots = []; // List of objects
 		this.vehicles = []; // List of objects
 		this.armors = [];
+
+		if(passedin){
+			import_properties(passedin,this,serial_character);
+		}
 	}
 
 	shortrest() {

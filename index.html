@@ -18,6 +18,8 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.js" integrity="sha256-vma2DJ+AbxsPuvzFC6PezrSzM2kMTxRA4rhGapnkM6A=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lz-string/1.4.4/lz-string.min.js" integrity="sha256-nRoO8HoupfqozUr7YKBRgHXmdx40Hl/04OSBzv7e7L8=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js" integrity="sha256-VeNaFBVDhoX3H+gJ37DpT/nTuZTdjYro9yBruHjVmoQ=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.10.0/Sortable.min.js" integrity="sha256-h5esCRvE+shjlH7Dtl7ly6ByDKH5bI9PFvM8OeThBTM=" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/Vue.Draggable/15.0.0/vuedraggable.min.js" integrity="sha256-kZmY4LUwE53ceTqZXPto8gMELhExZWBrmzOCZgzyY0Y=" crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fomantic-ui/2.7.7/semantic.min.css" integrity="sha256-R5nBNKPoJrsn3nPBR6SnXHR0612Bd8Siru2igAua8JU=" crossorigin="anonymous" />
 	<script src="js/character.js"></script>
 	<script src="js/gear_templates.js"></script>
@@ -46,6 +48,13 @@
 		}
 	    .ui.vertical.tabular.menu .active.item {
       		background-color: #3D3E3F;
+    	}
+    	.draggable {
+    		cursor: pointer;
+    		margin: 3px !important;
+    	}
+    	.draggable:hover {
+    		background-color: #777777 !important;
     	}
 		/* Link underliney */
 		a {
@@ -80,6 +89,7 @@
 		}
 		.ui.labeled.icon.button, .ui.labeled.icon.buttons .button {
 			padding-left:2.5em !important;
+			padding-right:1em !important;
 		}
 		/* Hide sub-menus until parent menu item is active. */
 		.item .menu {
@@ -152,6 +162,10 @@
 			background: rgba(0,0,0,0.15) !important;
 			color: inherit !important;
 		}
+		/* I want MORE compact */
+		.ui.compact.table>tbody>tr>td, .ui.compact.table>tr>td {
+    		padding: .2em .3em;
+		}
 	</style>
 </head>
 <body>
@@ -160,7 +174,8 @@
 			<router-link class="item" to="/primer">EP2 Primer</router-link>
 			<router-link class="item" to="/quickrules">Quick Rules</router-link>
 		    <router-link class="item" to="/chargen">Chargen Guide</router-link>
-		    <router-link class="item" to="/sheet">Character Sheet</router-link>
+		    <router-link class="item" to="/sheet">Char. Sheet</router-link>
+		    <router-link class="item" to="/tracker">Char. Tracker</router-link>
 		    <div id="datadropdown" class="ui inverted dropdown item">
     			Data Pages
     			<i class="dropdown icon"></i>

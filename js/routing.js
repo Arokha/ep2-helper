@@ -254,7 +254,7 @@ const vr_sheet = function() {
           this.defaults();
           $('#character-wipe').modal('hide');
           var browserStore = window.localStorage;
-          browserStore.clear();
+          browserStore.removeItem('ep2character');
         },
         update_export(){
           let preparing = $.extend(true,{},serial_character);
@@ -324,7 +324,7 @@ const vr_sheet = function() {
             let decomp = JSON.parse(LZString.decompressFromBase64(base64));
             
             //Try to import properties
-            import_properties(decomp,this.character,serial_character);
+            this.character = character_loaded = new Character(decomp);
             
             //Drop modal if it worked
             $("#import-modal").modal('hide');
@@ -366,6 +366,15 @@ const vr_sheet = function() {
         },
         close_newchar_notice(){
           $("#sheetnotice-modal").modal('hide');
+        },
+        send_to_tracker(){
+          vr_router.push("tracker").then(() => {
+            if(_.find(vue_tracker.characters,this.character)){
+              show_toast("That character is already in the tracker!","I'm not going to add them a second time.","warning");
+              return;
+            }
+            vue_tracker.characters.push(this.character);
+          });
         }
       },
       computed: {
@@ -396,6 +405,171 @@ const vr_sheet = function() {
     };
   });
 };
+
+var vue_tracker = null;
+const vr_tracker = function() {
+  return $.ajax("static/tracker.html").then(function(templateHtml) {
+    return {
+      data: function() {
+        return {
+          characters: [],
+          base64export: null,
+          tobedeleted: null
+        };
+      },
+      created() {
+        vue_tracker = this;
+        this.load_from_localstorage();
+      },
+      methods: {
+        edit(character){
+          vr_router.push("sheet").then(() => {
+            //Already loaded
+            if(character_loaded == character){
+              return;
+            }
+            if(!_.find(this.characters,character_loaded) && (character_loaded.name != "<Input Name>")){
+              show_toast("Would overwrite character!","Clear the sheet or save them in the tracker first.","error");
+              return;
+            }
+            vue_sheet.character = character;
+            character_loaded = character;
+          });
+        },
+        update_export(){
+          let prepped_array = [];
+          _.each(this.characters, function(character) {
+            let prep = $.extend(true,{},serial_character);
+            export_properties(character,prep,serial_character); //This mutates 2nd arg
+            prepped_array.push(prep);
+          });
+          let uncomp = JSON.stringify(prepped_array);
+          let comp = LZString.compressToBase64(uncomp);
+          let final =
+`// Eclipse Phase Second Edition Tracker Export
+// https://arokha.com/eclipsehelper
+// Data is compressed with lz-string compressToBase64()
+` + comp;
+          this.base64export = final;
+        },
+        export_tracker(){
+          $("#trackerexportbutton").addClass("loading");
+          this.update_export();
+          download("ep2tracker.txt",this.base64export);
+          $("#trackerexportbutton").removeClass("loading");
+        },
+        import_tracker(base64){
+          try {
+            //Scrape comments
+            base64 = base64.replace(/\/\/.*[\r\n]+/gm,"");
+            
+            //Decompress
+            let decomp = JSON.parse(LZString.decompressFromBase64(base64));
+            
+            //Try to import properties
+            _.each(decomp,(character) => {
+              let newchar = new Character(character);
+              this.characters.push(newchar);
+            });
+            
+            show_toast("Imported Tracker","Import complete!","success");
+          } catch (e) {
+            console.error(e);
+            show_toast("Import Error!","This appears to be malformed data.","error");
+          } finally {
+            $("#trackerimportbutton").removeClass("loading");
+          }
+        },
+        import_file_change(element){
+          $("#trackerimportbutton").addClass("loading");
+          let files = element.target.files || element.dataTransfer.files;
+          if(!files.length)
+            return;
+          let reader = new FileReader();
+          reader.onload = (evt) => {
+            let result = evt.target.result;
+            this.import_tracker(result);
+          };
+          var firstfile = files[0];
+          if(firstfile.type != "text/plain"){
+            show_toast("Import Error!","This doesn't appear to be plaintext.","error");
+            return;
+          }
+          if(firstfile.size > 5120000){ //I doubt you could make a 5000k tracker legitimately
+            show_toast("Import Error!","File unreasonably large.","error");
+            return;
+          }
+          reader.readAsText(firstfile);
+          element.target.value = '';
+        },
+        save_tracker(){
+          this.update_export();
+          var browserStore = window.localStorage;
+          browserStore.setItem('ep2tracker', this.base64export);
+          $('body')
+            .toast({
+              title: 'Saved Tracker',
+              message: "You should occasionally back up your data via 'Export' also.",
+              displayTime: 7000,
+              showProgress: "bottom"
+            });
+        },
+        load_from_localstorage(){
+          var browserStore = window.localStorage;
+          var save = browserStore.getItem('ep2tracker');
+          if(save){
+            this.import_tracker(save);
+            return true;
+          }
+          return false;
+        },
+        show_wipe_dialog(){
+          $('#tracker-wipe').modal('show');
+        },
+        wipe(){
+          this.characters.splice(0,this.characters.length);
+          $('#tracker-wipe').modal('hide');
+          var browserStore = window.localStorage;
+          browserStore.removeItem('ep2tracker');
+        },
+        del(){
+          let delindex = this.characters.findIndex( el => el === this.tobedeleted );
+          this.characters.splice(delindex,1);
+          $('#tracker-del').modal('hide');
+        },
+        show_del_dialog(character){
+          this.tobedeleted = character;
+          $('#tracker-del').modal('show');
+        },
+        show_tips(){
+          $('#trackertips-modal').modal('show');
+        },
+        close_tips(){
+          $('#trackertips-modal').modal('hide');
+        },
+        quick_roll(character,target){
+          let modifier = (character.wounds_taken * 10) + (character.traumas_taken * 10);
+          let new_target = target -= modifier;
+          if(target <= 0){
+            show_toast("Target would be negative or zero with wounds/traumas.","You can consider that a failure.","error",7000);
+            return;
+          }
+
+          let roll = roll_dice(new_target);
+          let topmessage = "Rolled a " + roll.result + " against " + new_target;
+          show_toast(topmessage,roll.text,roll.success ? "success":"error",7000);
+        },
+        show_sort(){
+          $('#sort-tracker').modal('show');
+        },
+        hide_sort(){
+          $('#sort-tracker').modal('hide');
+        },
+      },
+      template: templateHtml
+    }
+  });
+}
 
 const vr_chargen = function() {
   return $.ajax("static/chargen.html").then(function(templateHtml) {
@@ -854,6 +1028,7 @@ const vr_primer = function() {
 const vr_routes = [
   { path: '/quickrules', component: vr_quickrules },
   { path: '/sheet', component: vr_sheet },
+  { path: '/tracker', component: vr_tracker },
   { path: '/chargen', redirect: '/chargen/1' },
   { path: '/chargen/:step', component: vr_chargen },
   { path: '/primer', redirect: '/primer/whatis' },
