@@ -585,8 +585,14 @@ const vr_chargen = function() {
           aptemps,
           reputations,
           gearpacks,
-          skills
+          skills,
+          cpspends: []
         };
+      },
+      computed: {
+        cpspent() {
+          return _.sumBy(this.cpspends, spend => spend.cost);
+        }
       },
       watch: {
         '$route' (to, from) {

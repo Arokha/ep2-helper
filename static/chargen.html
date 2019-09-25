@@ -176,6 +176,27 @@
         <div class="header">Specializations</div>
         <p>Skill specializations cost 1 CP. They give a +10 bonus to that skill when that specialization applies. (This specialization bonus does not count towards the skill maximum of 80.)</p>
       </div>
+
+      <div class="ui segment inverted">
+        <h3>CP Calculator</h3>
+        <p>(Note: You'll lose this data if you close or refresh the page, however you can navigate forward/back and click links on this site without losing it.)</p>
+        <table class="ui celled collapsing inverted table">
+          <thead>
+            <tr>
+              <th class="center aligned">CP</th>
+              <th>Spent on...</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="spend in cpspends">
+              <td class="center aligned selectable" style="padding-left: 0px !important;"><prop :obj="spend" keyname="cost" /></td>
+              <td class="selectable" style="padding-left: 3px !important; padding-right: 3px !important"><prop :obj="spend" keyname="text" /></td>
+            </tr>
+            <tr><th class="center aligned">[{{cpspent}}]</th><th>[Total Spent]</th>
+            <tr><td colspan="2" class="center aligned selectable" @click="cpspends.push({cost:1,text:'Type here'})">+ Add Row</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <!-- Derived Stats -->
