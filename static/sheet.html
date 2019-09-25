@@ -1020,7 +1020,7 @@
 			<table class="ui inverted unstackable sortable table">
 				<thead>
 					<tr>
-						<th data-content="Ctrl-Click skillnames to add specializations. Ctrl-Click specs to delete." data-position="top left">Name <a @click="new_skill()"><i class="plus square outline icon"></i></a></th>
+						<th data-content="Ctrl-Click skillnames to add specializations. Ctrl-Click specs to delete." data-position="top left">Name <a @click.stop="new_skill()"><i class="plus square outline icon"></i></a></th>
 						<th class="center aligned">Rank</th>
 						<th class="center aligned">Aptitude</th>
 						<th class="center aligned">Mod</th>
