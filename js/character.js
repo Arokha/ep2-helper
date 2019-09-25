@@ -210,11 +210,6 @@ class Skill extends Resolvable {
 
 	}
 
-	total(apt) {
-		if(this.name.toLowerCase() == "fray" || this.name.toLowerCase() == "perceive"){apt *= 2;} //So silly
-		return this.rank + this.mod + apt;
-	}
-
 	resolve(val) {
 		super.resolve(val);
 

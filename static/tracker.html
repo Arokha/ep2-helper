@@ -129,12 +129,12 @@
 								<template v-for="skill in character.skills">
 									<tr v-if="skill.rank">
 										<td>{{skill.name}}</td>
-										<td class="center aligned selectable" @click="quick_roll(character,skill.total(character[skill.aptitude]))">{{skill.total(character[skill.aptitude])}}</td>
+										<td class="center aligned selectable" @click="quick_roll(character,skillTotal(skill,character))">{{skillTotal(skill,character)}}</td>
 									</tr>
 									<!-- Laaaame -->
 									<tr v-if="skill.name == 'Fray'">
 										<td>Fray/2 (vs ranged)</td>
-										<td class="center aligned selectable" @click="quick_roll(character,skill.total(character[skill.aptitude])/2)">{{skill.total(character[skill.aptitude])/2}}</td>
+										<td class="center aligned selectable" @click="quick_roll(character,skillTotal(skill,character)/2)">{{skillTotal(skill,character)/2}}</td>
 									</tr>
 								</template>
 							</tbody>

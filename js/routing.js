@@ -19,6 +19,9 @@ const vr_sheet = function() {
         };
       },
       methods: {
+        skillTotal(skill,character){
+          return skillTotal(skill,character);
+        },
         new_morph_trait(type){
           this.character.morph_traits.push(new Trait(null,type));
         },
@@ -119,15 +122,15 @@ const vr_sheet = function() {
         //Roll a skill with frills (specialization, default considerations, etc)
         skill_roll_and_log(skill,spec = false){
           //Get the value of the aptitude
-          let apt = this.character[skill.aptitude];
-          if(!apt){
+          if(!character[skill.aptitude]){
             show_toast("No Aptitude?","I can't tell what aptitude that skill uses.","error");
             return;
           }
           
-          //Pass the apt in, get the total back from the skill
-          let target = skill.total(apt);
+          //Get the skill total
+          let target = skillTotal(skill,this.character);
           
+          //Are we using a specialization?
           if(spec){
             target += 10;
           }
@@ -422,6 +425,9 @@ const vr_tracker = function() {
         this.load_from_localstorage();
       },
       methods: {
+        skillTotal(skill,character){
+          return skillTotal(skill,character);
+        },
         edit(character){
           vr_router.push("sheet").then(() => {
             //Already loaded

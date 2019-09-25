@@ -1051,7 +1051,7 @@
 						<td class="center aligned selectable"><prop :obj="skill" keyname="rank" /></td>
 						<td :class="'center aligned' + (skill.mandatory ? '' : ' selectable')"><prop :obj="skill" keyname="aptitude" :readonly="skill.mandatory" /></td>
 						<td class="center aligned selectable"><span v-if="skill.mod > 0">+</span><prop :obj="skill" keyname="mod" /></td>
-						<td class="center aligned selectable" @click="skill_roll_and_log(skill)">{{skill.total(character[skill.aptitude])}}</td>
+						<td class="center aligned selectable" @click="skill_roll_and_log(skill)">{{skillTotal(skill,character)}}</td>
 						<td class="selectable collapsing"><a v-if="!skill.mandatory" @click="character.skills.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
 					</tr>
 				</tbody>
@@ -1310,7 +1310,7 @@
 						<td class="center aligned selectable"><prop :obj="skill" keyname="rank" /></td>
 						<td :class="'center aligned' + (skill.mandatory ? '' : ' selectable')"><prop :obj="skill" keyname="aptitude" :readonly="skill.mandatory" /></td>
 						<td class="center aligned selectable"><span v-if="skill.mod > 0">+</span><prop :obj="skill" keyname="mod" /></td>
-						<td class="center aligned selectable" @click="skill_roll_and_log(skill)">{{skill.total(character.muse[skill.aptitude])}}</td>
+						<td class="center aligned selectable" @click="skill_roll_and_log(skill)">{{skillTotal(skill,character.muse)}}</td>
 						<td class="selectable collapsing"><a v-if="!skill.mandatory" @click="character.muse.skills.splice(index,1)"><i class="ui minus square outline red icon"></i></a></td>
 					</tr>
 				</tbody>
