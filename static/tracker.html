@@ -1,0 +1,233 @@
+<div id="tracker">
+	<div class="ui segment inverted">
+		<div class="ui labeled icon inverted basic teal button" @click="save_tracker()">
+			<i class="save icon"></i>
+			Save
+		</div>
+		<label for="trackerimport">
+			<div id="trackerimportbutton" class="ui labeled icon inverted basic teal button">
+				<i class="upload icon"></i>
+				Import Tracker
+			</div>
+		</label>
+		<input type="file" id="trackerimport" name="trackerimport" accept=".txt" style="display: none;" @input="import_file_change">
+		<div id="trackerexportbutton" class="ui labeled icon inverted basic teal button" @click="export_tracker()">
+			<i class="download icon"></i>
+			Export Tracker
+		</div>
+		<div class="ui labeled icon inverted basic red button" @click="show_wipe_dialog()">
+			<i class="undo red icon"></i>
+			Reset
+		</div>
+		<div class="ui labeled icon inverted basic teal right floated button" @click="show_sort()">
+			<i class="sort amount down icon"></i>
+			Edit Order
+		</div>
+		<div class="ui labeled icon inverted basic teal right floated button" @click="show_tips()">
+			<i class="info circle icon"></i>
+			Help
+		</div>
+	</div>
+	<template v-for="character in characters">
+		<div class="ui top attached segment inverted">
+			<div class="ui labeled icon inverted basic green right floated button" @click="edit(character)">
+				<i class="pencil icon"></i>
+				Edit Charsheet
+			</div>
+			<div class="ui labeled icon inverted basic red right floated button" @click="show_del_dialog(character)">
+				<i class="trash icon"></i>
+				Delete
+			</div>
+			<span class="ui big text">{{character.name}}</span><br>
+			({{character.background}}/{{character.career}}/{{character.interest}}/{{character.faction}})
+		</div>
+		
+		<div class="ui bottom attached segment inverted">
+			<div class="ui internally celled inverted grid">
+				<div class="row">
+					<div class="four wide column">
+						<table class="ui basic inverted compact table">
+							<thead>
+								<tr>
+									<th class="center aligned">Stat</th>
+									<th class="center aligned">Value</th>
+									<th class="center aligned">Check</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<th class="center aligned">COG</th>
+									<td class="center aligned"><prop :obj="character" keyname="cog" /></td>
+									<td class="center aligned selectable" @click="quick_roll(character,character.cog_check)"><prop :obj="character" keyname="cog_check" readonly /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">INT</th>
+									<td class="center aligned"><prop :obj="character" keyname="int" /></td>
+									<td class="center aligned selectable" @click="quick_roll(character,character.int_check)"><prop :obj="character" keyname="int_check" readonly /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">REF</th>
+									<td class="center aligned"><prop :obj="character" keyname="ref" /></td>
+									<td class="center aligned selectable" @click="quick_roll(character,character.ref_check)"><prop :obj="character" keyname="ref_check" readonly /></td>
+
+								</tr>
+								<tr>
+									<th class="center aligned">SAV</th>
+									<td class="center aligned"><prop :obj="character" keyname="sav" /></td>
+									<td class="center aligned selectable" @click="quick_roll(character,character.sav_check)"><prop :obj="character" keyname="sav_check" readonly /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">SOM</th>
+									<td class="center aligned"><prop :obj="character" keyname="som" /></td>
+									<td class="center aligned selectable" @click="quick_roll(character,character.som_check)"><prop :obj="character" keyname="som_check" readonly /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">WIL</th>
+									<td class="center aligned"><prop :obj="character" keyname="wil" /></td>
+									<td class="center aligned selectable" @click="quick_roll(character,character.wil_check)"><prop :obj="character" keyname="wil_check" readonly /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">Dur/WT/DR</th>
+									<td class="center aligned"><prop :obj="character" keyname="durability" />/<prop :obj="character" keyname="wound_threshold" readonly />/<prop :obj="character" keyname="death_rating" readonly /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">Luc/TT/IR</th>
+									<td class="center aligned"><prop :obj="character" keyname="lucidity" />/<prop :obj="character" keyname="trauma_threshold" readonly />/<prop :obj="character" keyname="insanity_rating" readonly /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">Damage</th>
+									<td class="center aligned"><prop :obj="character" keyname="damage_taken" /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">Stress</th>
+									<td class="center aligned"><prop :obj="character" keyname="stress_taken" /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">Wounds</th>
+									<td class="center aligned"><prop :obj="character" keyname="wounds_taken" /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">Traumas</th>
+									<td class="center aligned"><prop :obj="character" keyname="traumas_taken" /></td>
+								</tr>
+								<tr>
+									<th class="center aligned">Init.</th>
+									<td class="center aligned"><prop :obj="character" keyname="initiative" /></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="four wide column">
+						<table class="ui basic inverted compact table">
+							<thead>
+								<tr>
+									<th>Skills</th>
+									<th class="center aligned">Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<template v-for="skill in character.skills">
+									<tr v-if="skill.rank">
+										<td>{{skill.name}}</td>
+										<td class="center aligned selectable" @click="quick_roll(character,skill.total(character[skill.aptitude]))">{{skill.total(character[skill.aptitude])}}</td>
+									</tr>
+									<!-- Laaaame -->
+									<tr v-if="skill.name == 'Fray'">
+										<td>Fray/2 (vs ranged)</td>
+										<td class="center aligned selectable" @click="quick_roll(character,skill.total(character[skill.aptitude])/2)">{{skill.total(character[skill.aptitude])/2}}</td>
+									</tr>
+								</template>
+							</tbody>
+						</table>
+					</div>
+					<div class="four wide column">
+						<table class="ui basic inverted compact table">
+							<thead>
+								<tr>
+									<th>Gear</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="item in character.items"><td>{{item.name}}</td></tr>
+								<tr v-for="item in character.weapons_ranged"><td>{{item.name}} (Ranged)</td></tr>
+								<tr v-for="item in character.weapons_melee"><td>{{item.name}} (Melee)</td></tr>
+								<tr v-for="item in character.armors"><td>{{item.name}} (Armor)</td></tr>
+								<tr v-for="item in character.bots"><td>{{item.name}} (Bot)</td></tr>
+								<tr v-for="item in character.vehicles"><td>{{item.name}} (Vehicle)</td></tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="four wide column">
+						<div class="ui secondary inverted segment" style="min-height: 80%;"><prop :obj="character" keyname="notes" multiline /></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</template>
+	<div class="ui modal inverted" id="tracker-del">
+		<div class="header">Confirm Character Deletion</div>
+		<div class="content">
+			<p>Are you sure about this? This can't be undone unless you exported your character data and saved it elsewhere.</p>
+			<p>We suggest you do that if these are characters you've spent any time working on!</p>
+			<p>Click ANYWHERE ELSE to close this window.</p>
+			<div class="ui animated fade button inverted red" @click="del()">
+					<div class="visible content">Yes, Delete<span v-if="tobedeleted"> "{{tobedeleted.name}}"</span></div>
+			<div class="hidden content"><i class="trash black icon"></i></div>
+			</div>
+		</div>
+	</div>
+	<div class="ui modal inverted" id="tracker-wipe">
+		<div class="header">Confirm Tracker Deletion</div>
+		<div class="content">
+			<p>Are you sure about this? This can't be undone unless you exported your tracker data and saved it elsewhere.</p>
+			<p>We suggest you do that if these are characters you've spent any time working on!</p>
+			<p>Click ANYWHERE ELSE to close this window.</p>
+			<div class="ui animated fade button inverted red" @click="wipe()">
+					<div class="visible content">Yes, Clear All Data</div>
+			<div class="hidden content"><i class="trash black icon"></i></div>
+			</div>
+		</div>
+	</div>
+	<div class="ui inverted modal" id="sort-tracker">
+		<div class="header">Arrange Characters</div>
+		<div class="content">
+			<p>Drag the characters below into your preferred order.</p>
+
+				<draggable v-model="characters">
+					<div v-for="character in characters" :key="character.name">
+						<div class="ui compact inverted segment draggable">
+							<b>{{character.name}}</b> - {{character.background}}/{{character.career}}/{{character.interest}}/{{character.faction}}
+						</div>
+					</div>
+				</draggable>
+
+		</div>
+		<div class="actions">
+			<div class="ui basic inverted green button" @click="hide_sort()">
+				Ok, done.
+			</div>
+		</div>
+	</div>
+	<div class="ui small basic modal" id="trackertips-modal">
+		<div class="header">Tips & Tricks</div>
+		<div class="content">
+			<h3>Character Tracker</h3>
+			<p>You can keep track of a group of characters here, be they NPCs, or a party of PCs. You can also export/import groups of characters, similar to the character sheet allowing you to import/export one at a time.</p>
+
+			<h3>Import/Export</h3>
+			<p>Exporting will export the full character data for every character on the tracker, not just the data displayed. You can use this to save several characters at once that you've designed sheets for.</p>
+
+			<h3>Interaction with Character Sheet</h3>
+			<p>Characters can be moved to/from the full character sheet page by clicking 'Edit Sheet' on the tracker, and 'Tracker' on the character sheet. All character data is kept, even though the tracker only displays some data for keeping things simple to look at.</p>
+
+			<h3>Rolling Dice</h3>
+			<p>Like the character sheet, clicking various totals will allow you to roll a d100 against the value, Eclipse Phase style. Note that this isn't as "comprehensive" as the full character sheet roller.</p>
+			<p>If you want more detail about your rolls, move the character to the full character sheet page and perform your rolls there. The tracker is more intended as a quick and simple view into things, and the roller matches this philosophy.</p>
+		</div>
+		<div class="actions">
+			<div class="ui basic inverted green button" @click="close_tips()">
+				Ok, thanks.
+			</div>
+		</div>
+	</div>
+</div>
