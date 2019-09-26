@@ -58,6 +58,9 @@ const vr_sheet = function() {
         new_skill(){
           this.character.skills.push(new Skill());
         },
+        new_muse_skill(){
+          this.character.muse.skills.push(new Skill());
+        },
         add_item_mod(item,event){
           item.mods.push(prompt("Please enter the new mod:", ""));
         },
