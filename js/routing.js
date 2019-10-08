@@ -125,8 +125,8 @@ const vr_sheet = function() {
         //Roll a skill with frills (specialization, default considerations, etc)
         skill_roll_and_log(skill,spec = false){
           //Get the value of the aptitude
-          if(!character[skill.aptitude]){
-            show_toast("No Aptitude?","I can't tell what aptitude that skill uses.","error");
+          if(this.character[skill.aptitude] == undefined){
+            show_toast("No Aptitude?","That aptitude is 0 (impossible) or typed wrong.","error");
             return;
           }
           
