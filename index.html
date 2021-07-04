@@ -198,12 +198,6 @@
 </body>
 
 <script>
-	//Create the vue instance
-	var mainVue = new Vue({
-		el: "#app",
-		router: vr_router
-	});
-
 	//Initialize lots of ajax loading of json data
 	var unsorted_gear = [];
 	var traits = [];
@@ -220,6 +214,12 @@
     var morph_types = [];
     var sleights = [];
     var gear_types = [];
+	
+	//Create the vue instance
+	var mainVue = new Vue({
+		el: "#app",
+		router: vr_router
+	});
 
     $.getJSON('data/backgrounds.json').then( json => backgrounds.push(...json) );
     $.getJSON('data/careers.json').then( json => careers.push(...json) );
