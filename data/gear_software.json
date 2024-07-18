@@ -199,6 +199,17 @@
   },
   {
     "category": "Software",
+    "subcategory": "ALIs",
+    "name": "Monitor ALI",
+    "complexity/gp": "Mod/2",
+    "summary": "Infosec 30, Interface 30, Kinesics 30, Know: Psychology 60, Know: Surveillance 60, Medicine: Psychosurgery 30, Perceive 60, Provoke 30, Research 30",
+    "description": "These ALIs reside within ghostrider modules installed to watch over their carrier’s activities. They are used to watch over prisoners and parolees, civilians living under police states, and people restricted with second-class citizenship like uplifts and indentures in some polities. They are also sometimes deployed in high-security installations or criminal or hypercorp operations where secrecy and accountability are prerogatives.",
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "92c3dcf5-c673-4616-9c3e-c7d0cbadfff9"
+  },
+  {
+    "category": "Software",
     "subcategory": "Scorchers",
     "name": "Bedlam",
     "complexity/gp": "Mod/R/2",

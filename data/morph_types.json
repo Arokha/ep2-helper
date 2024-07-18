@@ -24,6 +24,14 @@
     "id": "f671e07a-85ca-433d-a626-19986ce7075a"
   },
   {
+    "name": "Exomorph",
+    "description": "Though still rare, transhumanity has successfully adapted several non-sapient alien species with cyberbrain systems, allowing them to be sleeved.",
+    "biological": true,
+    "resource": "Character Options",
+    "reference": "",
+    "id": "0ed15ca1-2392-4a9b-84b7-38e486d0fe14"
+  },
+  {
     "name": "Synthmorph",
     "description": "Most synthmorph designs were originally intended to be robots, piloted by ALIs. Robot forms are optimized to suit their function, and so a wide variety of body plans exist. Robots designed to interact with transhumans often have biped or quadruped walker frames, to better navigate transhuman dwellings and spaces, but were often distinctly non-human in appearance. Many feature a sort of symbolic “face,” to give transhumans something to look at and interact with, but these were rarely realistic, so as to avoid uncanny-valley creepiness. Since the Fall, more synthmorphs have been designed specifically for transhuman egos, as they are cheaper and quicker to make than biomorphs. Without specialized robotic functions in mind, many of these synthmorph designs feature anthropomorphic frames (androids and gynoids) specifically tailored for egos used to human forms, including heads and distinctive (though still non-realistic) faces. As transhumanity grows accustomed to synthmorphs and more creative, however, innovative and unusual synthmorph designs become more common-place.<br>Synthmorphs — as well as bots, vehicles, and similar shells — share the following capabilities: <ul><li><b>Lack of Biological Functions - </b>Shells need not be bothered with trivialities like breathing, eating, defecating, aging, sleeping, or any similar minor but crucial aspects of biological life. They are also immune to toxins and pathogens. Synthmorphs are powered by nuclear and standard batteries, and sometimes solar power; for game purposes, power is not an issue for them.</li><li><b>Pain Filter - </b>Synthmorphs can filter out their pain receptors so that they are unhampered by wounds or physical damage. This allows them to ignore the −10 modifier from 1 wound (Wound Effects ▶220 ), but they suffer −30 on any tactile-based Perceive Tests and will not even notice they have been damaged unless they succeed in a (modified) Perceive Test.</li><li><b>Immunity to Shock - </b>Synthmorphs have no nervous system to disrupt, and their optical electronics are carefully shielded from interference. Shock attacks temporarily disrupt wireless radio communications, however, impeding all mesh actions until the end of the next action turn.</li><li><b>Environmental Durability - </b>Synthmorphs are built to withstand a wide range of environments, from dusty Mars to the oceans of Europa to the vacuum of space. They are unaffected by any but the most extreme temperatures and atmospheric pressures. Treat as cold tolerance ▶324 and vacuum sealing ▶325.</li><li><b>Toughness - </b> Synthetic shells are made to last — a fact reflected in their higher Durability and built-in Armor ratings. Their composition also makes their physical strikes more damaging; unarmed strikes by shells inflict DV 2d6.</li></ul>",
     "biological": false,
@@ -46,5 +54,13 @@
     "resource": "Eclipse Phase Second Edition",
     "reference": "",
     "id": "7eda9676-d8dc-40a5-9f14-1d8e3936ab56"
+  },
+  {
+    "name": "Core",
+    "description": "<p>Core morphs are cyberbrain systems equipped to run infrastructure such as habitats or ships.</p><p>Core cyberbrain systems enable large infrastructure systems to be sleeved as a morph. Though based on similar architecture, cores are orders of magnitude more complex than morph cyberbrains. They require distributed quantum computing systems, networked throughout the infrastructure. This setup ensures that damage to one particular part of the ship or habitat will not take out the entire controlling ego.</p>",
+    "biological": false,
+    "resource": "Eclipse Phase Second Edition",
+    "reference": "",
+    "id": "93dcac18-8206-40c4-8f4f-4b4772eedd52"
   }
 ]

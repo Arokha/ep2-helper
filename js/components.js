@@ -360,6 +360,12 @@ Vue.component('vcomp-morphcard', {
         <div class="description">{{english_list(morph.common_extras)}}</div>
       </div>
     </template>
+    <template v-if="morph.common_shape_adjustments.length">
+      <div class="extra content">
+        <div class="header">Common Shape Adjustments</div>
+        <div class="description">{{english_list(morph.common_shape_adjustments)}}</div>
+      </div>
+    </template>
     <template v-if="morph.notes.length">
       <div class="extra content">
         <div class="header">Additional Notes</div>

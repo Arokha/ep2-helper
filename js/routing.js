@@ -658,9 +658,11 @@ const vr_morphs = {
         <div id="morph-tabs" class="ui vertical sticky fluid tabular menu inverted">
           <router-link class="item" to="biomorph">Biomorphs</router-link>
           <router-link class="item" to="pod">Pod Biomorphs</router-link>
-          <router-link class="item" to="uplift">Uplift Biomorhs</router-link>
+          <router-link class="item" to="uplift">Uplift Biomorphs</router-link>
+          <router-link class="item" to="exomorph">Exomorph Biomorphs</router-link>
           <router-link class="item" to="synthmorph">Synthmorphs</router-link>
           <router-link class="item" to="infomorph">Infomorphs</router-link>
+          <router-link class="item" to="core">Core Morphs</router-link>
           <router-link class="item" to="flexbot">Flexbots</router-link>
         </div>
       </div>
@@ -694,12 +696,16 @@ const vr_morphs = {
           return this.pod_biomorphs;
         case "uplift":
           return this.uplift_biomorphs;
+        case "exomorph":
+          return this.exomorph_biomorphs;
         case "synthmorph":
           return this.synthmorphs;
         case "infomorph":
           return this.infomorphs;
         case "flexbot":
           return this.flexbot_parts;
+        case "core":
+          return this.core_morphs;
         default:
           return [];
       }
@@ -725,6 +731,11 @@ const vr_morphs = {
         if(element.type == "Uplift"){return true;}
       });
     },
+    exomorph_biomorphs: function () {
+      return this.morphs.filter(function(element){
+        if(element.type == "Exomorph"){return true;}
+      });
+    },
     synthmorphs: function () {
       return this.morphs.filter(function(element){
         if(element.type == "Synthmorph"){return true;}
@@ -733,6 +744,11 @@ const vr_morphs = {
     infomorphs: function () {
       return this.morphs.filter(function(element){
         if(element.type == "Infomorph"){return true;}
+      });
+    },
+    core_morphs: function () {
+      return this.morphs.filter(function(element){
+        if(element.type == "Core"){return true;}
       });
     },
     flexbot_parts: function () {
